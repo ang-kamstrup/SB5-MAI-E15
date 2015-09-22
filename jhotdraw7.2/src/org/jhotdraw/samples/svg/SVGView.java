@@ -356,8 +356,11 @@ public class SVGView extends AbstractView implements ExportableView {
         if (!f.getName().endsWith("." + format.getFileExtension())) {
             f = new File(f.getPath() + "." + format.getFileExtension());
         }
-
+        
+        //SVGTextFigure watermark = new SVGTextFigure("Exported from SVG");        
+        //svgPanel.getDrawing().add(watermark);        
         format.write(f, svgPanel.getDrawing());
+        //svgPanel.getDrawing().remove(watermark);        
 
         preferences.put("viewExportFile", f.getPath());
         preferences.put("viewExportFormat", filter.getDescription());
