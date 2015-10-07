@@ -194,6 +194,8 @@ public class ButtonFactory {
     }
     public final static int HSV_COLORS_COLUMN_COUNT = 12;
 
+    
+
     private static class ToolButtonListener implements ItemListener {
 
         private Tool tool;
@@ -1522,6 +1524,19 @@ public class ButtonFactory {
     public static JButton createApplyAttributesButton(DrawingEditor editor) {
         JButton btn;
         btn = new JButton(new ApplyAttributesAction(editor));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static JButton createApplyScaleButton(DrawingEditor editor) {
+        JButton btn;
+        btn = new JButton(new ApplyScaleButton(editor));
         if (btn.getIcon() != null) {
             btn.putClientProperty("hideActionText", Boolean.TRUE);
         }

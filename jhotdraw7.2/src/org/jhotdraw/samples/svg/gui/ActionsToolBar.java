@@ -133,7 +133,8 @@ public class ActionsToolBar extends AbstractToolBar {
                 gbc.gridy = 1;
                 gbc.insets = new Insets(3, 3, 0, 0);
                 p.add(btn, gbc);
-
+                
+                
                 JPopupButton pb = new JPopupButton();
                 pb.setUI((PaletteButtonUI) PaletteButtonUI.createUI(pb));
                 pb.setItemFont(UIManager.getFont("MenuItem.font"));
@@ -154,6 +155,17 @@ public class ActionsToolBar extends AbstractToolBar {
                 gbc.gridy = 2;
                 gbc.insets = new Insets(3, 0, 0, 0);
                 p.add(pb, gbc);
+                
+                //Scale btn
+                btn = ButtonFactory.createApplyScaleButton(editor);
+                btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                labels.configureToolBarButton(btn, "edit.applyScale");
+                gbc = new GridBagConstraints();
+                gbc.gridy = 2;
+                gbc.insets = new Insets(3, 0, 0, 0);
+                p.add(btn, gbc);
+                
+                
                 break;
             }
         }
