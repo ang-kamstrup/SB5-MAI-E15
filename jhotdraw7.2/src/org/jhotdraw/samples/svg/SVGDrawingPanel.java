@@ -27,6 +27,7 @@ import org.jhotdraw.gui.ToolBarLayout;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.gui.plaf.palette.PaletteLookAndFeel;
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
+import org.jhotdraw.samples.svg.gui.Navigator;
 
 /**
  * JSVGDrawingAppletPanel.
@@ -136,6 +137,7 @@ public class SVGDrawingPanel extends JPanel {
             public void componentRemoved(ContainerEvent e) {
             }
         });
+        toolsPane.add(new Navigator(view));
     }
 
     public void setDrawing(Drawing d) {
