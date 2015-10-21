@@ -20,6 +20,7 @@ import java.util.*;
 import javax.swing.*;
 import org.jhotdraw.filters.BlackHoleFilterAction;
 import org.jhotdraw.filters.GaussianBlurFilterAction;
+import org.jhotdraw.filters.PixelFilterAction;
 import org.jhotdraw.util.ResourceBundleUtil;
 /**
  * DefaultApplicationModel.
@@ -229,16 +230,13 @@ public class DefaultApplicationModel
     }
 
     private void createFilterMenuEntries(JMenu menu) {
-        
         JMenuItem menuItem;
         menuItem = menu.add(getAction(GaussianBlurFilterAction.ID));
         menuItem.setIcon(null);
         menuItem = menu.add(getAction(BlackHoleFilterAction.ID));
         menuItem.setIcon(null);
-        /*menuItem = menu.add(getAction(PixelFilterAction.ID));
+        menuItem = menu.add(getAction(PixelFilterAction.ID));
         menuItem.setIcon(null);
-        */
-        //Feel free to choose a different name for your actions
     }
 
     private void createEditMenuEntries(JMenu m) {
