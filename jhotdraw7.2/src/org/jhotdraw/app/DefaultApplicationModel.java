@@ -18,6 +18,7 @@ import org.jhotdraw.app.action.*;
 import org.jhotdraw.beans.*;
 import java.util.*;
 import javax.swing.*;
+import org.jhotdraw.filters.BlackHoleFilterAction;
 import org.jhotdraw.filters.GaussianBlurFilterAction;
 import org.jhotdraw.util.ResourceBundleUtil;
 /**
@@ -232,7 +233,7 @@ public class DefaultApplicationModel
         JMenuItem menuItem;
         menuItem = menu.add(getAction(GaussianBlurFilterAction.ID));
         menuItem.setIcon(null);
-        menuItem = menu.add(getAction(BlackholeFilterAction.ID));
+        menuItem = menu.add(getAction(BlackHoleFilterAction.ID));
         menuItem.setIcon(null);
         /*menuItem = menu.add(getAction(PixelFilterAction.ID));
         menuItem.setIcon(null);
