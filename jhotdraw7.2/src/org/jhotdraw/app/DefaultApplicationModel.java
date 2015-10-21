@@ -173,42 +173,31 @@ public class DefaultApplicationModel
         list.add(tb);
         return list;
     }
-    public List<JMenu> createMenus(Application a, View p) {
+    
+    public List<JMenu> createMenus(Application app, View v) {
         LinkedList<JMenu> list = new LinkedList<JMenu>();
-        list.add(createEditMenu(a, p));
+        list.add(createEditMenu(app, v));
+        list.add(createFilterMenu(app, v));
         return list;
     }
     protected JMenu createEditMenu(Application a, View p) {
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.Labels");
-        
-        JMenu m;
-        JMenuItem mi;
-        
-        m = new JMenu();
+        JMenu m = new JMenu();
         labels.configureMenu(m, "edit");
-        mi = m.add(getAction(UndoAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(RedoAction.ID));
-        mi.setIcon(null);
-        m.addSeparator();
-        mi = m.add(getAction(CutAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(CopyAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(PasteAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(DuplicateAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(DeleteAction.ID));
-        mi.setIcon(null);
-        m.addSeparator();
-        mi = m.add(getAction(SelectAllAction.ID));
-        mi.setIcon(null);
-        if (getAction(FindAction.ID) != null) {
-            m.addSeparator();
-            m.add(getAction(FindAction.ID));
-        }
+        
+        createEditMenuEntries(m);
+        
         return m;
+    }
+    
+    protected JMenu createFilterMenu(Application app, View v) {
+        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.Labels");
+        JMenu menu = new JMenu();
+        labels.configureMenu(menu, "filter");
+        
+        createFilterMenuEntries(menu);
+        
+        return menu;
     }
     
     public void initView(Application a, View p) {
@@ -234,6 +223,45 @@ public class DefaultApplicationModel
             actions.remove(id);
         } else {
             actions.put(id, action);
+        }
+    }
+
+    private void createFilterMenuEntries(JMenu menu) {
+        /*
+        JMenuItem menuItem;
+        menuItem = menu.add(getAction(GaussianBlurFilterAction.ID));
+        menuItem.setIcon(null);
+        menuItem = menu.add(getAction(BlackholeFilterAction.ID));
+        menuItem.setIcon(null);
+        menuItem = menu.add(getAction(PixelFilterAction.ID));
+        menuItem.setIcon(null);
+        */
+        //Feel free to choose a different name for your actions
+    }
+
+    private void createEditMenuEntries(JMenu m) {
+        JMenuItem mi;
+        mi = m.add(getAction(UndoAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(RedoAction.ID));
+        mi.setIcon(null);
+        m.addSeparator();
+        mi = m.add(getAction(CutAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(CopyAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(PasteAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(DuplicateAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(DeleteAction.ID));
+        mi.setIcon(null);
+        m.addSeparator();
+        mi = m.add(getAction(SelectAllAction.ID));
+        mi.setIcon(null);
+        if (getAction(FindAction.ID) != null) {
+            m.addSeparator();
+            m.add(getAction(FindAction.ID));
         }
     }
 }
