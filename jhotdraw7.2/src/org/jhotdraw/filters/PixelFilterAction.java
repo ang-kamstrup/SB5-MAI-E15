@@ -6,6 +6,7 @@ package org.jhotdraw.filters;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.jhotdraw.app.Application;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -15,7 +16,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
 public class PixelFilterAction extends AbstractAction {
     public final static String ID = "filter.pixel";
     
-    public PixelFilterAction(){
+    public PixelFilterAction(Application app){
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.labels");
         labels.configureAction(this, ID);
     }

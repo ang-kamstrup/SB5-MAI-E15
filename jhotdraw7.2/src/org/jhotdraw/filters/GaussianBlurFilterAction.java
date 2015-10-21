@@ -2,6 +2,7 @@ package org.jhotdraw.filters;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.jhotdraw.app.Application;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -11,7 +12,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
 public class GaussianBlurFilterAction extends AbstractAction {
     public final static String ID = "filter.gaussianBlur";
 
-    public GaussianBlurFilterAction(){
+    public GaussianBlurFilterAction(Application app){
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.labels");
         labels.configureAction(this, ID);
     }

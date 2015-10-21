@@ -6,6 +6,7 @@ package org.jhotdraw.filters;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.jhotdraw.app.Application;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -15,7 +16,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
 public class BlackHoleFilterAction extends AbstractAction {
     public final static String ID = "filter.blackHole";
     
-    public BlackHoleFilterAction(){
+    public BlackHoleFilterAction(Application app){
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.labels");
         labels.configureAction(this, ID);
     }
