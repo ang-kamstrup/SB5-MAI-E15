@@ -13,7 +13,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * @author Martin
  */
 public class BlackHoleFilterAction extends AbstractAction {
-    public final static String ID = "filter..blackHole";
+    public final static String ID = "filter.blackHole";
     
     public BlackHoleFilterAction(){
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.labels");
