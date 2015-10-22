@@ -1537,11 +1537,9 @@ public class ButtonFactory {
     /**
      * Creates a button that make it possible to scale the figures.
      */
-    public static JButton createApplyScaleButton(DrawingEditor editor) {
-        JButton btn;
-        
-        //Event handler for the button
-        btn = new JButton(new ApplyScaleButton(editor));
+    public static JButton createApplyScaleButton(DrawingEditor editor, CompositeFigure prototype) {        
+       //Event handler for the button
+       JButton btn = new JButton(new ApplyScaleButton(editor, prototype));
         if (btn.getIcon() != null) {
             btn.putClientProperty("hideActionText", Boolean.TRUE);
         }

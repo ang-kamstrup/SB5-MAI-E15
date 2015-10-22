@@ -6,7 +6,13 @@ package org.jhotdraw.draw.action;
 
 import java.awt.event.ActionEvent;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Locale;
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoableEdit;
+import org.jhotdraw.draw.CompositeFigure;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.Figure;
@@ -22,47 +28,57 @@ import sun.java2d.loops.ScaledBlit;
 public class ApplyScaleButton extends AbstractSelectedAction {
 
     private ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels", Locale.getDefault());
+    
+    private Grouping group;
+    private CompositeFigure prototype;
 
-    public ApplyScaleButton(DrawingEditor editor) {
+    
+    public ApplyScaleButton(DrawingEditor editor, CompositeFigure prototype) {
         super(editor);
         labels.configureAction(this, "edit.applyScale");
-        setEnabled(true);
+        group = new Grouping();
+        this.prototype = prototype;
+        updateEnabledState();
+    }
+    
+    @Override
+    protected void updateEnabledState() {
+        if (getView() != null) {
+            setEnabled(getView().getSelectionCount() > 0 ? true : false);
+        } else {
+            setEnabled(false);
+        }
+    }
+    
+    protected boolean canGroup() {
+        if(getView() != null)
+        {
+            //If the selected is only one group.
+            if(getView().getSelectionCount() == 1 && getView().getSelectedFigures().iterator().next().getClass().equals(prototype.getClass()))
+                return false;
+            else if (getView().getSelectionCount() >= 1)
+                return true;
+        }
+        return false;
+    }
+    
+    protected boolean canUngroup() {
+        return getView() != null &&
+                getView().getSelectionCount() == 1 &&
+                prototype != null && 
+                getView().getSelectedFigures().iterator().next().getClass().equals(
+                prototype.getClass());
     }
 
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Test");
-        applyScale();
-        setEnabled(true);
-    }
-
-    public void applyScale() {
-        DrawingView view = getView();
-
-        //Get the area the seleceted figure is in
-        double minX = Double.MAX_VALUE, maxX = Double.MIN_VALUE, minY = Double.MAX_VALUE, maxY = Double.MIN_VALUE;
-        for (Figure figure : view.getSelectedFigures()) {
-            if(figure.getDrawingArea().width + figure.getDrawingArea().x> maxX){
-                maxX = figure.getDrawingArea().width + + figure.getDrawingArea().x;
-            }
-            
-            if(figure.getDrawingArea().x < minX){
-                minX = figure.getDrawingArea().x ;
-            }
-            
-            if(figure.getDrawingArea().height + figure.getDrawingArea().y > maxY){
-                maxY = figure.getDrawingArea().height + figure.getDrawingArea().y;
-            }
-            
-            if(figure.getDrawingArea().y  < minY){
-                minY = figure.getDrawingArea().y ;
-            }
+        if(canGroup())
+        {
+            fireUndoableEditHappened(group.groupAction(getView(), prototype));
         }
-        
-        //Add the scale area
-        
-        
-        
-        System.out.println(minX + " " + maxX + " " +minY + " " + maxY  );
+        else if(group.canUngroup(getView(), prototype))
+        {
+            fireUndoableEditHappened(group.ungroupAction(getView()));
+        }
     }
 
     /*@SuppressWarnings("unchecked")

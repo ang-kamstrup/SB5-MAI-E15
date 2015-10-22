@@ -41,6 +41,7 @@ public class GroupAction extends AbstractSelectedAction {
 
     public final static String ID = "edit.groupSelection";
     private CompositeFigure prototype;
+    Grouping g = new Grouping();
     /**
      * If this variable is true, this action groups figures.
      * If this variable is false, this action ungroups figures.
@@ -72,7 +73,8 @@ public class GroupAction extends AbstractSelectedAction {
             setEnabled(false);
         }
     }
-
+    
+    
     protected boolean canGroup() {
         return getView() != null && getView().getSelectionCount() > 1;
     }
@@ -89,87 +91,87 @@ public class GroupAction extends AbstractSelectedAction {
     public void actionPerformed(java.awt.event.ActionEvent e) {
         if (isGroupingAction) {
             if (canGroup()) {
-                final DrawingView view = getView();
-                final LinkedList<Figure> ungroupedFigures = new LinkedList<Figure>(view.getSelectedFigures());
-                final CompositeFigure group = (CompositeFigure) prototype.clone();
-                UndoableEdit edit = new AbstractUndoableEdit() {
-
-                    @Override
-                    public String getPresentationName() {
-                        return labels.getString("edit.groupSelection.text");
-                    }
-
-                    public void redo() throws CannotRedoException {
-                        super.redo();
-                        groupFigures(view, group, ungroupedFigures);
-                    }
-
-                    @Override
-                    public void undo() throws CannotUndoException {
-                        ungroupFigures(view, group);
-                        super.undo();
-                    }
-
-                    @Override
-                    public boolean addEdit(UndoableEdit anEdit) {
-                        return super.addEdit(anEdit);
-                    }
-                };
-                groupFigures(view, group, ungroupedFigures);
-                fireUndoableEditHappened(edit);
+//                final DrawingView view = getView();
+//                final LinkedList<Figure> ungroupedFigures = new LinkedList<Figure>(view.getSelectedFigures());
+//                final CompositeFigure group = (CompositeFigure) prototype.clone();
+//                UndoableEdit edit = new AbstractUndoableEdit() {
+//
+//                    @Override
+//                    public String getPresentationName() {
+//                        return labels.getString("edit.groupSelection.text");
+//                    }
+//
+//                    public void redo() throws CannotRedoException {
+//                        super.redo();
+//                        groupFigures(view, group, ungroupedFigures);
+//                    }
+//
+//                    @Override
+//                    public void undo() throws CannotUndoException {
+//                        ungroupFigures(view, group);
+//                        super.undo();
+//                    }
+//
+//                    @Override
+//                    public boolean addEdit(UndoableEdit anEdit) {
+//                        return super.addEdit(anEdit);
+//                    }
+//                };
+//                groupFigures(view, group, ungroupedFigures);
+                fireUndoableEditHappened(g.groupAction(getView(), prototype));
             }
         } else {
             if (canUngroup()) {
-                final DrawingView view = getView();
-                final CompositeFigure group = (CompositeFigure) getView().getSelectedFigures().iterator().next();
-                final LinkedList<Figure> ungroupedFigures = new LinkedList<Figure>();
-                UndoableEdit edit = new AbstractUndoableEdit() {
-
-                    @Override
-                    public String getPresentationName() {
-                        return labels.getString("edit.ungroupSelection.text");
-                    }
-
-                    @Override
-                    public void redo() throws CannotRedoException {
-                        super.redo();
-                        ungroupFigures(view, group);
-                    }
-
-                    @Override
-                    public void undo() throws CannotUndoException {
-                        groupFigures(view, group, ungroupedFigures);
-                        super.undo();
-                    }
-                };
-                ungroupedFigures.addAll(ungroupFigures(view, group));
-                fireUndoableEditHappened(edit);
+//                final DrawingView view = getView();
+//                final CompositeFigure group = (CompositeFigure) getView().getSelectedFigures().iterator().next();
+//                final LinkedList<Figure> ungroupedFigures = new LinkedList<Figure>();
+//                UndoableEdit edit = new AbstractUndoableEdit() {
+//
+//                    @Override
+//                    public String getPresentationName() {
+//                        return labels.getString("edit.ungroupSelection.text");
+//                    }
+//
+//                    @Override
+//                    public void redo() throws CannotRedoException {
+//                        super.redo();
+//                        ungroupFigures(view, group);
+//                    }
+//
+//                    @Override
+//                    public void undo() throws CannotUndoException {
+//                        groupFigures(view, group, ungroupedFigures);
+//                        super.undo();
+//                    }
+//                };
+//                ungroupedFigures.addAll(ungroupFigures(view, group));
+                fireUndoableEditHappened(g.ungroupAction(getView()));
             }
         }
     }
 
-    public Collection<Figure> ungroupFigures(DrawingView view, CompositeFigure group) {
-// XXX - This code is redundant with UngroupAction
-        LinkedList<Figure> figures = new LinkedList<Figure>(group.getChildren());
-        view.clearSelection();
-        group.basicRemoveAllChildren();
-        view.getDrawing().basicAddAll(view.getDrawing().indexOf(group), figures);
-        view.getDrawing().remove(group);
-        view.addToSelection(figures);
-        return figures;
-    }
-
-    public void groupFigures(DrawingView view, CompositeFigure group, Collection<Figure> figures) {
-        Collection<Figure> sorted = view.getDrawing().sort(figures);
-        int index = view.getDrawing().indexOf(sorted.iterator().next());
-        view.getDrawing().basicRemoveAll(figures);
-        view.clearSelection();
-        view.getDrawing().add(index, group);
-        group.willChange();
-        for (Figure f : sorted) {
-            group.basicAdd(f);
-        }
-        group.changed();
-        view.addToSelection(group);
-    }
+//    public Collection<Figure> ungroupFigures(DrawingView view, CompositeFigure group) {
+//// XXX - This code is redundant with UngroupAction
+//        LinkedList<Figure> figures = new LinkedList<Figure>(group.getChildren());
+//        view.clearSelection();
+//        group.basicRemoveAllChildren();
+//        view.getDrawing().basicAddAll(view.getDrawing().indexOf(group), figures);
+//        view.getDrawing().remove(group);
+//        view.addToSelection(figures);
+//        return figures;
+//    }
+//
+//    public void groupFigures(DrawingView view, CompositeFigure group, Collection<Figure> figures) {
+//        Collection<Figure> sorted = view.getDrawing().sort(figures);
+//        int index = view.getDrawing().indexOf(sorted.iterator().next());
+//        view.getDrawing().basicRemoveAll(figures);
+//        view.clearSelection();
+//        view.getDrawing().add(index, group);
+//        group.willChange();
+//        for (Figure f : sorted) {
+//            group.basicAdd(f);
+//        }
+//        group.changed();
+//        view.addToSelection(group);
+//    }
 }
