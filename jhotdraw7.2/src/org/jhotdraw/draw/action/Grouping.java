@@ -6,6 +6,7 @@ package org.jhotdraw.draw.action;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Locale;
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
@@ -64,8 +65,9 @@ public class  Grouping {
 
             @Override
             public void undo() throws CannotUndoException {
-                ungroupFigures(view, group);
                 super.undo();
+                ungroupFigures(view, group);
+
             }
 
             @Override
@@ -96,8 +98,8 @@ public class  Grouping {
 
             @Override
             public void undo() throws CannotUndoException {
-                groupFigures(view, group, ungroupedFigures);
                 super.undo();
+                groupFigures(view, group, ungroupedFigures);
             }
         };
         ungroupedFigures.addAll(ungroupFigures(view, group));

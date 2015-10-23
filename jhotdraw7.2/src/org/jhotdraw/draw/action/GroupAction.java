@@ -118,6 +118,7 @@ public class GroupAction extends AbstractSelectedAction {
 //                    }
 //                };
 //                groupFigures(view, group, ungroupedFigures);
+//                fireUndoableEditHappened(edit);
                 fireUndoableEditHappened(g.groupAction(getView(), prototype));
             }
         } else {
@@ -145,7 +146,9 @@ public class GroupAction extends AbstractSelectedAction {
 //                    }
 //                };
 //                ungroupedFigures.addAll(ungroupFigures(view, group));
-                fireUndoableEditHappened(g.ungroupAction(getView()));
+//                fireUndoableEditHappened(edit);
+
+                //fireUndoableEditHappened(g.ungroupAction(getView()));
             }
         }
     }

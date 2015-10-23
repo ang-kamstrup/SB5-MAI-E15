@@ -175,7 +175,7 @@ public class ActionsToolBar extends AbstractToolBar {
         p.add(pb, gbc);
         
         //Scale btn
-        btn = ButtonFactory.createApplyScaleButton(editor);
+        btn = ButtonFactory.createApplyScaleButton(editor, new SVGGroupFigure());
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
         labels.configureToolBarButton(btn, "edit.applyScale");
         gbc = new GridBagConstraints();
