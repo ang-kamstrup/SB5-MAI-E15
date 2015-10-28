@@ -245,8 +245,6 @@ public class SVGDrawingPanel extends JPanel {
         toolsPane.add(linkToolBar);
         toolsPane.add(canvasToolBar);
         toolsPane.add(viewToolBar);
-
-        filterToolBar.setRollover(true);
         toolsPane.add(filterToolBar);
 
         toolsScrollPane.setViewportView(toolsPane);
