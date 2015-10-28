@@ -24,6 +24,7 @@ import java.util.*;
 import java.util.prefs.*;
 import javax.swing.*;
 import org.jhotdraw.app.action.*;
+import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.filters.BlackHoleFilterAction;
 import org.jhotdraw.filters.GaussianBlurFilterAction;
 import org.jhotdraw.filters.PixelFilterAction;
@@ -497,7 +498,7 @@ public class DefaultSDIApplication extends AbstractApplication {
     }
 
     private void filterPutActions(ApplicationModel m) {
-        m.putAction(GaussianBlurFilterAction.ID, new GaussianBlurFilterAction(this));
+        //m.putAction(GaussianBlurFilterAction.ID, new GaussianBlurFilterAction());
         m.putAction(BlackHoleFilterAction.ID, new BlackHoleFilterAction(this));
         m.putAction(PixelFilterAction.ID, new PixelFilterAction(this));
     }

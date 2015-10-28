@@ -181,6 +181,7 @@ public class SVGDrawingPanel extends JPanel {
         editor.setActiveView(view);
         canvasToolBar.setEditor(editor);
         viewToolBar.setEditor(editor);
+        filterToolBar.setEditor(editor);
         editor.setActiveView(temp);
     }
 
@@ -258,6 +259,8 @@ public class SVGDrawingPanel extends JPanel {
     public JComponent getComponent() {
         return this;
     }
+    
+    private org.jhotdraw.samples.svg.gui.FilterToolBar filterToolBar;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jhotdraw.samples.svg.gui.ActionsToolBar actionToolBar;
     private org.jhotdraw.samples.svg.gui.AlignToolBar alignToolBar;

@@ -17,17 +17,17 @@ import org.jhotdraw.util.ResourceBundleUtil;
  *
  * @author Dan/Kyzaq
  */
-public class GaussianBlurFilterAction extends AbstractAction {
+public class GaussianBlurFilterAction extends AbstractSelectedAction {
     public final static String ID = "filter.gaussianBlur";
 
-    /*public GaussianBlurFilterAction(DrawingEditor editor) {
+    public GaussianBlurFilterAction(DrawingEditor editor) {
         super(editor);
-    }*/
+    }
     
-    public GaussianBlurFilterAction(Application app){
+    /*public GaussianBlurFilterAction(Application app){
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.labels");
         labels.configureAction(this, ID);
-    }
+    }*/
     
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet.");

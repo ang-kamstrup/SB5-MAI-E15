@@ -198,8 +198,6 @@ public class DefaultApplicationModel
         JMenu menu = new JMenu();
         labels.configureMenu(menu, "filter");
         
-        createFilterMenuEntries(menu);
-        
         return menu;
     }
     
@@ -227,16 +225,6 @@ public class DefaultApplicationModel
         } else {
             actions.put(id, action);
         }
-    }
-
-    private void createFilterMenuEntries(JMenu menu) {
-        JMenuItem menuItem;
-        menuItem = menu.add(getAction(GaussianBlurFilterAction.ID));
-        menuItem.setIcon(null);
-        menuItem = menu.add(getAction(BlackHoleFilterAction.ID));
-        menuItem.setIcon(null);
-        menuItem = menu.add(getAction(PixelFilterAction.ID));
-        menuItem.setIcon(null);
     }
 
     private void createEditMenuEntries(JMenu m) {
