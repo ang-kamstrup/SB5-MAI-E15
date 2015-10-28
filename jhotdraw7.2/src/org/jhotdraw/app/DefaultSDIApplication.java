@@ -116,7 +116,6 @@ public class DefaultSDIApplication extends AbstractApplication {
         
         filePutActions(m, appLabels);
         editPutActions(m);
-        filterPutActions(m);
     }
 
     protected void initViewActions(View p) {
@@ -286,24 +285,6 @@ public class DefaultSDIApplication extends AbstractApplication {
             mb.add(helpMenu);
         }
         
-        ////////////////////
-        // CHANGE REQUEST //
-        ////////////////////
-        JMenu filterMenu = createFilterMenu(p);
-        for (Component mc : mb.getComponents()) {
-            JMenu m = (JMenu) mc;
-            if (m.getText().equals(filterMenu.getText())) {
-                for (Component c : filterMenu.getMenuComponents()) {
-                    m.add(c);
-                }
-                filterMenu = null;
-                break;
-            }
-        }
-        if (filterMenu != null) {
-            mb.add(filterMenu);
-        }
-        
         return mb;
     }
 
@@ -457,22 +438,6 @@ public class DefaultSDIApplication extends AbstractApplication {
 
         return m;
     }
-    
-    protected JMenu createFilterMenu(View p){
-        ApplicationModel model = getModel();
-        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.Labels");
-
-        JMenu m;
-        JMenuItem mi;
-
-        m = new JMenu();
-        labels.configureMenu(m, "filter");
-        m.add(model.getAction(GaussianBlurFilterAction.ID));
-        m.add(model.getAction(BlackHoleFilterAction.ID));
-        m.add(model.getAction(PixelFilterAction.ID));
-
-        return m;
-    }
 
     private void editPutActions(ApplicationModel m) {
         m.putAction(UndoAction.ID, new UndoAction(this));
@@ -495,11 +460,5 @@ public class DefaultSDIApplication extends AbstractApplication {
         m.putAction(SaveAsAction.ID, new SaveAsAction(this));
         m.putAction(CloseAction.ID, new CloseAction(this));
         m.putAction(PrintAction.ID, new PrintAction(this));
-    }
-
-    private void filterPutActions(ApplicationModel m) {
-        //m.putAction(GaussianBlurFilterAction.ID, new GaussianBlurFilterAction());
-        m.putAction(BlackHoleFilterAction.ID, new BlackHoleFilterAction(this));
-        m.putAction(PixelFilterAction.ID, new PixelFilterAction(this));
     }
 }

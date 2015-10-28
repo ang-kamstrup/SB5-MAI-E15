@@ -179,7 +179,6 @@ public class DefaultApplicationModel
     
     public List<JMenu> createMenus(Application app, View v) {
         LinkedList<JMenu> list = new LinkedList<JMenu>();
-        list.add(createFilterMenu(app, v));
         list.add(createEditMenu(app, v));
         return list;
     }
@@ -191,14 +190,6 @@ public class DefaultApplicationModel
         createEditMenuEntries(m);
         
         return m;
-    }
-    
-    protected JMenu createFilterMenu(Application app, View v) {
-        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.Labels");
-        JMenu menu = new JMenu();
-        labels.configureMenu(menu, "filter");
-        
-        return menu;
     }
     
     public void initView(Application a, View p) {
