@@ -48,70 +48,12 @@ public class FilterToolBar extends AbstractToolBar{
         switch (state) {
             case 1:
                  {
-                    p = new JPanel();
-                    p.setOpaque(false);
-                    p.setBorder(new EmptyBorder(5, 5, 5, 8));
+                    p = createPanelLayout(p);
                     ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
-
-                    GridBagLayout layout = new GridBagLayout();
-                    p.setLayout(layout);
-
-                    GridBagConstraints gbc;
-                    AbstractButton btn;
                     
-                    
-                    btn = new JButton(new GaussianBlurFilterAction(editor));
-                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-                    btn.setText(null);
-                    labels.configureToolBarButton(btn, GaussianBlurFilterAction.ID);
-                    btn.putClientProperty("hideActionText", Boolean.TRUE);
-                    gbc = new GridBagConstraints();
-                    gbc.gridy = 2;
-                    gbc.insets = new Insets(3, 0, 0, 0);
-                    gbc.anchor = GridBagConstraints.NORTH;
-                    p.add(btn, gbc);
-                    
-                    
-                    // Pixel Blur
-                    btn = new JButton(new PixelFilterAction(editor));
-                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-                    btn.setText(null);
-                    labels.configureToolBarButton(btn, PixelFilterAction.ID);
-                    btn.putClientProperty("hideActionText", Boolean.TRUE);
-                    gbc = new GridBagConstraints();
-                    gbc.gridy = 1;
-                    gbc.insets = new Insets(3, 0, 0, 0);
-                    gbc.anchor = GridBagConstraints.NORTH;
-                    p.add(btn, gbc);
-                    
-                    // Black Hole
-                    btn = new JButton(new BlackHoleFilterAction(editor));
-                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-                    btn.setText(null);
-                    labels.configureToolBarButton(btn, BlackHoleFilterAction.ID);
-                    btn.putClientProperty("hideActionText", Boolean.TRUE);
-                    gbc = new GridBagConstraints();
-                    gbc.gridy = 0;
-                    
-                    gbc.anchor = GridBagConstraints.CENTER;
-                    p.add(btn, gbc);
-                    
-                    
-                    /* Useless stuff to remove later.
-                    btn = new JButton(new SendToBackAction(editor));
-                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-                    btn.setText(null);
-                    labels.configureToolBarButton(btn, SendToBackAction.ID);
-                    btn.putClientProperty("hideActionText", Boolean.TRUE);
-                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-                    gbc = new GridBagConstraints();
-                    gbc.gridy = 1;
-                    gbc.insets = new Insets(3, 0, 0, 0);
-                    gbc.anchor = GridBagConstraints.NORTH;
-                    gbc.weighty=1f;
-                    p.add(btn, gbc);
-                    
-                    */
+                    createGaussianBlurFilterButton(labels, p);
+                    createPixelFilterActionButton(labels, p);
+                    createBlackHoleFilterButton(labels, p);
                 }
                 break;
         }
@@ -138,5 +80,57 @@ public class FilterToolBar extends AbstractToolBar{
     }// </editor-fold>                        
     // Variables declaration - do not modify                     
     // End of variables declaration  
-    
+
+    private void createGaussianBlurFilterButton(ResourceBundleUtil labels, JPanel p) {
+        AbstractButton btn;
+        GridBagConstraints gbc;
+        btn = new JButton(new GaussianBlurFilterAction(editor));
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        btn.setText(null);
+        labels.configureToolBarButton(btn, GaussianBlurFilterAction.ID);
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        gbc = new GridBagConstraints();
+        gbc.gridy = 2;
+        gbc.insets = new Insets(3, 0, 0, 0);
+        gbc.anchor = GridBagConstraints.NORTH;
+        p.add(btn, gbc);
+    }
+
+    private void createPixelFilterActionButton(ResourceBundleUtil labels, JPanel p) {
+        AbstractButton btn;
+        GridBagConstraints gbc;
+        btn = new JButton(new PixelFilterAction(editor));
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        btn.setText(null);
+        labels.configureToolBarButton(btn, PixelFilterAction.ID);
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        gbc = new GridBagConstraints();
+        gbc.gridy = 1;
+        gbc.insets = new Insets(3, 0, 0, 0);
+        gbc.anchor = GridBagConstraints.NORTH;
+        p.add(btn, gbc);
+    }
+
+    private void createBlackHoleFilterButton(ResourceBundleUtil labels, JPanel p) {
+        AbstractButton btn;
+        GridBagConstraints gbc;
+        btn = new JButton(new BlackHoleFilterAction(editor));
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        btn.setText(null);
+        labels.configureToolBarButton(btn, BlackHoleFilterAction.ID);
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        gbc = new GridBagConstraints();
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        p.add(btn, gbc);
+    }
+
+    private JPanel createPanelLayout(JPanel p) {
+        p = new JPanel();
+        p.setOpaque(false);
+        p.setBorder(new EmptyBorder(5, 5, 5, 8));
+        GridBagLayout layout = new GridBagLayout();
+        p.setLayout(layout);
+        return p;
+    }
 }
