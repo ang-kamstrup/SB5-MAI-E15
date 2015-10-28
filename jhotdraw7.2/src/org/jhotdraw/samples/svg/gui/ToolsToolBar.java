@@ -160,6 +160,16 @@ public class ToolsToolBar extends AbstractToolBar {
         gbc.gridy = 2;
         gbc.insets = new Insets(3, 3, 0, 0);
         p.add(btn, gbc);
+        
+        btn = ButtonFactory.addToolTo(this, editor, creationTool = new CreationTool(new SVGStarFigure(), attributes), "createStar", labels);
+        creationTool.setToolDoneAfterCreation(false);
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.insets = new Insets(3, 3, 0, 0);
+        p.add(btn, gbc);
+        
                 }
                 break;
         }
