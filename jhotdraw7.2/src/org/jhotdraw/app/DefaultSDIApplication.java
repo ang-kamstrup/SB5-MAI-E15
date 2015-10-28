@@ -219,6 +219,12 @@ public class DefaultSDIApplication extends AbstractApplication {
         }
         return c;
     }
+    
+    protected Component wrapFilterComponent(View p){
+        JComponent c = p.getComponent();
+        
+        return c;
+    }
 
     public void hide(View p) {
         if (p.isShowing()) {
@@ -250,6 +256,7 @@ public class DefaultSDIApplication extends AbstractApplication {
             mb.add(mm);
             lastMenu = mm;
         }
+        
         JMenu viewMenu = createViewMenu(p, toolBarActions);
         if (viewMenu != null) {
             if (lastMenu != null && lastMenu.getText().equals(viewMenu.getText())) {
@@ -277,6 +284,25 @@ public class DefaultSDIApplication extends AbstractApplication {
         if (helpMenu != null) {
             mb.add(helpMenu);
         }
+        
+        ////////////////////
+        // CHANGE REQUEST //
+        ////////////////////
+        JMenu filterMenu = createFilterMenu(p);
+        for (Component mc : mb.getComponents()) {
+            JMenu m = (JMenu) mc;
+            if (m.getText().equals(filterMenu.getText())) {
+                for (Component c : filterMenu.getMenuComponents()) {
+                    m.add(c);
+                }
+                filterMenu = null;
+                break;
+            }
+        }
+        if (filterMenu != null) {
+            mb.add(filterMenu);
+        }
+        
         return mb;
     }
 
@@ -427,6 +453,22 @@ public class DefaultSDIApplication extends AbstractApplication {
         m = new JMenu();
         labels.configureMenu(m, "help");
         m.add(model.getAction(AboutAction.ID));
+
+        return m;
+    }
+    
+    protected JMenu createFilterMenu(View p){
+        ApplicationModel model = getModel();
+        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.Labels");
+
+        JMenu m;
+        JMenuItem mi;
+
+        m = new JMenu();
+        labels.configureMenu(m, "filter");
+        m.add(model.getAction(GaussianBlurFilterAction.ID));
+        m.add(model.getAction(BlackHoleFilterAction.ID));
+        m.add(model.getAction(PixelFilterAction.ID));
 
         return m;
     }
