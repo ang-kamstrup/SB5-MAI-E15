@@ -211,6 +211,7 @@ public class SVGDrawingPanel extends JPanel {
         linkToolBar = new org.jhotdraw.samples.svg.gui.LinkToolBar();
         canvasToolBar = new org.jhotdraw.samples.svg.gui.CanvasToolBar();
         viewToolBar = new org.jhotdraw.samples.svg.gui.ViewToolBar();
+        filterToolBar = new org.jhotdraw.samples.svg.gui.FilterToolBar();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
@@ -245,6 +246,9 @@ public class SVGDrawingPanel extends JPanel {
         toolsPane.add(canvasToolBar);
         toolsPane.add(viewToolBar);
 
+        filterToolBar.setRollover(true);
+        toolsPane.add(filterToolBar);
+
         toolsScrollPane.setViewportView(toolsPane);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -260,7 +264,6 @@ public class SVGDrawingPanel extends JPanel {
         return this;
     }
     
-    private org.jhotdraw.samples.svg.gui.FilterToolBar filterToolBar;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jhotdraw.samples.svg.gui.ActionsToolBar actionToolBar;
     private org.jhotdraw.samples.svg.gui.AlignToolBar alignToolBar;
@@ -269,6 +272,7 @@ public class SVGDrawingPanel extends JPanel {
     private org.jhotdraw.samples.svg.gui.ToolsToolBar creationToolBar;
     private org.jhotdraw.samples.svg.gui.FigureToolBar figureToolBar;
     private org.jhotdraw.samples.svg.gui.FillToolBar fillToolBar;
+    private org.jhotdraw.samples.svg.gui.FilterToolBar filterToolBar;
     private org.jhotdraw.samples.svg.gui.FontToolBar fontToolBar;
     private org.jhotdraw.samples.svg.gui.LinkToolBar linkToolBar;
     private javax.swing.JScrollPane scrollPane;
