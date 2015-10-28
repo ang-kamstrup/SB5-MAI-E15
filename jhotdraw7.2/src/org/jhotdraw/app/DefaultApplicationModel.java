@@ -179,8 +179,8 @@ public class DefaultApplicationModel
     
     public List<JMenu> createMenus(Application app, View v) {
         LinkedList<JMenu> list = new LinkedList<JMenu>();
-        list.add(createEditMenu(app, v));
         list.add(createFilterMenu(app, v));
+        list.add(createEditMenu(app, v));
         return list;
     }
     protected JMenu createEditMenu(Application a, View p) {
