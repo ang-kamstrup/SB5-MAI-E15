@@ -9,7 +9,6 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import org.jhotdraw.draw.DrawingEditor;
-import org.jhotdraw.draw.action.SendToBackAction;
 import org.jhotdraw.filters.BlackHoleFilterAction;
 import org.jhotdraw.filters.GaussianBlurFilterAction;
 import org.jhotdraw.filters.PixelFilterAction;
