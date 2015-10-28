@@ -5,24 +5,27 @@
 package org.jhotdraw.filters;
 
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import org.jhotdraw.app.Application;
-import org.jhotdraw.util.ResourceBundleUtil;
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.action.AbstractSelectedAction;
 
 /**
  *
  * @author Martin
  */
-public class PixelFilterAction extends AbstractAction {
+public class PixelFilterAction extends AbstractSelectedAction {
     public final static String ID = "filter.pixel";
     
-    public PixelFilterAction(Application app){
-        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.labels");
-        labels.configureAction(this, ID);
+    public PixelFilterAction(DrawingEditor editor) {
+        super(editor);
     }
 
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        createWindow();
+    }
+    
+    protected void createWindow(){
+     //MayDrawApp window = new MyDrawApp();
+     //window.open();
     }
     
 }

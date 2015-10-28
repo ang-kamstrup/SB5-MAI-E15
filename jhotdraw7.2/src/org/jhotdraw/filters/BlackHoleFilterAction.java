@@ -7,18 +7,19 @@ package org.jhotdraw.filters;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.jhotdraw.app.Application;
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.action.AbstractSelectedAction;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
  *
  * @author Martin
  */
-public class BlackHoleFilterAction extends AbstractAction {
+public class BlackHoleFilterAction extends AbstractSelectedAction {
     public final static String ID = "filter.blackHole";
     
-    public BlackHoleFilterAction(Application app){
-        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.labels");
-        labels.configureAction(this, ID);
+    public BlackHoleFilterAction(DrawingEditor editor) {
+        super(editor);
     }
 
     public void actionPerformed(ActionEvent ae) {
