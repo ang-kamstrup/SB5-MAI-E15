@@ -20,7 +20,12 @@ public class PixelFilterAction extends AbstractSelectedAction {
     }
 
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        createWindow();
+    }
+    
+    protected void createWindow(){
+     //MayDrawApp window = new MyDrawApp();
+     //window.open();
     }
     
 }
