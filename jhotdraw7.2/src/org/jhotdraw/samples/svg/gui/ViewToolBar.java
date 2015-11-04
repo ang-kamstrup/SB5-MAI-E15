@@ -201,13 +201,39 @@ public class ViewToolBar extends AbstractToolBar {
             gbc.gridx = 1;
             gbc.gridy = 1;
             gbc.gridwidth = GridBagConstraints.REMAINDER;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.fill = GridBagConstraints.NONE;
             gbc.anchor = GridBagConstraints.FIRST_LINE_START;
             gbc.insets = new Insets(3, 0, 0, 0);
             gbc.weighty = 1;
             btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, scaleFactorField.getPreferredSize().height));
             panel.add(btn, gbc);
         }
+    }
+    
+    /**
+     * Adds a new "Zoom Selection" button to the toolbar.
+     * @param panel to add button to.
+     */
+    private void addZoomSelectionButton(JPanel panel) {
+        GridBagConstraints gbc;
+        AbstractButton btn;
+
+        btn = ButtonFactory.createZoomSelectionButton(view);
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        labels.configureToolBarButton(btn, "view.zoomSelection");
+
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weighty = 1;
+        gbc.weightx = 1;
+        gbc.gridwidth = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gbc.insets = new Insets(3, 0, 0, 0);        
+
+        btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, btn.getPreferredSize().height));
+        panel.add(btn, gbc);
     }
 
     @Override
@@ -228,10 +254,12 @@ public class ViewToolBar extends AbstractToolBar {
             case 1: {
                 addToggleGridButton(p, false);
                 addZoomButton(p, false);
+                addZoomSelectionButton(p);
             } break;
             case 2: {
                 addToggleGridButton(p, true);
                 addZoomButton(p, true);
+                addZoomSelectionButton(p);
             } break;
         }
         return p;
