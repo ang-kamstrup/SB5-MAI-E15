@@ -57,7 +57,10 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
     //Coordinates and bounds
     @Override
     public Double getBounds() {
-        return (Rectangle2D.Double)(star.getBounds2D());
+       double height = star.r*2;
+       double width = star.r*2;
+       return new Rectangle2D.Double(star.x, star.y, height, width);
+//        return (Rectangle2D.Double)(star.getBounds2D());
     }
 
     @Override
@@ -76,18 +79,44 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
 
     @Override
     public void restoreTransformTo(Object geometry) {
-        throw new UnsupportedOperationException("Not supported yet.");
-//        Object[] restoreData = (Object[]) geometry;
-//        star =  (Rectangle2D.Double) ((Rectangle2D.Double) restoreData[0]).clone();
-//        TRANSFORM.basicSetClone(this, (AffineTransform) restoreData[1]);
-//        FILL_GRADIENT.basicSetClone(this, (Gradient) restoreData[2]);
-//        STROKE_GRADIENT.basicSetClone(this, (Gradient) restoreData[3]);
-//        invalidate();
+        Object[] restoreData = (Object[]) geometry;
+        star = (StarFigure) restoreData[0];
+        TRANSFORM.basicSetClone(this, (AffineTransform) restoreData[1]);
+        FILL_GRADIENT.basicSetClone(this, (Gradient) restoreData[2]);
+        STROKE_GRADIENT.basicSetClone(this, (Gradient) restoreData[3]);
+        invalidate();
     }
 
     @Override
     public void transform(AffineTransform tx) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        invalidateTransform();
+        if(TRANSFORM.get(this) != null || (tx.getType() & (AffineTransform.TYPE_TRANSLATION)) != tx.getType()) {
+            if (TRANSFORM.get(this) == null) {
+                TRANSFORM.basicSet(this, (AffineTransform) tx.clone());
+            } else {
+                AffineTransform t = TRANSFORM.getClone(this);
+                t.preConcatenate(tx);
+                TRANSFORM.basicSet(this, t);
+            } 
+        } else {
+            Point2D.Double anchor = getStartPoint();
+            Point2D.Double lead = getEndPoint();
+            setBounds(
+                    (Point2D.Double) tx.transform(anchor, anchor),
+                    (Point2D.Double) tx.transform(lead, lead));
+            if (FILL_GRADIENT.get(this) != null &&
+                    !FILL_GRADIENT.get(this).isRelativeToFigureBounds()) {
+                Gradient g = FILL_GRADIENT.getClone(this);
+                g.transform(tx);
+                FILL_GRADIENT.basicSet(this, g);
+            }
+            if (STROKE_GRADIENT.get(this) != null &&
+                    !STROKE_GRADIENT.get(this).isRelativeToFigureBounds()) {
+                Gradient g = STROKE_GRADIENT.getClone(this);
+                g.transform(tx);
+                STROKE_GRADIENT.basicSet(this, g);
+            }
+        }
     }
 
     @Override
@@ -129,6 +158,9 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
     @Override
     public void invalidate() {
         super.invalidate();
+        invalidateTransform();
+    }
+    private void invalidateTransform() {
         cachedTransformedShape = null;
         cachedHitShape = null;
     }
