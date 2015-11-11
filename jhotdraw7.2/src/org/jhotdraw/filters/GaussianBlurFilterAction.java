@@ -1,6 +1,10 @@
 package org.jhotdraw.filters;
 
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,18 +23,30 @@ import org.jhotdraw.util.ResourceBundleUtil;
  */
 public class GaussianBlurFilterAction extends AbstractSelectedAction {
     public final static String ID = "filter.gaussianBlur";
+    private BufferedImage blurredImage;
+    private Figure blurredFigure;
 
     public GaussianBlurFilterAction(DrawingEditor editor) {
         super(editor);
     }
     
-    /*public GaussianBlurFilterAction(Application app){
-        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.labels");
-        labels.configureAction(this, ID);
-    }*/
-    
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final DrawingView view = getView();
+        final Figure figure = (Figure) view.getSelectedFigures();
+        //final LinkedList<Figure> figures = new LinkedList<Figure>(view.getSelectedFigures());
+        blurImage(view, figure);
+    }
+    
+    private void blurImage(DrawingView view, Figure figure){
+        BufferedImageOp elementToBlur = (BufferedImageOp) figure;
+        elementToBlur = new ConvolveOp(GaussianKernel.createGaussianKernel());
+        blurredImage = elementToBlur.filter(blurredImage, null);
+        blurredFigure = (Figure) blurredImage;
+        blurredFigure.changed();
+        
+        //return blurredImage;
+        //Test: Receive a figure, end with an image
+        //blurredImage.createGraphics()
     }
     
     /*
