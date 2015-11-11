@@ -74,7 +74,7 @@ public class SVGDrawingPanel extends JPanel {
         }
 
         initComponents();
-        toolsPane.setLayout(new ToolBarLayout());
+        toolsPane.setLayout(new ToolBarLayout(1));
         toolsPane.setBackground(new Color(0xf0f0f0));
         toolsPane.setOpaque(true);
 
@@ -137,7 +137,9 @@ public class SVGDrawingPanel extends JPanel {
             public void componentRemoved(ContainerEvent e) {
             }
         });
-        toolsPane.add(new Navigator(view));
+        //toolsPane.add(new Navigator(view));
+        this.remove(toolsPane);
+        this.add(toolsPane, java.awt.BorderLayout.LINE_START);
     }
 
     public void setDrawing(Drawing d) {
@@ -210,6 +212,7 @@ public class SVGDrawingPanel extends JPanel {
         linkToolBar = new org.jhotdraw.samples.svg.gui.LinkToolBar();
         canvasToolBar = new org.jhotdraw.samples.svg.gui.CanvasToolBar();
         viewToolBar = new org.jhotdraw.samples.svg.gui.ViewToolBar();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
@@ -244,6 +247,9 @@ public class SVGDrawingPanel extends JPanel {
         toolsPane.add(canvasToolBar);
         toolsPane.add(viewToolBar);
 
+        jButton1.setText("jButton1");
+        toolsPane.add(jButton1);
+
         toolsScrollPane.setViewportView(toolsPane);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -267,6 +273,7 @@ public class SVGDrawingPanel extends JPanel {
     private org.jhotdraw.samples.svg.gui.FigureToolBar figureToolBar;
     private org.jhotdraw.samples.svg.gui.FillToolBar fillToolBar;
     private org.jhotdraw.samples.svg.gui.FontToolBar fontToolBar;
+    private javax.swing.JButton jButton1;
     private org.jhotdraw.samples.svg.gui.LinkToolBar linkToolBar;
     private javax.swing.JScrollPane scrollPane;
     private org.jhotdraw.samples.svg.gui.StrokeToolBar strokeToolBar;

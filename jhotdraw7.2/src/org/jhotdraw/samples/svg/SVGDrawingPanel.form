@@ -120,6 +120,11 @@
                 </Component>
                 <Component class="org.jhotdraw.samples.svg.gui.ViewToolBar" name="viewToolBar">
                 </Component>
+                <Component class="javax.swing.JButton" name="jButton1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="jButton1"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
