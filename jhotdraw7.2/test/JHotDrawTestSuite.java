@@ -1,3 +1,5 @@
+import org.jhotdraw.draw.action.GroupAction;
+import org.jhotdraw.draw.action.GroupingTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,7 +15,7 @@ import org.junit.runners.Suite;
  * @author jcs
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({})
+@Suite.SuiteClasses({GroupingTest.class})
 public class JHotDrawTestSuite {
 
     @BeforeClass
