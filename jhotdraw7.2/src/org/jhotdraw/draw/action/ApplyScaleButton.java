@@ -22,7 +22,10 @@ import org.jhotdraw.util.ResourceBundleUtil;
 import sun.java2d.loops.ScaledBlit;
 
 /**
- *
+ * @(#)ApplyScaleButton.java  2.0.3  2015-11-11
+ * Event handler for the ApplyScaleButton.
+ * First time the button is press the selected figures is grouped
+ * Next time they are ungrouped.
  * @author Jens Schwee
  */
 public class ApplyScaleButton extends AbstractSelectedAction {
@@ -80,29 +83,4 @@ public class ApplyScaleButton extends AbstractSelectedAction {
             fireUndoableEditHappened(group.ungroupAction(getView()));
         }
     }
-
-    /*@SuppressWarnings("unchecked")
-     public void applyAttributes() {
-     DrawingEditor editor = getEditor();
-
-     CompositeEdit edit = new CompositeEdit(labels.getString("edit.applyAttrbutes.text"));
-     DrawingView view = getView();
-     view.getDrawing().fireUndoableEditHappened(edit);
-
-     for (Figure figure : view.getSelectedFigures()) {
-     figure.willChange();
-     for (Map.Entry<AttributeKey, Object> entry : editor.getDefaultAttributes().entrySet()) {
-     if (!excludedAttributes.contains(entry.getKey())) {
-     entry.getKey().basicSet(figure, entry.getValue());
-     }
-     }
-     figure.changed();
-     }
-     view.getDrawing().fireUndoableEditHappened(edit);
-     }
-
-     public void selectionChanged(FigureSelectionEvent evt) {
-     setEnabled(getView().getSelectionCount() == 1);
-     }
-     */
 }
