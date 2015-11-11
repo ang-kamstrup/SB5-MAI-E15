@@ -1542,6 +1542,8 @@ public class ButtonFactory {
 
         toggleButton = new JToggleButton();
         toggleButton.setFocusable(false);
+        
+        final String ZOOM_SELECTION_PROPERTY_NAME = "SELECTION_ENDED";
 
         // Corresponding action for button.
         final ZoomSelectionAction action = new ZoomSelectionAction(view);
@@ -1557,7 +1559,7 @@ public class ButtonFactory {
         action.addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 // The action has ended, toggle the button.
-                if (evt.getPropertyName().equals("Selection ended")) {
+                if (evt.getPropertyName().equals(ZOOM_SELECTION_PROPERTY_NAME)) {
                     toggleButton.setSelected(false);
                 }
             }

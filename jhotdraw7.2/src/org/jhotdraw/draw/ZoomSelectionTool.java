@@ -10,10 +10,9 @@ import java.awt.event.MouseEvent;
 public class ZoomSelectionTool extends SelectionTool {
     
     Tool tracker;
-    int x, y, width, height;
     
     /**
-     * Initialises the tool with an areatracker.
+     * Initialises the tool with an area tracker.
      */
     public ZoomSelectionTool() {
         super();
@@ -21,24 +20,12 @@ public class ZoomSelectionTool extends SelectionTool {
     }
     
     @Override
-    public void mouseClicked(MouseEvent evt) {
-        this.x = evt.getXOnScreen();
-        this.y = evt.getYOnScreen();
-        if (getView() != null && getView().isEnabled()) {
-            tracker.mouseClicked(evt);
-        }
-    }
-    
-    @Override
     public void mouseReleased(MouseEvent evt) {
-        
-        height = Math.abs(this.y - evt.getYOnScreen());
-        width = Math.abs(this.x - evt.getXOnScreen());
         
         if (getView() != null && getView().isEnabled()) {
             tracker.mouseReleased(evt);
             this.toolDone(new ToolEvent(this, this.getView(),
-                    new Rectangle(x, y, height, width)));
+                    new Rectangle(evt.getXOnScreen(), evt.getYOnScreen())));
         }
     }
     
