@@ -63,6 +63,7 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
      * imageData.
      */
     private BufferedImage bufferedImage;
+    private BufferedImage originalBufferedImage;
 
     /** Creates a new instance. */
     public SVGImageFigure() {
@@ -429,5 +430,13 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
         }
         imageData = baos.toByteArray();
         bufferedImage = img;
+    }
+    
+    public void setOriginalBufferedImage() {
+        originalBufferedImage = bufferedImage;
+    }
+    
+    public BufferedImage getOriginalBufferedImage() {
+        return originalBufferedImage;
     }
 }

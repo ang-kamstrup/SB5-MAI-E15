@@ -4,10 +4,8 @@
  */
 package org.jhotdraw.draw.action;
 
-import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
-import java.awt.image.ColorConvertOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.util.*;
@@ -33,7 +31,7 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
     public void actionPerformed(java.awt.event.ActionEvent e) {
         final DrawingView view = getView();
         final LinkedList<Figure> figures = new LinkedList<Figure>(view.getSelectedFigures());
-        edgeDetection(view, figures);
+        edgeDetection(figures);
         fireUndoableEditHappened(new AbstractUndoableEdit() {
             @Override
             public String getPresentationName() {
@@ -42,22 +40,31 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
             @Override
             public void redo() throws CannotRedoException {
                 super.redo();
-                //BringToFrontAction.bringToFront(view, figures);
+                edgeDetection(figures);
             }
             @Override
             public void undo() throws CannotUndoException {
                 super.undo();
-                //SendToBackAction.sendToBack(view, figures);
+                Iterator<Figure> figuresIte = figures.iterator();
+                while(figuresIte.hasNext()) {
+                     try {
+                        SVGImageFigure figure = (SVGImageFigure) figuresIte.next();
+                        figure.setBufferedImage(figure.getOriginalBufferedImage());
+                    } catch (Exception e) {
+                        System.out.println("Image not selected.");
+                    }
+                }
             }
         }
         
         );
     }
-    public static void edgeDetection(DrawingView view, Collection<Figure> figures) {
+    public static void edgeDetection(Collection<Figure> figures) {
         Iterator<Figure> figuresIte = figures.iterator();
         while(figuresIte.hasNext()) {
             try {
                 SVGImageFigure figure = (SVGImageFigure) figuresIte.next();
+                figure.setOriginalBufferedImage();
                 BufferedImage img = figure.getBufferedImage();
                 /*float[] kernel = { -1.0f, -1.0f, -1.0f,
                                         -1.0f, 8.0f, -1.0f,
