@@ -12,45 +12,62 @@ import org.jhotdraw.draw.ToolListener;
 import org.jhotdraw.draw.ZoomSelectionTool;
 
 /**
- *
+ * Action called for zooming to a selection.
+ * uses the ZoomSelectionTool to perform selection.
  * @author jesper_wohlert
  */
 public class ZoomSelectionAction extends AbstractDrawingViewAction {
 
     private DrawingView view;
-    private SelectionTool tool;
+    private SelectionTool selectionTool;
+    boolean isZoomed = false;
     
+    /**
+     * Initialises the action with a view.
+     * @param view 
+     */
     public ZoomSelectionAction(DrawingView view) {
         super(view);
         this.view = view;
-        tool = new ZoomSelectionTool();
+        selectionTool = new ZoomSelectionTool();
     }
     
-    public void actionPerformed(final ActionEvent e) {
-        // Perform selection logic
-        // Perform zoom
-        // view.setScaleFactor(newValue)
+    /**
+     * Called when the action is performed, e.g. by clicking a button.
+     * Usually works as a callback with the event.
+     * @param _ ActionEvent received from caller.
+     */
+    @Override
+    public void actionPerformed(final ActionEvent _) {
         
-        view.getEditor().setTool(tool);
+        if (isZoomed) {
+            view.setScaleFactor(1d);
+            isZoomed = false;
+            return;
+        }
         
-        final ZoomSelectionAction self = this;
+        view.getEditor().setTool(selectionTool);
+        
+        //final ZoomSelectionAction self = this;
         
         ToolListener listener = new ToolListener() {
             
             public void toolStarted(ToolEvent event) {
-                System.out.println(event.getInvalidatedArea());
+                //System.out.println(event.getInvalidatedArea());
             }
 
             public void toolDone(ToolEvent event) {
-                System.out.println(event.getInvalidatedArea());
+                int w = event.getInvalidatedArea().width;
+                view.setScaleFactor(1d);
+                isZoomed = true;
             }
 
-            public void areaInvalidated(ToolEvent e) {
+            public void areaInvalidated(ToolEvent event) {
                 // Unused for this action.           
             }
         };
 
-        tool.addToolListener(listener);
+        selectionTool.addToolListener(listener);
     }
     
 }

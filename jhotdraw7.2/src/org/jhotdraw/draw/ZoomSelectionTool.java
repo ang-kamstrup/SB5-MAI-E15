@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 /**
- *
+ * Tool for zooming to a selected area.
  * @author jesper_wohlert
  */
 public class ZoomSelectionTool extends SelectionTool {
@@ -12,6 +12,9 @@ public class ZoomSelectionTool extends SelectionTool {
     Tool tracker;
     int x, y, width, height;
     
+    /**
+     * Initialises the tool with an areatracker.
+     */
     public ZoomSelectionTool() {
         super();
         this.tracker = this.getSelectAreaTracker();
@@ -39,6 +42,11 @@ public class ZoomSelectionTool extends SelectionTool {
         }
     }
     
+    /**
+     * Fired when the selection has ended.
+     * Sends the invalidated area (rectangle) back to the caller.
+     * @param event 
+     */
     @Override
     public void toolDone(ToolEvent event) {
         // Empty
