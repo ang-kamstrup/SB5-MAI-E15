@@ -20,8 +20,7 @@ import org.jhotdraw.samples.svg.figures.SVGImageFigure;
 public class EdgeDetectionAction extends AbstractSelectedAction {
     
        public static String ID = "edit.edgeDetection";
-
-       
+   
     /** Creates a new instance. */
     public EdgeDetectionAction(DrawingEditor editor) {
         super(editor);
@@ -45,20 +44,25 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
             @Override
             public void undo() throws CannotUndoException {
                 super.undo();
-                Iterator<Figure> figuresIte = figures.iterator();
-                while(figuresIte.hasNext()) {
-                     try {
-                        SVGImageFigure figure = (SVGImageFigure) figuresIte.next();
-                        figure.setBufferedImage(figure.getOriginalBufferedImage());
-                    } catch (Exception e) {
-                        System.out.println("Image not selected.");
-                    }
-                }
+                doUndo(figures);
             }
+            
         }
         
         );
     }
+    public void doUndo(LinkedList<Figure> figures) {
+        Iterator<Figure> figuresIte = figures.iterator();
+        while(figuresIte.hasNext()) {
+             try {
+                SVGImageFigure figure = (SVGImageFigure) figuresIte.next();
+                figure.setBufferedImage(figure.getOriginalBufferedImage());
+            } catch (Exception e) {
+                System.out.println("Image not selected.");
+            }
+        }
+    }
+    
     public static void edgeDetection(Collection<Figure> figures) {
         Iterator<Figure> figuresIte = figures.iterator();
         while(figuresIte.hasNext()) {
@@ -66,41 +70,41 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
                 SVGImageFigure figure = (SVGImageFigure) figuresIte.next();
                 figure.setOriginalBufferedImage();
                 BufferedImage img = figure.getBufferedImage();
-                /*float[] kernel = { -1.0f, -1.0f, -1.0f,
-                                        -1.0f, 8.0f, -1.0f,
-                                        -1.0f, -1.0f, -1.0f};*/
-                float[] kernel = { 0.0f, -1.0f, 0.0f,
-                                        -1.0f, 4.0f, -1.0f,
-                                        0.0f, -1.0f, 0.0f};
-                /*float[] kernel = {0, 0, -1, -1, -1, 0, 0, 
-                                    0, -2, -3, -3, -3, -2, 0, 
-                                    -1, -3, 5, 5, 5, -3, -1, 
-                                    -1, -3, 5, 16, 5, -3, -1,
-                                    -1, -3, 5, 5, 5, -3, -1, 
-                                    0, -2, -3, -3, -3, -2, 0,
-                                    0, 0, -1, -1, -1, 0, 0};*/
+
+                float[] kernel = getKernel();
                 BufferedImageOp imgOp = new ConvolveOp(new Kernel(3, 3, kernel));
-
                 img = imgOp.filter(img, null);
-                for (int x = 0; x < img.getWidth(); x++) {
-                    for (int y = 0; y < img.getHeight(); y++)
-                    {
-                        int rgb = img.getRGB(x, y);
-                        int r = (rgb >> 16) & 0xFF;
-                        int g = (rgb >> 8) & 0xFF;
-                        int b = (rgb & 0xFF);
-
-                        int corrected = (Integer.parseInt("FF", 16) << 24) + (r << 16) + (g << 8) + b; 
-                        img.setRGB(x, y, corrected);
-                    }
-                }
-
+                img = correctImage(img);
                 figure.setBufferedImage(img);
+                
             } catch (Exception e) {
                 System.out.println("Image not selected.");
                 //System.out.println(e);
             }
         }
         
+    }
+    private static BufferedImage correctImage(BufferedImage img) {
+        BufferedImage newImg = img;
+        for (int x = 0; x < img.getWidth(); x++) {
+            for (int y = 0; y < img.getHeight(); y++)
+            {
+                int rgb = img.getRGB(x, y);
+                int r = (rgb >> 16) & 0xFF;
+                int g = (rgb >> 8) & 0xFF;
+                int b = (rgb & 0xFF);
+
+                int corrected = (Integer.parseInt("FF", 16) << 24) + (r << 16) + (g << 8) + b; 
+                newImg.setRGB(x, y, corrected);
+            }
+        }
+        return newImg;
+    }
+    
+    private static float[] getKernel() {
+        float[] kernel = { 0.0f, -1.0f, 0.0f,
+                            -1.0f, 4.0f, -1.0f,
+                            0.0f, -1.0f, 0.0f};
+        return kernel;
     }
 }
