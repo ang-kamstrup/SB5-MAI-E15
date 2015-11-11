@@ -9,6 +9,7 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.util.*;
+import javax.swing.JOptionPane;
 import javax.swing.undo.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.samples.svg.figures.SVGImageFigure;
@@ -30,26 +31,28 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
     public void actionPerformed(java.awt.event.ActionEvent e) {
         final DrawingView view = getView();
         final LinkedList<Figure> figures = new LinkedList<Figure>(view.getSelectedFigures());
-        edgeDetection(figures);
-        fireUndoableEditHappened(new AbstractUndoableEdit() {
-            @Override
-            public String getPresentationName() {
-       return labels.getTextProperty(ID);
+        boolean done = edgeDetection(figures);
+        if(done) {
+            fireUndoableEditHappened(new AbstractUndoableEdit() {
+                @Override
+                public String getPresentationName() {
+           return labels.getTextProperty(ID);
+                }
+                @Override
+                public void redo() throws CannotRedoException {
+                    super.redo();
+                    edgeDetection(figures);
+                }
+                @Override
+                public void undo() throws CannotUndoException {
+                    super.undo();
+                    doUndo(figures);
+                }
+
             }
-            @Override
-            public void redo() throws CannotRedoException {
-                super.redo();
-                edgeDetection(figures);
-            }
-            @Override
-            public void undo() throws CannotUndoException {
-                super.undo();
-                doUndo(figures);
-            }
-            
+
+            );
         }
-        
-        );
     }
     public void doUndo(LinkedList<Figure> figures) {
         Iterator<Figure> figuresIte = figures.iterator();
@@ -58,12 +61,12 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
                 SVGImageFigure figure = (SVGImageFigure) figuresIte.next();
                 figure.setBufferedImage(figure.getOriginalBufferedImage());
             } catch (Exception e) {
-                System.out.println("Image not selected.");
+
             }
         }
     }
     
-    public static void edgeDetection(Collection<Figure> figures) {
+    public static boolean edgeDetection(Collection<Figure> figures) {
         Iterator<Figure> figuresIte = figures.iterator();
         while(figuresIte.hasNext()) {
             try {
@@ -76,12 +79,15 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
                 img = imgOp.filter(img, null);
                 img = correctImage(img);
                 figure.setBufferedImage(img);
-                
+                return true;
             } catch (Exception e) {
-                System.out.println("Image not selected.");
-                //System.out.println(e);
+                JOptionPane.showMessageDialog(null, "Edge detection cannot be used on this figure, "
+                        + "please select image figure",
+                        "InfoBox: Edge detection" , JOptionPane.INFORMATION_MESSAGE);
+                return false;
             }
         }
+        return false;
         
     }
     private static BufferedImage correctImage(BufferedImage img) {
