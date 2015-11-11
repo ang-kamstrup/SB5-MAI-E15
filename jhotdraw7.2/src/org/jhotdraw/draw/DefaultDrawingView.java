@@ -967,7 +967,7 @@ public class DefaultDrawingView
         //fireViewTransformChanged();
         validateViewTranslation();
 
-        firePropertyChange("scaleFactor", oldValue, newValue);
+        firePropertyChange(SCALE_FACTOR_PROPERTY, oldValue, newValue);
 
         invalidate();
         invalidateHandles();
