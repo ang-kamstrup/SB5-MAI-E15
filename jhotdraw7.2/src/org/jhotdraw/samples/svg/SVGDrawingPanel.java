@@ -74,7 +74,8 @@ public class SVGDrawingPanel extends JPanel {
         }
 
         initComponents();
-        toolsPane.setLayout(new ToolBarLayout(1));
+        toolsPane.setLayout(new ToolBarLayout());
+        //toolsPane.setLayout(new ToolBarLayout(1));
         toolsPane.setBackground(new Color(0xf0f0f0));
         toolsPane.setOpaque(true);
 
@@ -137,16 +138,26 @@ public class SVGDrawingPanel extends JPanel {
             public void componentRemoved(ContainerEvent e) {
             }
         });
-        //toolsPane.add(new Navigator(view));
-        this.remove(toolsPane);
-        this.add(toolsPane, java.awt.BorderLayout.LINE_START);
+        
+        //this.remove(toolsPane);
+        toolsPane.add(new Navigator(view));
+        //this.add(toolsPane, java.awt.BorderLayout.LINE_START);
+        
     }
 
+    // I will implement the change here
+    public void changeOrientation() {
+        
+    }
     public void setDrawing(Drawing d) {
         undoManager.discardAllEdits();
         view.getDrawing().removeUndoableEditListener(undoManager);
         view.setDrawing(d);
         d.addUndoableEditListener(undoManager);
+        
+        undoManager = new UndoRedoManager();
+        setEditor(new DefaultDrawingEditor());
+        editor.setHandleAttribute(HandleAttributeKeys.HANDLE_SIZE, new Integer(7));
     }
 
     public Drawing getDrawing() {
@@ -212,7 +223,7 @@ public class SVGDrawingPanel extends JPanel {
         linkToolBar = new org.jhotdraw.samples.svg.gui.LinkToolBar();
         canvasToolBar = new org.jhotdraw.samples.svg.gui.CanvasToolBar();
         viewToolBar = new org.jhotdraw.samples.svg.gui.ViewToolBar();
-        jButton1 = new javax.swing.JButton();
+        button1 = new java.awt.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
@@ -247,9 +258,6 @@ public class SVGDrawingPanel extends JPanel {
         toolsPane.add(canvasToolBar);
         toolsPane.add(viewToolBar);
 
-        jButton1.setText("jButton1");
-        toolsPane.add(jButton1);
-
         toolsScrollPane.setViewportView(toolsPane);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -259,7 +267,21 @@ public class SVGDrawingPanel extends JPanel {
         toolsPanel.add(toolsScrollPane, gridBagConstraints);
 
         add(toolsPanel, java.awt.BorderLayout.SOUTH);
+
+        button1.setLabel("button1");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+        add(button1, java.awt.BorderLayout.LINE_END);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        ToolBarChangeOrientation ori = new ToolBarChangeOrientation(toolsPanel);
+        
+        ori.ChangeToVertical();
+    }//GEN-LAST:event_button1ActionPerformed
 
     public JComponent getComponent() {
         return this;
@@ -268,12 +290,12 @@ public class SVGDrawingPanel extends JPanel {
     private org.jhotdraw.samples.svg.gui.ActionsToolBar actionToolBar;
     private org.jhotdraw.samples.svg.gui.AlignToolBar alignToolBar;
     private org.jhotdraw.samples.svg.gui.ArrangeToolBar arrangeToolBar;
+    private java.awt.Button button1;
     private org.jhotdraw.samples.svg.gui.CanvasToolBar canvasToolBar;
     private org.jhotdraw.samples.svg.gui.ToolsToolBar creationToolBar;
     private org.jhotdraw.samples.svg.gui.FigureToolBar figureToolBar;
     private org.jhotdraw.samples.svg.gui.FillToolBar fillToolBar;
     private org.jhotdraw.samples.svg.gui.FontToolBar fontToolBar;
-    private javax.swing.JButton jButton1;
     private org.jhotdraw.samples.svg.gui.LinkToolBar linkToolBar;
     private javax.swing.JScrollPane scrollPane;
     private org.jhotdraw.samples.svg.gui.StrokeToolBar strokeToolBar;
