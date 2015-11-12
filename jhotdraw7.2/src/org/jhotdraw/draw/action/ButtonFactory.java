@@ -1542,8 +1542,8 @@ public class ButtonFactory {
        
         popupButton.setText(fillToolBar.getFillState().getPrettyName());
 
-        for (final FillToolBar.FillState state : FillToolBar.FillState.values()) {
-            popupButton.add(new ChangeFillstateAction(editor, state, popupButton) {
+        for (final FillToolBar.GradientType state : FillToolBar.GradientType.values()) {
+            popupButton.add(new ChangeGradientAction(editor, state, popupButton) {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     super.actionPerformed(ae);

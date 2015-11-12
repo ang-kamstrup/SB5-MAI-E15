@@ -46,14 +46,14 @@ import org.jhotdraw.text.JavaNumberFormatter;
  */
 public class FillToolBar extends AbstractToolBar {
 
-    public enum FillState {
+    public enum GradientType {
         SOLID(" Solid Fill "),
         LINEAR_GRADIENT(" Linear Gradient "),
         RADIAL_GRADIENT(" Radial Gradient ");
         
         private String prettyName;
         
-        private FillState(String prettyName) {
+        private GradientType(String prettyName) {
             this.prettyName = prettyName;
         }
         
@@ -63,15 +63,14 @@ public class FillToolBar extends AbstractToolBar {
     }
     
     private SelectionComponentDisplayer displayer;
-    private FillState fillState;
+    private GradientType fillState;
     
-
     /** Creates new instance. */
     public FillToolBar() {
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
         setName(labels.getString(getID() + ".toolbar"));
         setDisclosureStateCount(3);
-        setFillState(FillState.SOLID);
+        setFillState(GradientType.SOLID);
     }
 
     @Override
@@ -91,8 +90,6 @@ public class FillToolBar extends AbstractToolBar {
     @FeatureEntryPoint(JHotDrawFeatures.FILL_PALETTE)
     protected JComponent createDisclosedComponent(int state) {
         JPanel p = null;
-        
-        System.out.println("create " + fillState + " " + getParent());
         
         if(state == 1 || state == 2) {
             p = new JPanel();
@@ -142,24 +139,28 @@ public class FillToolBar extends AbstractToolBar {
     protected String getID() {
         return "fill";
     }
+    
     @Override
     protected int getDefaultDisclosureState() {
         return 1;
     }
     
-    public void setFillState(FillState fillState) {
+    public void setFillState(GradientType fillState) {
         this.fillState = fillState;
         
-        // Force UI rebuild if FillToolBar is shown.
-        System.out.println(fillState + " " + getParent());
+        // Force rebuild of the FillToolBar panels with other disclose-states than that of the currently shown panel.
+        // Done to ensure that the fill-state is the same on all FillToolBar panels, they would get out of sync otherwise.
         if(getParent() != null) {
-            int oldState = getDisclosureState();
-            setDisclosureState(0);
-            setDisclosureState(oldState);
+            for(int i = 0; i < getDisclosureStateCount(); i++) {
+                JComponent component = this.getDisclosedComponent(i);
+                if(component != null) {
+                    component.invalidate();
+                }
+            }
         }
     }
     
-    public FillState getFillState() {
+    public GradientType getFillState() {
         return fillState;
     }
 
