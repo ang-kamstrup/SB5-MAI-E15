@@ -6,10 +6,18 @@
         <group/>
         <group name="SB5-MAI">
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/gui/JDisclosureToolBar.java</file>
-            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/AbstractToolBar.java</file>
-            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/ViewToolBar.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/SVGAttributeKeys.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/FillToolBar.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/AbstractAttributedFigure.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/GeometryEdit.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/AbstractToolBar.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/GradientHandleKit.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/ViewToolBar.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/io/SVGOutputFormat.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/ToolsToolBar.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/figures/SVGAttributedFigure.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/RadialGradient.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/AbstractFigure.java</file>
         </group>
     </open-files>
 </project-private>
