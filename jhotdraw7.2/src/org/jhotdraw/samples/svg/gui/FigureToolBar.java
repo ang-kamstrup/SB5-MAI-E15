@@ -102,6 +102,18 @@ public class FigureToolBar extends AbstractToolBar {
                     opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
                     opacitySlider.setScaleFactor(100d);
                     new FigureAttributeEditorHandler<Double>(OPACITY, opacitySlider, editor);
+                    
+                    //Add ShadowButton
+                    btn = ButtonFactory.createApplyShadowButton(editor);
+                    btn.setUI((PaletteButtonUI)PaletteButtonUI.createUI(this));
+                    labels.configureToolBarButton(btn, "edit.applyShadow");
+                    gbc = new GridBagConstraints();
+                    gbc.gridx = 2;
+                    gbc.gridy = 0;
+                    gbc.insets = new Insets(0, 0, 0, 0);
+                    p.add(btn, gbc);
+                    
+                    
                 }
                 break;
 
@@ -151,6 +163,18 @@ public class FigureToolBar extends AbstractToolBar {
                     opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
                     opacitySlider.setScaleFactor(100d);
                     new FigureAttributeEditorHandler<Double>(OPACITY, opacitySlider, editor);
+                    
+                    
+                    //Add ShadowButton
+                    btn = ButtonFactory.createApplyShadowButton(editor);
+                    btn.setUI((PaletteButtonUI)PaletteButtonUI.createUI(this));
+                    labels.configureToolBarButton(btn, "edit.applyShadow");
+                    gbc = new GridBagConstraints();
+                    gbc.gridx = 2;
+                    gbc.gridy = 0;
+                    gbc.insets = new Insets(0, 0, 0, 0);
+                    p.add(btn, gbc);
+                    
                 }
                 break;
         }
