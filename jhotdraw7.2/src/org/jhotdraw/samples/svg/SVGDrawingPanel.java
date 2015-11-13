@@ -145,10 +145,6 @@ public class SVGDrawingPanel extends JPanel {
         
     }
 
-    // I will implement the change here
-    public void changeOrientation() {
-        
-    }
     public void setDrawing(Drawing d) {
         undoManager.discardAllEdits();
         view.getDrawing().removeUndoableEditListener(undoManager);
@@ -224,6 +220,7 @@ public class SVGDrawingPanel extends JPanel {
         canvasToolBar = new org.jhotdraw.samples.svg.gui.CanvasToolBar();
         viewToolBar = new org.jhotdraw.samples.svg.gui.ViewToolBar();
         button1 = new java.awt.Button();
+        button2 = new java.awt.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
@@ -275,13 +272,27 @@ public class SVGDrawingPanel extends JPanel {
             }
         });
         add(button1, java.awt.BorderLayout.LINE_END);
+
+        button2.setLabel("button2");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+        add(button2, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         ToolBarChangeOrientation ori = new ToolBarChangeOrientation(toolsPanel);
         
-        ori.ChangeToVertical();
+        ori.changeToVertical();
     }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        ToolBarChangeOrientation ori = new ToolBarChangeOrientation(toolsPanel);
+        
+        ori.changeToHorizontal();
+    }//GEN-LAST:event_button2ActionPerformed
 
     public JComponent getComponent() {
         return this;
@@ -291,6 +302,7 @@ public class SVGDrawingPanel extends JPanel {
     private org.jhotdraw.samples.svg.gui.AlignToolBar alignToolBar;
     private org.jhotdraw.samples.svg.gui.ArrangeToolBar arrangeToolBar;
     private java.awt.Button button1;
+    private java.awt.Button button2;
     private org.jhotdraw.samples.svg.gui.CanvasToolBar canvasToolBar;
     private org.jhotdraw.samples.svg.gui.ToolsToolBar creationToolBar;
     private org.jhotdraw.samples.svg.gui.FigureToolBar figureToolBar;
