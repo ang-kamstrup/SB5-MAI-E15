@@ -32,10 +32,9 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
     public void actionPerformed(java.awt.event.ActionEvent e) {
         final DrawingView view = getView();
         final LinkedList<Figure> figures = new LinkedList<Figure>(view.getSelectedFigures());
+        changed = false;
         edgeDetection(figures);
-        //boolean undoableEdit = getUndoableEdit(figures);
-        //System.out.println(undoableEdit + " " + changed);
-        if(/*undoableEdit && */ changed) {
+        if(changed) {
             fireUndoableEditHappened(new AbstractUndoableEdit() {
                 @Override
                 public String getPresentationName() {
@@ -73,15 +72,23 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
     }
     
     public static void edgeDetection(Collection<Figure> figures) {
+        boolean showMessageBoxForSecondApplication = true;
+        boolean showMessageBoxForFigure = true;
         Iterator<Figure> figuresIte = figures.iterator();
+        if(figures.isEmpty()) {
+            changed = false;
+            return;
+        }
         while(figuresIte.hasNext()) {
             try {
                 SVGImageFigure figure = (SVGImageFigure) figuresIte.next();
                 if(figure.getEdgeDetectionApplied() == true) {
-                    JOptionPane.showMessageDialog(null, "Edge detection can be apllied only once per image",
+                    if(showMessageBoxForSecondApplication == true) {
+                        JOptionPane.showMessageDialog(null, "Edge detection can be apllied only once per image",
                         "InfoBox: Edge detection" , JOptionPane.INFORMATION_MESSAGE);
-                    changed = false;
-                    return;
+                        showMessageBoxForSecondApplication = false;
+                    }
+                    continue;
                 }
                 figure.setOriginalBufferedImage();
                 BufferedImage img = figure.getBufferedImage();
@@ -94,10 +101,12 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
                 figure.setEdgeDetectionApplied(true);
                 changed = true;
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Edge detection cannot be used on this figure, "
-                        + "please select image figure and use edge detection tool.",
-                        "InfoBox: Edge detection" , JOptionPane.INFORMATION_MESSAGE);
-                changed = false;
+                if(showMessageBoxForFigure == true) {
+                    JOptionPane.showMessageDialog(null, "Edge detection cannot be used on this figure, "
+                            + "please select image figure and use edge detection tool.",
+                            "InfoBox: Edge detection" , JOptionPane.INFORMATION_MESSAGE);
+                    showMessageBoxForFigure = false;
+                }
             }
         }
         
@@ -125,22 +134,10 @@ public class EdgeDetectionAction extends AbstractSelectedAction {
                             0.0f, -1.0f, 0.0f};
         return kernel;
     }
-
-    private boolean getUndoableEdit(LinkedList<Figure> figures) {
-        boolean undoableEdit = false;
-        
-        Iterator<Figure> figuresIte = figures.iterator();
-        while(figuresIte.hasNext()) {
-            try {
-                SVGImageFigure figure = (SVGImageFigure) figuresIte.next();
-                if(figure.getEdgeDetectionApplied() == true) {
-                    undoableEdit = true;
-                    break;
-                }
-            } catch (Exception exp) {
-
-            }
-        }
-        return undoableEdit;
+    
+    /* used only for testing */
+    public static boolean getChanged() {
+        return changed;
     }
+
 }

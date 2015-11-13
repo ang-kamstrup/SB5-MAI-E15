@@ -67,7 +67,6 @@ public class EdgeDetectionBetterTest {
         eda = new EdgeDetectionAction(null);
         figures = new LinkedList<Figure>();
         figures.add(imgFig);
-        eda.edgeDetection(figures);
         float[] kernel = { 0.0f, -1.0f, 0.0f,
                             -1.0f, 4.0f, -1.0f,
                             0.0f, -1.0f, 0.0f};
@@ -97,28 +96,37 @@ public class EdgeDetectionBetterTest {
                 convertedImage.setRGB(x, y, corrected);
             }
         }
-
+        
+        //do edge detection
+        eda.edgeDetection(figures);
         convertedImagePixels = ((DataBufferByte) convertedImage.getRaster().getDataBuffer()).getData();
         byte[] edPixels = ((DataBufferByte) imgFig.getBufferedImage().getRaster().getDataBuffer()).getData();
         boolean sameImage = Arrays.equals(edPixels, convertedImagePixels);
-        assertTrue("something's wrong!", sameImage);
+        assertTrue("Something wrong with edge detection change field (first edge detection)", eda.getChanged());
+        assertTrue("Problems with first edge detection", sameImage);
         
+        //do undo
         eda.doUndo(figures);
         byte[] undoPix = ((DataBufferByte) imgFig.getBufferedImage().getRaster().getDataBuffer()).getData();
         boolean sameUndoImage = Arrays.equals(undoPix, originalImagePixels);
-        assertTrue("something's wrong!", sameUndoImage);
+        assertTrue("Something wrong with edge detection change field (first undo)", eda.getChanged());
+        assertTrue("Problems with first undo", sameUndoImage);
         
+        //do undo again, nothing should change
         eda.doUndo(figures);
         byte[] undoPix2 = ((DataBufferByte) imgFig.getBufferedImage().getRaster().getDataBuffer()).getData();
         boolean sameUndoImage2 = Arrays.equals(undoPix2, originalImagePixels);
-        assertTrue("something's wrong!", sameUndoImage2);
+        assertTrue("Problems with second undo", sameUndoImage2);
         
+        //do edge detection again, should work normally like in first call of edgeDetection
         eda.edgeDetection(figures);
         byte[] edPixels2 = ((DataBufferByte) imgFig.getBufferedImage().getRaster().getDataBuffer()).getData();
         boolean sameImage2 = Arrays.equals(edPixels2, convertedImagePixels);
-        assertTrue("something's wrong!", sameImage2);
+        assertTrue("Problems with second edge detection", sameImage2);
         
-        
-        //System.out.println("all good");
+        LinkedList<Figure> emptyList = new LinkedList<Figure>();
+        eda.edgeDetection(emptyList);
+        assertFalse("Something wrong when empty list is sent to edgeDetection", eda.getChanged());
+
     }
 }
