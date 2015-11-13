@@ -1,11 +1,8 @@
 package org.jhotdraw.samples.svg;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import org.jhotdraw.gui.ToolBarLayout;
-import org.jhotdraw.samples.svg.gui.Navigator;
 
 /**
  *
@@ -14,7 +11,8 @@ import org.jhotdraw.samples.svg.gui.Navigator;
 public class ToolBarOrientationChanger {
     private org.jhotdraw.samples.svg.gui.ToolsToolBar toolsPane;
     private SVGDrawingPanel dp = new SVGDrawingPanel();
-    private javax.swing.JPanel toolsPanel;
+    //public javax.swing.JPanel toolsPanel;
+    private javax.swing.JPanel toolsPanel = new javax.swing.JPanel();
 
     public ToolBarOrientationChanger(JPanel toolsPanel) {
         this.toolsPanel = toolsPanel;

@@ -16,7 +16,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
  *
  * @author admur13
  */
-public class ChangeToHorizontalAction extends AbstractSelectedAction{
+public class ChangeToHorizontalAction extends AbstractSelectedAction {
 
     private ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels", Locale.getDefault());
     private org.jhotdraw.samples.svg.gui.ToolsToolBar toolsPane;
@@ -27,23 +27,19 @@ public class ChangeToHorizontalAction extends AbstractSelectedAction{
         labels.configureAction(this, "edit.changeToHorizontal");
         setEnabled(true);
     }
-    
-    
+
     public void actionPerformed(ActionEvent e) {
         System.out.println("Horizontal Button action performed!");
         changeToHorizontal();
         setEnabled(true);
     }
-    
-    public void changeToHorizontal(){
+
+    public void changeToHorizontal() {
         // Code implementation here!
-        JComponent parent = (JComponent)toolsPanel.getParent();
+        JComponent parent = (JComponent) toolsPanel.getParent();
         parent.remove(toolsPanel);
         parent.revalidate();
         parent.repaint();
-        parent.add(toolsPanel, BorderLayout.SOUTH); 
+        parent.add(toolsPanel, BorderLayout.SOUTH);
     }
-    
-    
-    
 }
