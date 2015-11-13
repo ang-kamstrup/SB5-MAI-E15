@@ -64,6 +64,7 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
      */
     private BufferedImage bufferedImage;
     private BufferedImage originalBufferedImage;
+    private boolean edgeDetectionApplied = false;;
 
     /** Creates a new instance. */
     public SVGImageFigure() {
@@ -438,5 +439,13 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
     
     public BufferedImage getOriginalBufferedImage() {
         return originalBufferedImage;
+    }
+    
+    public void setEdgeDetectionApplied(boolean  edgeDetectionApplied) {
+        this.edgeDetectionApplied = edgeDetectionApplied;
+    }
+    
+    public boolean getEdgeDetectionApplied() {
+        return edgeDetectionApplied;
     }
 }

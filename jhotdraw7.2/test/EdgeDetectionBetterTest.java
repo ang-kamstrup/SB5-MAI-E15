@@ -1,0 +1,124 @@
+
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.DataBufferByte;
+import java.awt.image.Kernel;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Map;
+import javax.imageio.ImageIO;
+import org.jhotdraw.draw.AttributeKey;
+import org.jhotdraw.draw.Drawing;
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.Tool;
+import org.jhotdraw.draw.action.EdgeDetectionAction;
+import org.jhotdraw.samples.svg.figures.SVGImageFigure;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+
+/**
+ *
+ * @author klancar
+ */
+public class EdgeDetectionBetterTest {
+    BufferedImage originalImage;
+    BufferedImage convertedImage;
+    BufferedImageOp imgOp;
+    byte[] originalImagePixels;
+    byte[] convertedImagePixels;
+    SVGImageFigure imgFig;
+    EdgeDetectionAction eda;
+    LinkedList<Figure> figures;
+
+    public EdgeDetectionBetterTest() {
+
+    }
+
+    @BeforeClass
+    public static void setUpClass() {
+
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+
+    }
+
+    @Before
+    public void setUp() throws IOException {
+        originalImage = ImageIO.read(new File("test/resources/testImage.jpg"));
+        imgFig = new SVGImageFigure();
+        imgFig.setBufferedImage(originalImage);
+        
+        eda = new EdgeDetectionAction(null);
+        figures = new LinkedList<Figure>();
+        figures.add(imgFig);
+        eda.edgeDetection(figures);
+        float[] kernel = { 0.0f, -1.0f, 0.0f,
+                            -1.0f, 4.0f, -1.0f,
+                            0.0f, -1.0f, 0.0f};
+        imgOp = new ConvolveOp(new Kernel(3, 3, kernel));
+        originalImagePixels = ((DataBufferByte) originalImage.getRaster().getDataBuffer()).getData();
+    }
+
+    @After
+    public void tearDown() {
+      
+    }
+
+    @Test
+    public void testEdgeDetection(){
+        // TEST
+        convertedImage = imgOp.filter(originalImage, null);
+        convertedImagePixels = ((DataBufferByte) convertedImage.getRaster().getDataBuffer()).getData();
+        for (int x = 0; x < convertedImage.getWidth(); x++) {
+            for (int y = 0; y < convertedImage.getHeight(); y++)
+            {
+                int rgb = convertedImage.getRGB(x, y);
+                int r = (rgb >> 16) & 0xFF;
+                int g = (rgb >> 8) & 0xFF;
+                int b = (rgb & 0xFF);
+
+                int corrected = (Integer.parseInt("FF", 16) << 24) + (r << 16) + (g << 8) + b; 
+                convertedImage.setRGB(x, y, corrected);
+            }
+        }
+
+        convertedImagePixels = ((DataBufferByte) convertedImage.getRaster().getDataBuffer()).getData();
+        byte[] edPixels = ((DataBufferByte) imgFig.getBufferedImage().getRaster().getDataBuffer()).getData();
+        boolean sameImage = Arrays.equals(edPixels, convertedImagePixels);
+        assertTrue("something's wrong!", sameImage);
+        
+        eda.doUndo(figures);
+        byte[] undoPix = ((DataBufferByte) imgFig.getBufferedImage().getRaster().getDataBuffer()).getData();
+        boolean sameUndoImage = Arrays.equals(undoPix, originalImagePixels);
+        assertTrue("something's wrong!", sameUndoImage);
+        
+        eda.doUndo(figures);
+        byte[] undoPix2 = ((DataBufferByte) imgFig.getBufferedImage().getRaster().getDataBuffer()).getData();
+        boolean sameUndoImage2 = Arrays.equals(undoPix2, originalImagePixels);
+        assertTrue("something's wrong!", sameUndoImage2);
+        
+        eda.edgeDetection(figures);
+        byte[] edPixels2 = ((DataBufferByte) imgFig.getBufferedImage().getRaster().getDataBuffer()).getData();
+        boolean sameImage2 = Arrays.equals(edPixels2, convertedImagePixels);
+        assertTrue("something's wrong!", sameImage2);
+        
+        
+        //System.out.println("all good");
+    }
+}
