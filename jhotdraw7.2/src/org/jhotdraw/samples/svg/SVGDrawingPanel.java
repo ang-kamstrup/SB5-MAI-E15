@@ -283,15 +283,15 @@ public class SVGDrawingPanel extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        ToolBarChangeOrientation ori = new ToolBarChangeOrientation(toolsPanel);
-        
-        ori.changeToVertical();
+//        ToolBarChangeOrientation ori = new ToolBarChangeOrientation(toolsPanel);
+//        
+//        ori.changeToVertical();
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        ToolBarChangeOrientation ori = new ToolBarChangeOrientation(toolsPanel);
-        
-        ori.changeToHorizontal();
+//        ToolBarChangeOrientation ori = new ToolBarChangeOrientation(toolsPanel);
+//        
+//        ori.changeToHorizontal();
     }//GEN-LAST:event_button2ActionPerformed
 
     public JComponent getComponent() {
