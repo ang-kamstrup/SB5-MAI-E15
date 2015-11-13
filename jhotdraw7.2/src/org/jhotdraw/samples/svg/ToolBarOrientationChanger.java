@@ -9,10 +9,10 @@ import javax.swing.JPanel;
  * @author admur13
  */
 public class ToolBarOrientationChanger {
-    private org.jhotdraw.samples.svg.gui.ToolsToolBar toolsPane;
-    private SVGDrawingPanel dp = new SVGDrawingPanel();
+    //private org.jhotdraw.samples.svg.gui.ToolsToolBar toolsPane;
+    //private SVGDrawingPanel dp = new SVGDrawingPanel();
     //public javax.swing.JPanel toolsPanel;
-    private javax.swing.JPanel toolsPanel = new javax.swing.JPanel();
+    private javax.swing.JPanel toolsPanel;
 
     public ToolBarOrientationChanger(JPanel toolsPanel) {
         this.toolsPanel = toolsPanel;

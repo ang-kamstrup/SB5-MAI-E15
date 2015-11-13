@@ -80,6 +80,9 @@ public class SVGDrawingPanel extends JPanel {
         toolsPane.setOpaque(true);
 
         viewToolBar.setView(view);
+        viewToolBar.setDrawingPanel(this);
+        viewToolBar.setToolPane(toolsPane);
+        
 
         undoManager = new UndoRedoManager();
         setEditor(new DefaultDrawingEditor());
@@ -155,6 +158,21 @@ public class SVGDrawingPanel extends JPanel {
         setEditor(new DefaultDrawingEditor());
         editor.setHandleAttribute(HandleAttributeKeys.HANDLE_SIZE, new Integer(7));
     }
+    
+    public JPanel getToolsPanel() {
+        return toolsPanel;
+    }
+    
+    public JPanel getToolsPane() {
+        return toolsPane;
+    }
+    
+//    public void toVertical() {
+//        remove(toolsPanel);
+//        revalidate();
+//        repaint();
+//        add(toolsPanel, BorderLayout.LINE_START); 
+//    }
 
     public Drawing getDrawing() {
         return view.getDrawing();
