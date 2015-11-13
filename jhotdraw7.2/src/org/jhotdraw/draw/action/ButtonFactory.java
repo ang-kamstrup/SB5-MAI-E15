@@ -1531,4 +1531,30 @@ public class ButtonFactory {
         btn.setFocusable(false);
         return btn;
     }
+    
+    public static JButton createChangeToHorizontalButton(DrawingEditor editor) {
+        JButton btn;
+        btn = new JButton(new ApplyAttributesAction(editor));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static JButton createChangeToVerticalButton(DrawingEditor editor) {
+        JButton btn;
+        btn = new JButton(new ApplyAttributesAction(editor));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
 }
