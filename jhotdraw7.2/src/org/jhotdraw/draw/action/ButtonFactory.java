@@ -1534,7 +1534,7 @@ public class ButtonFactory {
     
     public static JButton createChangeToHorizontalButton(DrawingEditor editor) {
         JButton btn;
-        btn = new JButton(new ApplyAttributesAction(editor));
+        btn = new JButton(new ChangeToHorizontalAction(editor));
         if (btn.getIcon() != null) {
             btn.putClientProperty("hideActionText", Boolean.TRUE);
         }

@@ -213,8 +213,18 @@ public class ViewToolBar extends AbstractToolBar {
                     gbc.weighty = 1;
                     btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, scaleFactorField.getPreferredSize().height));
                     p.add(btn, gbc);
+                    
+                    // Change to Horizontal btn
+                    btn = ButtonFactory.createChangeToHorizontalButton(editor);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                    labels.configureToolBarButton(btn, "edit.changeToHorizontal");
+                    gbc = new GridBagConstraints();
+                    gbc.gridy = 2;
+                    gbc.insets = new Insets(3, 0, 0, 0);
+                    p.add(btn, gbc);
+                    break;
                 }
-                break;
+                
         }
         return p;
     }
