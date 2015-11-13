@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.imageio.ImageIO;
-import org.jhotdraw.draw.Figure;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -77,6 +76,5 @@ public class EdgeDetectionTest {
         // ASSERT
         boolean isImagePixelsSame = Arrays.equals(originalImagePixels, convertedImagePixels);
         assertFalse("something's wrong!", isImagePixelsSame);
-        //System.out.println("all good");
     }
 }

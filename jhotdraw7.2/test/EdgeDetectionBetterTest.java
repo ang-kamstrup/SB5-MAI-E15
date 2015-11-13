@@ -1,25 +1,15 @@
 
-import java.awt.Container;
-import java.awt.Cursor;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.DataBufferByte;
 import java.awt.image.Kernel;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedList;
-import java.util.Map;
 import javax.imageio.ImageIO;
-import org.jhotdraw.draw.AttributeKey;
-import org.jhotdraw.draw.Drawing;
-import org.jhotdraw.draw.DrawingEditor;
-import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.Figure;
-import org.jhotdraw.draw.Tool;
 import org.jhotdraw.draw.action.EdgeDetectionAction;
 import org.jhotdraw.samples.svg.figures.SVGImageFigure;
 import org.junit.After;
