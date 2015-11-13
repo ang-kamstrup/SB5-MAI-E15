@@ -1547,7 +1547,7 @@ public class ButtonFactory {
     
     public static JButton createChangeToVerticalButton(DrawingEditor editor) {
         JButton btn;
-        btn = new JButton(new ApplyAttributesAction(editor));
+        btn = new JButton(new ChangeToVerticalAction(editor));
         if (btn.getIcon() != null) {
             btn.putClientProperty("hideActionText", Boolean.TRUE);
         }

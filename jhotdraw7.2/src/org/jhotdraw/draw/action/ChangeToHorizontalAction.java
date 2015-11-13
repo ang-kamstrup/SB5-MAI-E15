@@ -11,7 +11,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
  *
- * @author spider
+ * @author admur13
  */
 public class ChangeToHorizontalAction extends AbstractSelectedAction{
 
@@ -30,7 +30,7 @@ public class ChangeToHorizontalAction extends AbstractSelectedAction{
     }
     
     public void changeToHorizontal(){
-        
+        // Code implementation here!
     }
     
     

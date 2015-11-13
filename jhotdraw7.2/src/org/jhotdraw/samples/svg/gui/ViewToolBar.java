@@ -222,6 +222,15 @@ public class ViewToolBar extends AbstractToolBar {
                     gbc.gridy = 2;
                     gbc.insets = new Insets(3, 0, 0, 0);
                     p.add(btn, gbc);
+                    
+                    // Change to Vertical btn
+                    btn = ButtonFactory.createChangeToVerticalButton(editor);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                    labels.configureToolBarButton(btn, "edit.changeToVertical");
+                    gbc = new GridBagConstraints();
+                    gbc.gridy = 2;
+                    gbc.insets = new Insets(3, 0, 0, 0);
+                    p.add(btn, gbc);
                     break;
                 }
                 
