@@ -161,13 +161,6 @@ public class SVGDrawingPanel extends JPanel {
     public JPanel getToolsPane() {
         return toolsPane;
     }
-    
-//    public void toVertical() {
-//        remove(toolsPanel);
-//        revalidate();
-//        repaint();
-//        add(toolsPanel, BorderLayout.LINE_START); 
-//    }
 
     public Drawing getDrawing() {
         return view.getDrawing();
