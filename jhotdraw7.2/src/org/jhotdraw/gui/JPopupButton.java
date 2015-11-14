@@ -118,6 +118,14 @@ public class JPopupButton extends javax.swing.JButton {
     public void addSeparator() {
         getPopupMenu().addSeparator();
     }
+    
+    /**
+     * Removes all components added to the JPopupButton.
+     */
+    public void removeAllComponents() {
+        this.popupMenu.removeAll();
+    }
+
 
     public void setPopupMenu(JPopupMenu popupMenu) {
         this.popupMenu = popupMenu;
