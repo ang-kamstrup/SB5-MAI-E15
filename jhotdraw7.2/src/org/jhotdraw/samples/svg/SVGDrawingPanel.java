@@ -248,7 +248,7 @@ public class SVGDrawingPanel extends JPanel {
 
         toolsScrollPane.setBorder(PaletteLookAndFeel.getInstance().getBorder("Ribbon.border"));
         toolsScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-        toolsScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        toolsScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         toolsScrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
 
         toolsPane.setForeground(new java.awt.Color(153, 153, 153));
