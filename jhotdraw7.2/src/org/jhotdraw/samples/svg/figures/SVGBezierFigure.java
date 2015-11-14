@@ -72,11 +72,12 @@ public class SVGBezierFigure extends BezierFigure {
     public boolean handleMouseClick(Point2D.Double p, MouseEvent evt, DrawingView view) {
         if (evt.getClickCount() == 2/* && view.getHandleDetailLevel() == 0*/) {
             willChange();
-
+            
             // Apply inverse of transform to point
             if (TRANSFORM.get(this) != null) {
                 try {
                     p = (Point2D.Double) TRANSFORM.get(this).inverseTransform(p, new Point2D.Double());
+                    System.out.println(p.toString());
                 } catch (NoninvertibleTransformException ex) {
                     System.err.println("Warning: SVGBezierFigure.handleMouseClick. Figure has noninvertible Transform.");
                 }
@@ -135,6 +136,7 @@ public class SVGBezierFigure extends BezierFigure {
         if (cachedDrawingArea == null) {
             if (TRANSFORM.get(this) == null) {
                 cachedDrawingArea = path.getBounds2D();
+//                System.out.println(String.format("cached drawing area: %s", cachedDrawingArea.toString()));
             } else {
                 BezierPath p2 = (BezierPath) path.clone();
                 p2.transform(TRANSFORM.get(this));

@@ -64,6 +64,7 @@ public class ToolsToolBar extends AbstractToolBar {
         TextCreationTool textTool;
         TextAreaCreationTool textAreaTool;
         SVGCreateFromFileTool imageTool;
+        CalligraphyTool calTool;
 
         HashMap<AttributeKey, Object> attributes;
         btn = ButtonFactory.addSelectionToolTo(this, editor,
@@ -124,7 +125,17 @@ public class ToolsToolBar extends AbstractToolBar {
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 3, 0, 0);
         p.add(btn, gbc);
-
+        
+        btn = ButtonFactory.addToolTo(this, editor, calTool = new CalligraphyTool(new SVGPathFigure(),new SVGBezierFigure(false),attributes), "createCalligraphy", labels);
+        calTool.setToolDoneAfterCreation(false);
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.insets = new Insets(3,0,0,0);
+        p.add(btn,gbc);
+        
+        
         attributes = new HashMap<AttributeKey, Object>();
         attributes.put(AttributeKeys.FILL_COLOR, Color.black);
         attributes.put(AttributeKeys.STROKE_COLOR, null);

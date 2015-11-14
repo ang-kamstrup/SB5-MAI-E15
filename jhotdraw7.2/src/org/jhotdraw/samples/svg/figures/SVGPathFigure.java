@@ -61,9 +61,12 @@ public class SVGPathFigure extends AbstractAttributedCompositeFigure implements 
         add(new SVGBezierFigure());
         SVGAttributeKeys.setDefaults(this);
     }
+    
     @FeatureEntryPoint(JHotDrawFeatures.LINE_TOOL)
     public SVGPathFigure(boolean isEmpty) {
-        if (! isEmpty) { add(new SVGBezierFigure()); }
+        if (! isEmpty) {
+            add(new SVGBezierFigure());
+        }
         SVGAttributeKeys.setDefaults(this);
     }
 
