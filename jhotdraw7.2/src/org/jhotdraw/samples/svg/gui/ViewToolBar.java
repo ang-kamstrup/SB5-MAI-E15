@@ -117,8 +117,8 @@ public class ViewToolBar extends AbstractToolBar {
                     btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, toggleGridButton.getPreferredSize().height));
                     p.add(btn, gbc);
                     
-                                        // Change to Horizontal btn
-                    btn = ButtonFactory.createChangeToHorizontalButton(editor);
+                    // Change to Horizontal btn
+                    btn = ButtonFactory.createChangeToHorizontalButton(editor, svgDrawingpanel, toolsPane);
                     btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
                     labels.configureToolBarButton(btn, "edit.changeToHorizontal");
                     gbc = new GridBagConstraints();
@@ -244,7 +244,7 @@ public class ViewToolBar extends AbstractToolBar {
                     p.add(btn, gbc);
                     
                     // Change to Horizontal btn
-                    btn = ButtonFactory.createChangeToHorizontalButton(editor);
+                    btn = ButtonFactory.createChangeToHorizontalButton(editor, svgDrawingpanel, toolsPane);
                     btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
                     labels.configureToolBarButton(btn, "edit.changeToHorizontal");
                     gbc = new GridBagConstraints();

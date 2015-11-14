@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.gui.ToolBarLayout;
 import org.jhotdraw.samples.svg.SVGDrawingPanel;
-import org.jhotdraw.samples.svg.ToolBarOrientationChanger;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -37,8 +36,6 @@ public class ChangeToVerticalAction extends AbstractSelectedAction {
     public void actionPerformed(ActionEvent e) {
         System.out.println("Vertical Button action performed!");
         changeToVertical();
-//        ToolBarOrientationChanger oriChanger = new ToolBarOrientationChanger(toolsPanel);
-//        oriChanger.changeToVertical();
         System.out.println("Did it work?");
         setEnabled(true);
     }
