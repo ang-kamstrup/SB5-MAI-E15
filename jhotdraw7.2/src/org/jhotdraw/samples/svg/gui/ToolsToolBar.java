@@ -171,6 +171,11 @@ public class ToolsToolBar extends AbstractToolBar {
         a.add(new DuplicateAction());
 
         a.add(null); // separator
+        
+        a.add(new FlipHoriAction(editor));
+        a.add(new FlipVertAction(editor));
+        
+        a.add(null); // separator
 
         a.add(new GroupAction(editor, new SVGGroupFigure()));
         a.add(new UngroupAction(editor, new SVGGroupFigure()));

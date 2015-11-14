@@ -230,6 +230,11 @@ public class ButtonFactory {
         a.add(new DuplicateAction());
 
         a.add(null); // separator
+        
+        a.add(new FlipHoriAction(editor));
+        a.add(new FlipVertAction(editor));
+        
+        a.add(null); // separator
 
         a.add(new GroupAction(editor));
         a.add(new UngroupAction(editor));
