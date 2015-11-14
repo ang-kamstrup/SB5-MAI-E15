@@ -240,6 +240,7 @@ public class ButtonFactory {
 
         a.add(new BringToFrontAction(editor));
         a.add(new SendToBackAction(editor));
+        a.add(new EdgeDetectionAction(editor));
 
         return a;
     }
@@ -1390,6 +1391,7 @@ public class ButtonFactory {
         bar.addSeparator();
         bar.add(new BringToFrontAction(editor)).setFocusable(false);
         bar.add(new SendToBackAction(editor)).setFocusable(false);
+        bar.add(new EdgeDetectionAction(editor)).setFocusable(false);
 
     }
 
