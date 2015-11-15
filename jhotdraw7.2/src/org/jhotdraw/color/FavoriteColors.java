@@ -1,6 +1,5 @@
 package org.jhotdraw.color;
 
-import java.awt.*;
 import java.util.*;
 import org.jhotdraw.draw.action.ColorIcon;
 
@@ -45,7 +44,6 @@ public class FavoriteColors extends Observable {
      * @param color 
      */
     public void addFavoriteColor(ColorIcon color) {
-        System.out.println("Added fav color - FavoriteColors.java");
         FAVOURITE_COLORS.add(color);
         setChanged();
         notifyObservers();

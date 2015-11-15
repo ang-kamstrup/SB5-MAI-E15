@@ -1,19 +1,13 @@
 package org.jhotdraw.draw.action;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JColorChooser;
 import org.jhotdraw.color.FavoriteColors;
 import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.DrawingEditor;
-import org.jhotdraw.gui.FavoriteColorsPopupButton;
-import org.jhotdraw.samples.svg.SVGDrawingPanel;
-import org.jhotdraw.samples.svg.gui.AbstractToolBar;
 
 /**
  *
