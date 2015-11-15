@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
-        EdgeDetectionBetterTest.class)
+        EdgeDetectionBetterTest.class, FavoriteColorTest.class)
 public class JHotDrawTestSuite {
 
     @BeforeClass
