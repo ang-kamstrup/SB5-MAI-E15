@@ -45,10 +45,7 @@ public class FavoriteColorsPopupButton extends JPopupButton implements Observer 
         this.labels = labels;
         this.labelKey = labelKey;
         this.colorShape = colorShape;
-
-        
         init();
-
     }
 
     /**

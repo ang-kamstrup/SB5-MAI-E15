@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Random;
 import org.jhotdraw.color.FavoriteColors;
 import org.jhotdraw.draw.action.ColorIcon;
-import org.jhotdraw.gui.FavoriteColorsPopupButton;
-import org.jhotdraw.samples.svg.gui.FillToolBar;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -53,6 +51,7 @@ public class FavoriteColorTest {
 
     @Test
     public void testFavoriteColors() {
+        //Add test colors to FavoriteColors
         for (Object colorIcon : testColors) {
             FavoriteColors.getInstance().addFavoriteColor((ColorIcon) colorIcon);
         }
@@ -76,12 +75,6 @@ public class FavoriteColorTest {
         //Make sure that the testColors.get(5) was moved to the front of FavoriteColors.
         boolean isMoved = FavoriteColors.getInstance().getColors().get(0).equals(testColors.get(5));
         assertTrue("Favorited color was not moved to the front of the list, when re-added as favorite", isMoved);
-        
-        
-        
-        
-        
-        
 
     }
 }
