@@ -71,7 +71,7 @@ public class GaussianBlurFilterAction extends AbstractSelectedAction {
     private void blurOperation(Figure figure) {
         imageFigure = (SVGImageFigure) figure;
         figureToBlur = imageFigure.getBufferedImage();
-        blurOperation = new ConvolveOp(GaussianKernel.createGaussianKernel());
+        blurOperation = new ConvolveOp(GaussianKernel.createKernel());
         blurredImage = blurOperation.filter(figureToBlur, null);
         imageFigure.setBufferedImage(blurredImage);
     }
