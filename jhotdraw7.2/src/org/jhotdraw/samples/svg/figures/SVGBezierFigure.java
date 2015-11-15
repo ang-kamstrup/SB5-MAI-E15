@@ -67,6 +67,7 @@ public class SVGBezierFigure extends BezierFigure {
         return handles;
     }
 
+    
     @Override
     @FeatureEntryPoint(JHotDrawFeatures.BEZIER_TOOL)
     public boolean handleMouseClick(Point2D.Double p, MouseEvent evt, DrawingView view) {

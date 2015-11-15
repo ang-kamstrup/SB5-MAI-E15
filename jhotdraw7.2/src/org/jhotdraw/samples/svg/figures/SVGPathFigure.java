@@ -154,7 +154,7 @@ public class SVGPathFigure extends AbstractAttributedCompositeFigure implements 
             cachedPath.setWindingRule(WINDING_RULE.get(this) == WindingRule.EVEN_ODD ? GeneralPath.WIND_EVEN_ODD : GeneralPath.WIND_NON_ZERO);
             for (Figure child : getChildren()) {
                 SVGBezierFigure b = (SVGBezierFigure) child;
-                cachedPath.append(b.getBezierPath(), false);
+                cachedPath.append(b.getBezierPath(), true);
             }
         }
         return cachedPath;
@@ -505,8 +505,8 @@ public class SVGPathFigure extends AbstractAttributedCompositeFigure implements 
         AffineTransform tx = TRANSFORM.get(this);
         if (tx != null) {
             for (Figure child : getChildren()) {
-                //((SVGBezierFigure) child).transform(tx);
-                ((SVGBezierFigure) child).flattenTransform();
+                ((SVGBezierFigure) child).transform(tx);
+//                ((SVGBezierFigure) child).flattenTransform();
             }
         }
         if (FILL_GRADIENT.get(this) != null) {
