@@ -20,7 +20,7 @@ import org.jhotdraw.samples.svg.figures.SVGImageFigure;
  */
 public class GaussianBlurFilterAction extends AbstractSelectedAction {
     public final static String ID = "filter.gaussianBlur";
-    private SVGImageFigure imageFigure, blurredFigure;
+    private SVGImageFigure imageFigure;
     private BufferedImageOp blurOperation;
     private BufferedImage figureToBlur, blurredImage;
 
@@ -34,7 +34,6 @@ public class GaussianBlurFilterAction extends AbstractSelectedAction {
         final Figure figure = figures.getFirst();
         
         blurImageInThread(figure);
-        fireUndoableEdit();
     }
 
     private void blurImageInThread(final Figure figure) {
@@ -44,23 +43,7 @@ public class GaussianBlurFilterAction extends AbstractSelectedAction {
             }
         });
         t.start();
-    }
-
-    private void fireUndoableEdit() {
-        fireUndoableEditHappened(new AbstractUndoableEdit() {
-            @Override
-            public String getPresentationName() {
-                return labels.getTextProperty(ID);
-            }
-            @Override
-            public void redo() throws CannotRedoException {
-                super.redo();
-            }
-            @Override
-            public void undo() throws CannotUndoException {
-                super.undo();
-            }
-        });
+        fireUndoableEdit();
     }
     
     private void blurImage(Figure figure){
@@ -79,4 +62,20 @@ public class GaussianBlurFilterAction extends AbstractSelectedAction {
         imageFigure.setBufferedImage(blurredImage);
     }
     
+    private void fireUndoableEdit() {
+        fireUndoableEditHappened(new AbstractUndoableEdit() {
+            @Override
+            public String getPresentationName() {
+                return labels.getTextProperty(ID);
+            }
+            @Override
+            public void redo() throws CannotRedoException {
+                super.redo();
+            }
+            @Override
+            public void undo() throws CannotUndoException {
+                super.undo();
+            }
+        });
+    }
 }
