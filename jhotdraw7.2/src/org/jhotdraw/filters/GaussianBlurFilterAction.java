@@ -32,31 +32,42 @@ public class GaussianBlurFilterAction extends AbstractSelectedAction {
         final DrawingView view = getView();
         final LinkedList<Figure> figures = new LinkedList<Figure>(view.getSelectedFigures());
         final Figure figure = figures.getFirst();
-        blurImage(figure);
         
+        blurImageInThread(figure);
+        fireUndoableEdit();
+    }
+
+    private void blurImageInThread(final Figure figure) {
+        Thread t = new Thread(new Runnable(){
+            public void run(){
+                blurImage(figure);
+            }
+        });
+        t.start();
+    }
+
+    private void fireUndoableEdit() {
         fireUndoableEditHappened(new AbstractUndoableEdit() {
             @Override
             public String getPresentationName() {
-            return labels.getTextProperty(ID);
+                return labels.getTextProperty(ID);
             }
             @Override
             public void redo() throws CannotRedoException {
                 super.redo();
-                blurImage(figure);
             }
             @Override
             public void undo() throws CannotUndoException {
                 super.undo();
-                blurImage(figure);
             }
-        }
-    );}
+        });
+    }
     
     private void blurImage(Figure figure){
         try {
             blurOperation(figure);
-        } catch (Exception ClassCastException){
-            System.out.println("Selected figure must be an image");
+        } catch (ClassCastException ex){
+            System.out.println("Selected figure must be an image : "+ex);
         }
     }
 
