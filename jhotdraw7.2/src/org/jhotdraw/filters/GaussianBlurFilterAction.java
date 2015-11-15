@@ -1,10 +1,14 @@
 package org.jhotdraw.filters;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.util.LinkedList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
@@ -23,6 +27,8 @@ public class GaussianBlurFilterAction extends AbstractSelectedAction {
     private SVGImageFigure imageFigure;
     private BufferedImageOp blurOperation;
     private BufferedImage figureToBlur, blurredImage;
+    private int blurAmountRequest;
+    private final String promptText = "Insert preferred amount of blur:";
 
     public GaussianBlurFilterAction(DrawingEditor editor) {
         super(editor);
@@ -33,7 +39,13 @@ public class GaussianBlurFilterAction extends AbstractSelectedAction {
         final LinkedList<Figure> figures = new LinkedList<Figure>(view.getSelectedFigures());
         final Figure figure = figures.getFirst();
         
+        blurAmountPrompt();
+        
         blurImageInThread(figure);
+    }
+
+    private void blurAmountPrompt() throws NumberFormatException, HeadlessException {
+        blurAmountRequest = Integer.parseInt( JOptionPane.showInputDialog(promptText));
     }
 
     private void blurImageInThread(final Figure figure) {
@@ -48,7 +60,9 @@ public class GaussianBlurFilterAction extends AbstractSelectedAction {
     
     private void blurImage(Figure figure){
         try {
-            blurOperation(figure);
+            for (int i = 0; i < blurAmountRequest; i++) {
+                blurOperation(figure);
+            }
         } catch (ClassCastException ex){
             System.out.println("Selected figure must be an image : "+ex);
         }
