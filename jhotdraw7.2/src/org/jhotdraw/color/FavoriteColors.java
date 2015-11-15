@@ -46,13 +46,10 @@ public class FavoriteColors extends Observable {
      */
     public void addFavoriteColor(ColorIcon colorIcon) {
         if (isColorUnique(colorIcon)) {
-            System.out.println("unique");
             FAVOURITE_COLORS.add(0, colorIcon);
         } else if (FAVOURITE_COLORS.size() > 1) {
-            System.out.println("moved");
             moveToFront(colorIcon);
         } else {
-            System.out.println("nothing");
             return;
         }
         setChanged();
@@ -88,7 +85,6 @@ public class FavoriteColors extends Observable {
      * @param observer - The observer to observe this object.
      */
     public void registerObserver(Observer observer) {
-        System.out.println("Registering an observer Count: " + observers.size());
         observers.add(observer);
     }
 
