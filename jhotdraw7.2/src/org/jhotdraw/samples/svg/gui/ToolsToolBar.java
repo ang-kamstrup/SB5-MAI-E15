@@ -161,6 +161,7 @@ public class ToolsToolBar extends AbstractToolBar {
         gbc.insets = new Insets(3, 3, 0, 0);
         p.add(btn, gbc);
         
+        attributes = new HashMap<AttributeKey, Object>();
         btn = ButtonFactory.addToolTo(this, editor, creationTool = new CreationTool(new SVGStarFigure(), attributes), "createStar", labels);
         creationTool.setToolDoneAfterCreation(false);
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));

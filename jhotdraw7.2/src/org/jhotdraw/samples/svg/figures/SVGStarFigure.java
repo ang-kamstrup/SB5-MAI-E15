@@ -8,15 +8,18 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
+import java.awt.geom.RoundRectangle2D;
 import java.util.Collection;
 import java.util.LinkedList;
 import org.jhotdraw.draw.BoundsOutlineHandle;
 import org.jhotdraw.draw.Handle;
 import org.jhotdraw.draw.ResizeHandleKit;
 import org.jhotdraw.draw.TransformHandleKit;
+import org.jhotdraw.geom.GrowStroke;
 import org.jhotdraw.samples.svg.Gradient;
 import org.jhotdraw.samples.svg.SVGAttributeKeys;
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
@@ -29,15 +32,16 @@ import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
 public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
     
     private StarFigure star;
-    
-    private transient Shape cachedTransformedShape;
     private transient Shape cachedHitShape;
+    private transient Shape cachedTransformedShape;
+    
     //Contructors
     public SVGStarFigure() {
-        this(0,0,0,0,0);
+        this(0,0);
     }
-    public SVGStarFigure(int x, int y, int r, int innerR, int vertexCount) {
-        star = new StarFigure(x, y, r, innerR, vertexCount);
+    public SVGStarFigure(int x, int y) {
+        
+        star = new StarFigure(200, 200, 100, 20);
         SVGAttributeKeys.setDefaults(this);
     }
     //Drawing
@@ -50,9 +54,20 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
 
     @Override
     protected void drawStroke(Graphics2D g) {
-        if(star.r > 0 && star.innerR > 0) {
-            g.draw(star);
-        }
+
+    double angle = Math.PI / star.vertexCount;
+
+    GeneralPath path = new GeneralPath();
+
+    for (int i = 0; i < 2 * star.vertexCount; i++)
+    {
+        double r = (i & 1) == 0 ? star.r : star.innerR;
+        Point2D.Double p = new Point2D.Double(star.x + Math.cos(i * angle) * r, star.y + Math.sin(i * angle) * r);
+        if (i == 0) path.moveTo(p.getX(), p.getY());
+        else path.lineTo(p.getX(), p.getY());
+    }
+    path.closePath();
+    g.draw(path);
     }
     //Coordinates and bounds
     @Override
@@ -86,10 +101,18 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
         STROKE_GRADIENT.basicSetClone(this, (Gradient) restoreData[3]);
         invalidate();
     }
+    
+    @Override
+    public void setBounds(Point2D.Double anchor, Point2D.Double lead) {
+        star.x = (int) Math.min(anchor.x, lead.x);
+        star.y = (int) Math.min(anchor.y, lead.y);
+        star.r = (int) Math.sqrt((lead.x-anchor.x)*(lead.x-anchor.x)+(lead.y-anchor.y)*(lead.y-anchor.y));
+        star.innerR = star.r/2;
+        invalidate();
+    }
 
     @Override
     public void transform(AffineTransform tx) {
-        invalidateTransform();
         if(TRANSFORM.get(this) != null || (tx.getType() & (AffineTransform.TYPE_TRANSLATION)) != tx.getType()) {
             if (TRANSFORM.get(this) == null) {
                 TRANSFORM.basicSet(this, (AffineTransform) tx.clone());
@@ -124,13 +147,33 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
         Rectangle2D.Double d = getBounds();
         return d.height <= 0 || d.width <= 0;
     }
+    private Shape getTransformedShape() {
+        if (cachedTransformedShape == null) {
+            if (TRANSFORM.get(this) == null) {
+                cachedTransformedShape = star;
+            } else {
+                cachedTransformedShape = TRANSFORM.get(this).createTransformedShape(star);
+            }
+        }
+        return cachedTransformedShape;
+    }
 
     private Shape getHitShape() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (cachedHitShape == null) {
+            if (FILL_COLOR.get(this) != null || FILL_GRADIENT.get(this) != null) {
+                cachedHitShape = new GrowStroke(
+                        (float) SVGAttributeKeys.getStrokeTotalWidth(this) / 2f,
+                        (float) SVGAttributeKeys.getStrokeTotalMiterLimit(this)).createStrokedShape(getTransformedShape());
+            } else {
+                cachedHitShape = SVGAttributeKeys.getHitStroke(this).createStrokedShape(getTransformedShape());
+            }
+        }
+        return cachedHitShape;
     }
     
     @Override
     public Collection<Handle> createHandles(int detailLevel) {
+                System.out.println("Handles");
         LinkedList<Handle> handles = new LinkedList<Handle>();
         switch (detailLevel % 2) {
             case -1: // Mouse hover handles
@@ -152,18 +195,16 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
     public SVGStarFigure clone() {
         SVGStarFigure that = (SVGStarFigure) super.clone();
         that.star = (StarFigure) this.star.clone();
-        that.cachedTransformedShape = null;
         return that;
     }
+    
     @Override
     public void invalidate() {
         super.invalidate();
-        invalidateTransform();
-    }
-    private void invalidateTransform() {
         cachedTransformedShape = null;
         cachedHitShape = null;
     }
+
     
 }
 
