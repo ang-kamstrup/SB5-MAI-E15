@@ -22,8 +22,10 @@ public class Pixelation {
     }
     
     public void pixelateImage(SVGImageFigure img, int PIX_SIZE){
-        
-        // Author bchociej from Stackoverflow
+        /**
+        *
+        * @author bchociej from Stackoverflow
+        */
         
         bi = img.getBufferedImage();
         
