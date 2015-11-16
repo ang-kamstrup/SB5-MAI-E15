@@ -13,6 +13,7 @@ import org.jhotdraw.samples.svg.Gradient;
 import org.jhotdraw.samples.svg.LinearGradient;
 import org.jhotdraw.samples.svg.RadialGradient;
 import org.jhotdraw.samples.svg.SVGAttributeKeys;
+import static org.jhotdraw.samples.svg.SVGAttributeKeys.FILL_GRADIENT;
 
 /**
  *
@@ -32,10 +33,10 @@ public class GradientHandleKit {
         }
         
         if(g instanceof LinearGradient) {
-            handles.add(new GradientHandle(f));
+            handles.add(new LinearGradientHandleOne(f));
         }
         else if(g instanceof RadialGradient) {
-            handles.add(new GradientHandle2(f));
+            
         }
     }
     
@@ -50,11 +51,9 @@ public class GradientHandleKit {
     
     
     
-    private static class GradientHandle extends AbstractHandle {
+    private static class LinearGradientHandleOne extends AbstractHandle {
         
-        public int dx, dy;
-        
-        public GradientHandle(Figure owner) {
+        public LinearGradientHandleOne(Figure owner) {
             super(owner);
         }
 
@@ -66,11 +65,12 @@ public class GradientHandleKit {
     
         private Point locate() {
             Figure owner = getOwner();
+            LinearGradient g = (LinearGradient) owner.getAttribute(FILL_GRADIENT);
             
             Rectangle2D.Double r = owner.getBounds();
             Point2D.Double p = new Point2D.Double(
-                    r.x + (owner.getPreferredSize().getWidth() / 2) + dx, 
-                    r.y + (owner.getPreferredSize().getHeight() / 2) + dy
+                    r.x + (owner.getPreferredSize().getWidth() * g.getX1()),
+                    r.y + (owner.getPreferredSize().getHeight() * g.getY1())
                     );
             if (TRANSFORM.get(owner) != null) {
                 TRANSFORM.get(owner).transform(p, p);
@@ -79,33 +79,32 @@ public class GradientHandleKit {
         }
 
         public void trackStart(Point anchor, int modifiersEx) {
-            System.out.println("TRACK start " + anchor + " " + modifiersEx);
-                  
+            
         }
 
         public void trackStep(Point anchor, Point lead, int modifiersEx) {
-            System.out.println("TRACK step " + anchor + " " + lead + " " + modifiersEx);
-            dx = lead.x - anchor.x;
-            dy = lead.y - anchor.y;
+            Figure owner = getOwner();
+            LinearGradient g = (LinearGradient) owner.getAttribute(FILL_GRADIENT);
             
-            Figure f = getOwner();
             Point2D.Double p = view.viewToDrawing(lead);
-            f.willChange();
-            if (TRANSFORM.get(f) != null) {
+            owner.willChange();
+            
+            double x = (p.x - owner.getBounds().x) / owner.getPreferredSize().getWidth();
+            double y = (p.y - owner.getBounds().y) / owner.getPreferredSize().getHeight();
+            g.setGradientVector(x, y, g.getX2(), g.getY2());
+            
+            if (TRANSFORM.get(owner) != null) {
                 try {
-                    TRANSFORM.get(f).inverseTransform(p, p);
+                    TRANSFORM.get(owner).inverseTransform(p, p);
                 } catch (NoninvertibleTransformException ex) {
 
                 }
             }
-            f.changed();
+            owner.changed();
         }
 
         public void trackEnd(Point anchor, Point lead, int modifiersEx) {
-            System.out.println("TRACK end " + anchor + " " + lead + " " + modifiersEx);
-            dx = 0;
-            dy = 0;
-            
+            // TODO fireUndoableEdit
         }
 
         @Override
@@ -114,71 +113,4 @@ public class GradientHandleKit {
         }
         
     }
-    
-    private static class GradientHandle2 extends AbstractHandle {
-        
-        public int dx, dy;
-        
-        public GradientHandle2(Figure owner) {
-            super(owner);
-        }
-
-        protected Rectangle basicGetBounds() {
-            Rectangle r = new Rectangle(locate());
-            r.grow(getHandlesize() / 2 + 1, getHandlesize() / 2 + 1);
-            return r;
-        }
-    
-        private Point locate() {
-            Figure owner = getOwner();
-            
-            Rectangle2D.Double r = owner.getBounds();
-            Point2D.Double p = new Point2D.Double(
-                    r.x + (owner.getPreferredSize().getWidth() / 2) + dx, 
-                    r.y + (owner.getPreferredSize().getHeight() / 2) + dy
-                    );
-            if (TRANSFORM.get(owner) != null) {
-                TRANSFORM.get(owner).transform(p, p);
-            }
-            return view.drawingToView(p);
-        }
-
-        public void trackStart(Point anchor, int modifiersEx) {
-            System.out.println("TRACK start " + anchor + " " + modifiersEx);
-                  
-        }
-
-        public void trackStep(Point anchor, Point lead, int modifiersEx) {
-            System.out.println("TRACK step " + anchor + " " + lead + " " + modifiersEx);
-            dx = lead.x - anchor.x;
-            dy = lead.y - anchor.y;
-            
-            Figure f = getOwner();
-            Point2D.Double p = view.viewToDrawing(lead);
-            f.willChange();
-            if (TRANSFORM.get(f) != null) {
-                try {
-                    TRANSFORM.get(f).inverseTransform(p, p);
-                } catch (NoninvertibleTransformException ex) {
-
-                }
-            }
-            f.changed();
-        }
-
-        public void trackEnd(Point anchor, Point lead, int modifiersEx) {
-            System.out.println("TRACK end " + anchor + " " + lead + " " + modifiersEx);
-            dx = 0;
-            dy = 0;
-            
-        }
-
-        @Override
-        public void draw(Graphics2D g) {
-            drawCircle(g, Color.BLUE, Color.BLACK);
-        }
-        
-    }
-    
-    
 }
