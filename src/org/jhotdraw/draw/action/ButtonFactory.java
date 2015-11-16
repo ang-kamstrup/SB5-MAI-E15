@@ -812,6 +812,17 @@ public class ButtonFactory {
         new SelectionComponentRepainter(editor, popupButton);
         return popupButton;
     }
+    
+    /**
+     * Creates a crop tool button for the canvas toolbar.
+     * 
+     * @return a crop tool button of type JToggleButton
+     */
+    public JToggleButton createCropToolButton(){
+        JToggleButton button = new JToggleButton();
+        
+        return button;
+    }
 
     /**
      * Creates a color button, with an action region and a popup menu. The
