@@ -140,6 +140,9 @@ public class ActionsToolBar extends AbstractToolBar {
                 labels.configureToolBarButton(pb, "actions");
                 pb.add(new DuplicateAction());
                 pb.addSeparator();
+                pb.add(new FlipHoriAction(editor));
+                pb.add(new FlipVertAction(editor));
+                pb.addSeparator();
                 pb.add(new GroupAction(editor, new SVGGroupFigure()));
                 pb.add(new UngroupAction(editor, new SVGGroupFigure()));
                 pb.addSeparator();
