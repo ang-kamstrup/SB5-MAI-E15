@@ -13,6 +13,7 @@ import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.Figure;
 import org.jhotdraw.draw.GroupFigure;
+import org.jhotdraw.samples.svg.figures.SVGPathFigure;
 
 /**
  * FlipHoriAction.
@@ -85,6 +86,13 @@ public class FlipHoriAction extends AbstractSelectedAction {
             group.basicRemoveAllChildren();
             view.getDrawing().basicAddAll(view.getDrawing().indexOf(group), figures);
             view.getDrawing().remove(group);
+            
+            for(Figure f : figures) {
+                /** Resolves the issue of flipping after moving the figure */
+                SVGPathFigure pf = (SVGPathFigure) f;
+                pf.flattenTransform();
+            }
+            
             view.addToSelection(figures);
         } 
         else {
@@ -99,6 +107,10 @@ public class FlipHoriAction extends AbstractSelectedAction {
                 f.willChange();
                 f.transform(tx);
                 f.changed();
+                
+                /** Resolves the issue of flipping after moving the figure */
+                SVGPathFigure pf = (SVGPathFigure) f;
+                pf.flattenTransform();
             }  
         }  
     }
