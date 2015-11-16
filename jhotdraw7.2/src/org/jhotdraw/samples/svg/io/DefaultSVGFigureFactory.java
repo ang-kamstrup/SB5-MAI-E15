@@ -82,18 +82,18 @@ public class DefaultSVGFigureFactory implements SVGFigureFactory {
     }
     
     
-    public Figure insertGraph(Point2D.Double[] points, Map<AttributeKey, Object> a){
-        SVGPathFigure figure = new SVGPathFigure();
-        figure.removeAllChildren();
-        SVGBezierFigure bf = new SVGBezierFigure();
-        for (int i=0; i < points.length; i++) {
-            bf.addNode(new BezierPath.Node(points[i].x, points[i].y));
-        }
-        figure.add(bf);
-        figure.setAttributes(a);
-        return figure;
-    }
-    
+//    public Figure insertGraph(Point2D.Double[] points, Map<AttributeKey, Object> a){
+//        SVGPathFigure figure = new SVGPathFigure();
+//        figure.removeAllChildren();
+//        SVGBezierFigure bf = new SVGBezierFigure();
+//        for (int i=0; i < points.length; i++) {
+//            bf.addNode(new BezierPath.Node(points[i].x, points[i].y));
+//        }
+//        figure.add(bf);
+//        figure.setAttributes(a);
+//        return figure;
+//    }
+//    
     public Figure createPolygon(Point2D.Double[] points, Map<AttributeKey, Object> a) {
         SVGPathFigure figure = new SVGPathFigure();
         figure.removeAllChildren();

@@ -794,22 +794,22 @@ public class SVGInputFormat implements InputFormat {
     }
 
     
-    /**
-     * Reads an SVG "graph" element.
-     */
-    private Figure readGraphElement(IXMLElement elem) throws IOException{
-        HashMap<AttributeKey, Object> a = new HashMap<AttributeKey, Object>();
-        readCoreAttributes(elem, a);
-        readTransformAttribute(elem, a);
-        readOpacityAttribute(elem, a);
-        readLineAttributes(elem, a);
-
-        Point2D.Double[] points = toPoints(elem, readAttribute(elem, "points", ""));
-
-        Figure figure = factory.insertGraph(points, a);
-        elementObjects.put(elem, figure);
-        return figure;
-    }
+//    /**
+//     * Reads an SVG "graph" element.
+//     */
+//    private Figure readGraphElement(IXMLElement elem) throws IOException{
+//        HashMap<AttributeKey, Object> a = new HashMap<AttributeKey, Object>();
+//        readCoreAttributes(elem, a);
+//        readTransformAttribute(elem, a);
+//        readOpacityAttribute(elem, a);
+//        readLineAttributes(elem, a);
+//
+//        Point2D.Double[] points = toPoints(elem, readAttribute(elem, "points", ""));
+//
+//        Figure figure = factory.insertGraph(points, a);
+//        elementObjects.put(elem, figure);
+//        return figure;
+//    }
     
     /**
      * Reads an SVG "polygon" element.
