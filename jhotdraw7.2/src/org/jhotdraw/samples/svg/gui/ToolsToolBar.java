@@ -126,7 +126,7 @@ public class ToolsToolBar extends AbstractToolBar {
         gbc.insets = new Insets(0, 3, 0, 0);
         p.add(btn, gbc);
         
-        btn = ButtonFactory.addToolTo(this, editor, calTool = new CalligraphyTool(new SVGPathFigure(),new SVGBezierFigure(false),attributes), "createCalligraphy", labels);
+        btn = ButtonFactory.addToolTo(this, editor, calTool = new CalligraphyTool(new CalligraphyFigure(),new SVGBezierFigure(false),attributes), "createCalligraphy", labels);
         calTool.setToolDoneAfterCreation(false);
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
         gbc = new GridBagConstraints();
