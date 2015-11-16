@@ -477,5 +477,5 @@ public class ImageMapOutputFormat implements OutputFormat {
         Rectangle2D.Double rect = f.getBounds();
         writeRectAttributes(elem, f, rect);
         parent.addChild(elem);
-    }
+    }    
 }

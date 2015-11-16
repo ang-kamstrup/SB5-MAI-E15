@@ -47,6 +47,7 @@
                 <include name="createEllipse.png"/>
                 <include name="createImage.png"/>
                 <include name="createLine.png"/>
+                <include name="insertGraph.png"/>
                 <include name="createPolygon.png"/>
                 <include name="createRectangle.png"/>
                 <include name="createScribble.png"/>

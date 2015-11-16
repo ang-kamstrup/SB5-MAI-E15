@@ -1367,7 +1367,7 @@ public class ButtonFactory {
         btn.addActionListener(a);
         return btn;
     }
-
+    
     /**
      * Creates toolbar buttons and adds them to the specified JToolBar
      */

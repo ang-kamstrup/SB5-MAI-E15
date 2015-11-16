@@ -55,6 +55,11 @@ public interface SVGFigureFactory {
             Point2D.Double[] points, 
             Map<AttributeKey,Object> attributes);
     
+    
+    public Figure insertGraph(
+            Point2D.Double[] points,
+            Map<AttributeKey, Object> attributes);
+    
     public Figure createPolygon(
             Point2D.Double[] points, 
             Map<AttributeKey,Object> attributes);
