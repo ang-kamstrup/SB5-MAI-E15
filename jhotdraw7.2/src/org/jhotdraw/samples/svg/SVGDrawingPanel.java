@@ -79,6 +79,9 @@ public class SVGDrawingPanel extends JPanel {
         toolsPane.setOpaque(true);
 
         viewToolBar.setView(view);
+        viewToolBar.setDrawingPanel(this);
+        viewToolBar.setToolPane(toolsPane);
+        
 
         undoManager = new UndoRedoManager();
         setEditor(new DefaultDrawingEditor());
@@ -137,7 +140,7 @@ public class SVGDrawingPanel extends JPanel {
             public void componentRemoved(ContainerEvent e) {
             }
         });
-        toolsPane.add(new Navigator(view));
+        toolsPane.add(new Navigator(view));        
     }
 
     public void setDrawing(Drawing d) {
@@ -145,6 +148,18 @@ public class SVGDrawingPanel extends JPanel {
         view.getDrawing().removeUndoableEditListener(undoManager);
         view.setDrawing(d);
         d.addUndoableEditListener(undoManager);
+        
+        undoManager = new UndoRedoManager();
+        setEditor(new DefaultDrawingEditor());
+        editor.setHandleAttribute(HandleAttributeKeys.HANDLE_SIZE, new Integer(7));
+    }
+    
+    public JPanel getToolsPanel() {
+        return toolsPanel;
+    }
+    
+    public JPanel getToolsPane() {
+        return toolsPane;
     }
 
     public Drawing getDrawing() {
@@ -226,7 +241,7 @@ public class SVGDrawingPanel extends JPanel {
 
         toolsScrollPane.setBorder(PaletteLookAndFeel.getInstance().getBorder("Ribbon.border"));
         toolsScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-        toolsScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        toolsScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         toolsScrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
 
         toolsPane.setForeground(new java.awt.Color(153, 153, 153));

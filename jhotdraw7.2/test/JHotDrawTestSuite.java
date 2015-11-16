@@ -15,7 +15,7 @@ import org.junit.runners.Suite;
  * @author jcs
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GroupingTest.class})
+@Suite.SuiteClasses({GroupingTest.class,EdgeDetectionBetterTest.class, FavoriteColorTest.class})
 public class JHotDrawTestSuite {
 
     @BeforeClass
