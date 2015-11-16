@@ -30,6 +30,8 @@ import org.jhotdraw.geom.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.gui.FavoriteColorsPopupButton;
 import org.jhotdraw.gui.JFontChooser;
+import org.jhotdraw.samples.svg.SVGApplicationModel;
+import org.jhotdraw.samples.svg.SVGDrawingPanel;
 
 /**
  * ButtonFactory.
@@ -1551,4 +1553,38 @@ public class ButtonFactory {
         btn.setFocusable(false);
         return btn;
     }
+    
+    public static JButton createChangeToHorizontalButton(DrawingEditor editor, SVGDrawingPanel svgDrawingPanel, JPanel toolsPane) {
+        JButton btn;
+        btn = new JButton(new ChangeToHorizontalAction(editor, svgDrawingPanel, toolsPane));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static JButton createChangeToVerticalButton(DrawingEditor editor, SVGDrawingPanel svgDrawingPanel, JPanel toolsPane) {
+        JButton btn;
+        btn = new JButton(new ChangeToVerticalAction(editor, svgDrawingPanel, toolsPane));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public void getSVGDrawingPanel() {
+        
+    }
+    
+//    public void getSVGDrawingPanel() {
+//        return null;
+//    }
 }
