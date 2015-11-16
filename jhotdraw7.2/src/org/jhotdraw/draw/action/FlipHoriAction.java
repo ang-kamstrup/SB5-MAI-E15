@@ -72,12 +72,12 @@ public class FlipHoriAction extends AbstractSelectedAction {
                 group.basicAdd(f);
             }
             tx = new AffineTransform();
-            p0 = new Point2D.Double(group.getBounds().x, group.getBounds().y);
+            p0 = new Point2D.Double(group.getDrawingArea().x, group.getDrawingArea().y);
                 
             /** Flips the figure and then moves it back to its original position */
-            tx.translate(p0.x+group.getBounds().getWidth(), p0.y);
+            tx.translate(p0.x+group.getDrawingArea().getWidth(), p0.y);
             tx.scale(-1, 1);
-            tx.translate(-group.getBounds().x, -group.getBounds().y);
+            tx.translate(-group.getDrawingArea().x, -group.getDrawingArea().y);
                 
             group.transform(tx);
             group.changed();
@@ -86,31 +86,20 @@ public class FlipHoriAction extends AbstractSelectedAction {
             group.basicRemoveAllChildren();
             view.getDrawing().basicAddAll(view.getDrawing().indexOf(group), figures);
             view.getDrawing().remove(group);
-            
-            for(Figure f : figures) {
-                /** Resolves the issue of flipping after moving the figure */
-                SVGPathFigure pf = (SVGPathFigure) f;
-                pf.flattenTransform();
-            }
-            
             view.addToSelection(figures);
         } 
         else {
             for(Figure f : figures) {
                 tx = new AffineTransform();
-                p0 = new Point2D.Double(f.getBounds().x, f.getBounds().y);
+                p0 = new Point2D.Double(f.getDrawingArea().x, f.getDrawingArea().y);
                 
-                tx.translate(p0.x+f.getBounds().getWidth(), p0.y);
+                tx.translate(p0.x+f.getDrawingArea().getWidth(), p0.y);
                 tx.scale(-1, 1);
-                tx.translate(-f.getBounds().x, -f.getBounds().y);
+                tx.translate(-f.getDrawingArea().x, -f.getDrawingArea().y);
                 
                 f.willChange();
                 f.transform(tx);
                 f.changed();
-                
-                /** Resolves the issue of flipping after moving the figure */
-                SVGPathFigure pf = (SVGPathFigure) f;
-                pf.flattenTransform();
             }  
         }  
     }
