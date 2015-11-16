@@ -197,8 +197,6 @@ public class ButtonFactory {
     }
     public final static int HSV_COLORS_COLUMN_COUNT = 12;
 
-    
-
     private static class ToolButtonListener implements ItemListener {
 
         private Tool tool;
@@ -237,6 +235,11 @@ public class ButtonFactory {
 
         a.add(null); // separator
 
+          a.add(new FlipHoriAction(editor));
+        a.add(new FlipVertAction(editor));
+        
+        a.add(null); // separator
+        
         a.add(new GroupAction(editor));
         a.add(new UngroupAction(editor));
 
@@ -1557,21 +1560,6 @@ public class ButtonFactory {
         return btn;
     }
     
-    /**
-     * Creates a button that make it possible to scale the figures.
-     */
-    public static JButton createApplyScaleButton(DrawingEditor editor, CompositeFigure prototype) {        
-       //Event handler for the button
-       JButton btn = new JButton(new ApplyScaleButton(editor, prototype));
-        if (btn.getIcon() != null) {
-            btn.putClientProperty("hideActionText", Boolean.TRUE);
-        }
-        btn.setHorizontalTextPosition(JButton.CENTER);
-        btn.setVerticalTextPosition(JButton.BOTTOM);
-        btn.setText(null);
-        btn.setFocusable(false);
-        return btn;
-    }
     public static JButton createChangeToHorizontalButton(DrawingEditor editor, SVGDrawingPanel svgDrawingPanel, JPanel toolsPane) {
         JButton btn;
         btn = new JButton(new ChangeToHorizontalAction(editor, svgDrawingPanel, toolsPane));
@@ -1588,6 +1576,22 @@ public class ButtonFactory {
     public static JButton createChangeToVerticalButton(DrawingEditor editor, SVGDrawingPanel svgDrawingPanel, JPanel toolsPane) {
         JButton btn;
         btn = new JButton(new ChangeToVerticalAction(editor, svgDrawingPanel, toolsPane));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    /**
+     * Creates a button that make it possible to scale the figures.
+     */
+    public static JButton createApplyScaleButton(DrawingEditor editor, CompositeFigure prototype) {        
+       //Event handler for the button
+       JButton btn = new JButton(new ApplyScaleButton(editor, prototype));
         if (btn.getIcon() != null) {
             btn.putClientProperty("hideActionText", Boolean.TRUE);
         }
