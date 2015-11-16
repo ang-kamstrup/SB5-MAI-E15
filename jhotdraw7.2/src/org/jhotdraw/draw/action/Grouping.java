@@ -141,7 +141,7 @@ public class  Grouping {
      * @param prototype the group to ungrups
      * @return can the selected be ungroup
      */
-    protected boolean canUngroup(DrawingView localView, CompositeFigure prototype) {
+    public boolean canUngroup(DrawingView localView, CompositeFigure prototype) {
         return localView != null &&
                 localView.getSelectionCount() == 1 &&
                 prototype != null &&
