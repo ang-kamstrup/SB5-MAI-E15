@@ -79,88 +79,7 @@ public class ActionsToolBar extends AbstractToolBar {
 
     @Override
     protected JComponent createDisclosedComponent(int state) {
-        JPanel p = null;
-
-        switch (state) {
-            case 1: {
-                p = new JPanel();
-                p.setOpaque(false);
-                p.setBorder(new EmptyBorder(5, 5, 5, 8));
-
-                Preferences prefs = Preferences.userNodeForPackage(getClass());
-
-                ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
-
-                GridBagLayout layout = new GridBagLayout();
-                p.setLayout(layout);
-
-                GridBagConstraints gbc;
-                AbstractButton btn;
-
-                btn = new JButton(undoManager.getUndoAction());
-                btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-                btn.setText(null);
-                labels.configureToolBarButton(btn, "edit.undo");
-                btn.putClientProperty("hideActionText", Boolean.TRUE);
-                gbc = new GridBagConstraints();
-                gbc.gridy = 0;
-                gbc.gridx = 0;
-                p.add(btn, gbc);
-
-                btn = new JButton(undoManager.getRedoAction());
-                btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-                btn.setText(null);
-                labels.configureToolBarButton(btn, "edit.redo");
-                btn.putClientProperty("hideActionText", Boolean.TRUE);
-                gbc = new GridBagConstraints();
-                gbc.gridy = 0;
-                gbc.insets = new Insets(0, 3, 0, 0);
-                p.add(btn, gbc);
-
-
-                btn = ButtonFactory.createPickAttributesButton(editor);
-                btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-                labels.configureToolBarButton(btn, "attributesPick");
-                gbc = new GridBagConstraints();
-                gbc.gridy = 1;
-                gbc.insets = new Insets(3, 0, 0, 0);
-                p.add(btn, gbc);
-
-                btn = ButtonFactory.createApplyAttributesButton(editor);
-                btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-                labels.configureToolBarButton(btn, "attributesApply");
-                gbc = new GridBagConstraints();
-                gbc.gridy = 1;
-                gbc.insets = new Insets(3, 3, 0, 0);
-                p.add(btn, gbc);
-
-                JPopupButton pb = new JPopupButton();
-                pb.setUI((PaletteButtonUI) PaletteButtonUI.createUI(pb));
-                pb.setItemFont(UIManager.getFont("MenuItem.font"));
-                labels.configureToolBarButton(pb, "actions");
-                pb.add(new DuplicateAction());
-                pb.addSeparator();
-                pb.add(new FlipHoriAction(editor));
-                pb.add(new FlipVertAction(editor));
-                pb.addSeparator();
-                pb.add(new GroupAction(editor, new SVGGroupFigure()));
-                pb.add(new UngroupAction(editor, new SVGGroupFigure()));
-                pb.addSeparator();
-                pb.add(new CutAction());
-                pb.add(new CopyAction());
-                pb.add(new PasteAction());
-                pb.add(new SelectAllAction());
-                pb.add(new SelectSameAction(editor));
-                pb.add(new ClearSelectionAction());
-
-                gbc = new GridBagConstraints();
-                gbc.gridy = 2;
-                gbc.insets = new Insets(3, 0, 0, 0);
-                p.add(pb, gbc);
-                break;
-            }
-        }
-        return p;
+        return (state == 1) ? CreateActionToolbar(): null;
     }
 
     public ToggleGridAction getToggleGridAction() {
@@ -186,4 +105,86 @@ public class ActionsToolBar extends AbstractToolBar {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * 
+     * @return 
+     */
+    private JPanel CreateActionToolbar() {
+        JPanel p = new JPanel();
+        p.setOpaque(false);
+        p.setBorder(new EmptyBorder(5, 5, 5, 8));
+        Preferences prefs = Preferences.userNodeForPackage(getClass());
+        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
+        GridBagLayout layout = new GridBagLayout();
+        p.setLayout(layout);
+        GridBagConstraints gbc;
+        AbstractButton btn;
+        btn = new JButton(undoManager.getUndoAction());
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        btn.setText(null);
+        labels.configureToolBarButton(btn, "edit.undo");
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        gbc = new GridBagConstraints();
+        gbc.gridy = 0;
+        gbc.gridx = 0;
+        p.add(btn, gbc);
+        btn = new JButton(undoManager.getRedoAction());
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        btn.setText(null);
+        labels.configureToolBarButton(btn, "edit.redo");
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        gbc = new GridBagConstraints();
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0, 3, 0, 0);
+        p.add(btn, gbc);
+        btn = ButtonFactory.createPickAttributesButton(editor);
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        labels.configureToolBarButton(btn, "attributesPick");
+        gbc = new GridBagConstraints();
+        gbc.gridy = 1;
+        gbc.insets = new Insets(3, 0, 0, 0);
+        p.add(btn, gbc);
+        btn = ButtonFactory.createApplyAttributesButton(editor);
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        labels.configureToolBarButton(btn, "attributesApply");
+        gbc = new GridBagConstraints();
+        gbc.gridy = 1;
+        gbc.insets = new Insets(3, 3, 0, 0);
+        p.add(btn, gbc);
+        
+        
+        JPopupButton pb = new JPopupButton();
+        pb.setUI((PaletteButtonUI) PaletteButtonUI.createUI(pb));
+        pb.setItemFont(UIManager.getFont("MenuItem.font"));
+        labels.configureToolBarButton(pb, "actions");
+        pb.add(new DuplicateAction());
+        pb.addSeparator();
+        pb.add(new FlipHoriAction(editor));
+        pb.add(new FlipVertAction(editor));
+        pb.addSeparator();
+        pb.add(new GroupAction(editor, new SVGGroupFigure()));
+        pb.add(new UngroupAction(editor, new SVGGroupFigure()));
+        pb.addSeparator();
+        pb.add(new CutAction());
+        pb.add(new CopyAction());
+        pb.add(new PasteAction());
+        pb.add(new SelectAllAction());
+        pb.add(new SelectSameAction(editor));
+        pb.add(new ClearSelectionAction());
+        gbc = new GridBagConstraints();
+        gbc.gridy = 2;
+        gbc.insets = new Insets(3, 0, 0, 0);
+        p.add(pb, gbc);
+        
+        //Scale btn
+        btn = ButtonFactory.createApplyScaleButton(editor, new SVGGroupFigure());
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        labels.configureToolBarButton(btn, "edit.applyScale");
+        gbc = new GridBagConstraints();
+        gbc.gridy = 2;
+        gbc.insets = new Insets(3, 0, 0, 0);
+        p.add(btn, gbc);
+        return p;
+    }
 }
