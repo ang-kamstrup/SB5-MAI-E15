@@ -1,17 +1,3 @@
-/*
- * @(#)SelectionColorChooserAction.java  2.0  2006-06-07
- *
- * Copyright (c) 1996-2006 by the original authors of JHotDraw
- * and all its contributors.
- * All rights reserved.
- *
- * The copyright of this software is owned by the authors and  
- * contributors of the JHotDraw project ("the copyright holders").  
- * You may not use, copy or modify this software, except in  
- * accordance with the license agreement you entered into with  
- * the copyright holders. For details see accompanying license terms. 
- */
-
 package org.jhotdraw.draw.action;
 
 import javax.swing.*;
@@ -24,8 +10,10 @@ import javax.swing.undo.UndoableEdit;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.samples.svg.Gradient;
 import org.jhotdraw.samples.svg.SVGAttributeKeys;
+
 /**
  * 
+ * @author Peter G. Andersen - peand13@student.sdu.dk
  */
 public class SelectionGradientColorChooserAction extends AttributeAction {
     protected AttributeKey<Gradient> key;
