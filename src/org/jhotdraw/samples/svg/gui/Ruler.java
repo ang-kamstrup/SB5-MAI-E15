@@ -30,11 +30,7 @@ public class Ruler extends JComponent {
         setIncrementAndUnits();
         repaint();
     }
- 
-    //trying to git...
-    
-    //more try.
-    
+
     private void setIncrementAndUnits() {
         if (isMetric) {
             units = (int)((double)INCH / (double)2.54); // dots per centimeter
