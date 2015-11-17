@@ -13,23 +13,32 @@
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/Figure.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/GradientHandleKit.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/ViewToolBar.java</file>
-            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/LinearGradient.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/ActionsToolBar.java</file>
-            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/action/GroupAction.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/action/ZoomAction.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/ToolsToolBar.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/figures/SVGRectFigure.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/figures/SVGAttributedFigure.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/SVGDrawingPanel.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/DrawingView.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/AbstractFigure.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/AbstractHandle.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/FillToolBar.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/action/UngroupAction.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/MoveHandle.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/DefaultDrawingView.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/figures/SVGPathFigure.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/figures/SVGFigure.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/gui/AbstractToolBar.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/action/StrokeIcon.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/RelativeLocator.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/gui/JPopupButton.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/figures/SVGRectRadiusHandle.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/gui/FigureAttributeEditorHandler.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/action/SendToBackAction.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/action/ChangeGradientAction.java</file>
-            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/samples/svg/RadialGradient.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/gui/AttributeEditor.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/action/ButtonFactory.java</file>
+            <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/gui/JAttributeSlider.java</file>
             <file>file:/home/peter/Projects/SDU/SB5-MAI/jhotdraw7.2/src/org/jhotdraw/draw/action/SelectSameAction.java</file>
         </group>
     </open-files>

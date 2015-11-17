@@ -32,6 +32,7 @@ import org.jhotdraw.gui.JAttributeSlider;
 import org.jhotdraw.gui.JAttributeTextField;
 import org.jhotdraw.gui.JPopupButton;
 import org.jhotdraw.gui.plaf.palette.*;
+import org.jhotdraw.samples.svg.LinearGradient;
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.FILL_GRADIENT;
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.FILL_OPACITY;
 import org.jhotdraw.text.ColorFormatter;
@@ -323,8 +324,8 @@ public class FillToolBar extends AbstractToolBar {
                 new FigureAttributeEditorHandler<Color>(FILL_COLOR, defaultAttributes, colorField, editor, true);
                 rowOne.add(colorField, gbc);
             }*/
-            JButton btn = ButtonFactory.createSelectionColorButton(editor,
-                    FILL_COLOR, ButtonFactory.HSV_COLORS, ButtonFactory.HSV_COLORS_COLUMN_COUNT,
+            JButton btn = ButtonFactory.createSelectionGradientColorButton(editor,
+                    0, FILL_GRADIENT, ButtonFactory.HSV_COLORS, ButtonFactory.HSV_COLORS_COLUMN_COUNT,
                     "attribute.fillColor", labels, defaultAttributes, new Rectangle(3, 3, 10, 10));
             btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
             ((JPopupButton) btn).setAction(null, null);
@@ -395,8 +396,8 @@ public class FillToolBar extends AbstractToolBar {
                 new FigureAttributeEditorHandler<Color>(FILL_COLOR, defaultAttributes, colorField, editor, true);
                 rowOne.add(colorField, gbc);
             }*/
-            btn = ButtonFactory.createSelectionColorButton(editor,
-                    FILL_COLOR, ButtonFactory.HSV_COLORS, ButtonFactory.HSV_COLORS_COLUMN_COUNT,
+            btn = ButtonFactory.createSelectionGradientColorButton(editor,
+                    1, FILL_GRADIENT, ButtonFactory.HSV_COLORS, ButtonFactory.HSV_COLORS_COLUMN_COUNT,
                     "attribute.fillColor", labels, defaultAttributes, new Rectangle(3, 3, 10, 10));
             btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
             ((JPopupButton) btn).setAction(null, null);
