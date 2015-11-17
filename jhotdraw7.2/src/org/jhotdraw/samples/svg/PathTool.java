@@ -35,7 +35,7 @@ public class PathTool extends BezierTool {
     /**
      * Set this to true to turn on debugging output on System.out.
      */
-    private final static boolean DEBUG = false;
+    private final static boolean DEBUG = true;
     /**
      * The path prototype for new figures.
      */

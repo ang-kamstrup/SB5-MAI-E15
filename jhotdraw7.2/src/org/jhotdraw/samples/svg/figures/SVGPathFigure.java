@@ -145,7 +145,7 @@ public class SVGPathFigure extends AbstractAttributedCompositeFigure implements 
         cachedHitShape = null;
     }
 
-    protected GeneralPath getPath() {
+    public GeneralPath getPath() {
         if (cachedPath == null) {
             cachedPath = new GeneralPath();
             cachedPath.setWindingRule(WINDING_RULE.get(this) == WindingRule.EVEN_ODD ? GeneralPath.WIND_EVEN_ODD : GeneralPath.WIND_NON_ZERO);
