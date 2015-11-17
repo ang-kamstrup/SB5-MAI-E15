@@ -24,6 +24,10 @@ import java.util.*;
 import java.util.prefs.*;
 import javax.swing.*;
 import org.jhotdraw.app.action.*;
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.filters.BlackHoleFilterAction;
+import org.jhotdraw.filters.GaussianBlurFilterAction;
+import org.jhotdraw.filters.PixelFilterAction;
 
 /**
  * A DefaultSDIApplication can handle the life cycle of a single document window
@@ -109,25 +113,9 @@ public class DefaultSDIApplication extends AbstractApplication {
         ApplicationModel m = getModel();
         m.putAction(AboutAction.ID, new AboutAction(this));
         m.putAction(ExitAction.ID, new ExitAction(this));
-
-        m.putAction(ClearAction.ID, new ClearAction(this));
-        m.putAction(NewAction.ID, new NewAction(this));
-        appLabels.configureAction(m.getAction(NewAction.ID), "window.new");
-        m.putAction(LoadAction.ID, new LoadAction(this));
-        m.putAction(ClearRecentFilesAction.ID, new ClearRecentFilesAction(this));
-        m.putAction(SaveAction.ID, new SaveAction(this));
-        m.putAction(SaveAsAction.ID, new SaveAsAction(this));
-        m.putAction(CloseAction.ID, new CloseAction(this));
-        m.putAction(PrintAction.ID, new PrintAction(this));
-
-        m.putAction(UndoAction.ID, new UndoAction(this));
-        m.putAction(RedoAction.ID, new RedoAction(this));
-        m.putAction(CutAction.ID, new CutAction());
-        m.putAction(CopyAction.ID, new CopyAction());
-        m.putAction(PasteAction.ID, new PasteAction());
-        m.putAction(DeleteAction.ID, new DeleteAction());
-        m.putAction(DuplicateAction.ID, new DuplicateAction());
-        m.putAction(SelectAllAction.ID, new SelectAllAction());
+        
+        filePutActions(m, appLabels);
+        editPutActions(m);
     }
 
     protected void initViewActions(View p) {
@@ -231,6 +219,12 @@ public class DefaultSDIApplication extends AbstractApplication {
         }
         return c;
     }
+    
+    protected Component wrapFilterComponent(View p){
+        JComponent c = p.getComponent();
+        
+        return c;
+    }
 
     public void hide(View p) {
         if (p.isShowing()) {
@@ -262,6 +256,7 @@ public class DefaultSDIApplication extends AbstractApplication {
             mb.add(mm);
             lastMenu = mm;
         }
+        
         JMenu viewMenu = createViewMenu(p, toolBarActions);
         if (viewMenu != null) {
             if (lastMenu != null && lastMenu.getText().equals(viewMenu.getText())) {
@@ -289,6 +284,7 @@ public class DefaultSDIApplication extends AbstractApplication {
         if (helpMenu != null) {
             mb.add(helpMenu);
         }
+        
         return mb;
     }
 
@@ -441,5 +437,28 @@ public class DefaultSDIApplication extends AbstractApplication {
         m.add(model.getAction(AboutAction.ID));
 
         return m;
+    }
+
+    private void editPutActions(ApplicationModel m) {
+        m.putAction(UndoAction.ID, new UndoAction(this));
+        m.putAction(RedoAction.ID, new RedoAction(this));
+        m.putAction(CutAction.ID, new CutAction());
+        m.putAction(CopyAction.ID, new CopyAction());
+        m.putAction(PasteAction.ID, new PasteAction());
+        m.putAction(DeleteAction.ID, new DeleteAction());
+        m.putAction(DuplicateAction.ID, new DuplicateAction());
+        m.putAction(SelectAllAction.ID, new SelectAllAction());
+    }
+
+    private void filePutActions(ApplicationModel m, ResourceBundleUtil appLabels) {
+        m.putAction(ClearAction.ID, new ClearAction(this));
+        m.putAction(NewAction.ID, new NewAction(this));
+        appLabels.configureAction(m.getAction(NewAction.ID), "window.new");
+        m.putAction(LoadAction.ID, new LoadAction(this));
+        m.putAction(ClearRecentFilesAction.ID, new ClearRecentFilesAction(this));
+        m.putAction(SaveAction.ID, new SaveAction(this));
+        m.putAction(SaveAsAction.ID, new SaveAsAction(this));
+        m.putAction(CloseAction.ID, new CloseAction(this));
+        m.putAction(PrintAction.ID, new PrintAction(this));
     }
 }

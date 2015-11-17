@@ -89,6 +89,10 @@ public class SVGApplicationModel extends DefaultApplicationModel {
     public static Collection<Action> createSelectionActions(DrawingEditor editor) {
         LinkedList<Action> a = new LinkedList<Action>();
         a.add(new DuplicateAction());
+        
+        a.add(null); // separator
+        a.add(new FlipHoriAction(editor));
+        a.add(new FlipVertAction(editor));
 
         a.add(null); // separator
         a.add(new GroupAction(editor, new SVGGroupFigure()));
@@ -99,6 +103,7 @@ public class SVGApplicationModel extends DefaultApplicationModel {
         a.add(null); // separator
         a.add(new BringToFrontAction(editor));
         a.add(new SendToBackAction(editor));
+        a.add(new EdgeDetectionAction(editor));
 
         return a;
     }
