@@ -21,6 +21,7 @@ import javax.swing.*;
 import java.util.*;
 import org.jhotdraw.app.JHotDrawFeatures;
 import org.jhotdraw.app.action.Actions;
+import org.jhotdraw.samples.svg.figures.SVGRectFigure;
 
 /**
  * A SelectionTool, which recognizes double clicks and popup menu triggers.
@@ -324,7 +325,10 @@ public class DelegationSelectionTool extends SelectionTool {
                 } else {
                     if (outerFigure.handleMouseClick(p, evt, getView())) {
                         v.clearSelection();
-                        v.addToSelection(outerFigure);
+                        if (!SVGRectFigure.class.equals(outerFigure.getClass())) {
+                            v.addToSelection(outerFigure);
+                        }
+                        
                     } else {
                         v.clearSelection();
                         v.addToSelection(outerFigure);
