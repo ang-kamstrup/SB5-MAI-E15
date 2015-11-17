@@ -155,6 +155,20 @@ public class CanvasToolBar extends AbstractToolBar {
                     gbc.insets = new Insets(3, 3, 0, 0);
                     gbc.gridwidth=2;
                     p.add(heightField, gbc);
+                    
+                    //Crop tool button
+                    JToggleButton cropButton;
+                    cropButton = ButtonFactory.createCropToolButton();
+                    cropButton.setToolTipText("Crop tool");
+                    cropButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(cropButton));
+                    gbc = new GridBagConstraints();
+                    gbc.gridx = 3;
+                    gbc.gridy = 0;
+                    gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+                    gbc.fill = GridBagConstraints.BOTH;
+                    gbc.insets = new Insets(3, 3, 0, 0);
+                    gbc.gridwidth = 3;
+                    p.add(cropButton, gbc);
 
                 }
                 break;
@@ -299,7 +313,7 @@ public class CanvasToolBar extends AbstractToolBar {
                     gbc.fill = GridBagConstraints.BOTH;
                     gbc.insets = new Insets(3, 3, 0, 0);
                     p3.add(heightField, gbc);
-
+                    
                     // Add horizontal strips
                     gbc = new GridBagConstraints();
                     gbc.gridy = 0;
