@@ -12,6 +12,30 @@ import java.awt.Polygon;
  */
 public class StarFigure extends Polygon implements Cloneable {
     int x;
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getR() {
+        return r;
+    }
+
+    public int getInnerR() {
+        return innerR;
+    }
+
+    public static int getVertexCount() {
+        return vertexCount;
+    }
+
+    public double getStartAngle() {
+        return startAngle;
+    }
     int y;
     int r;
     int innerR;
@@ -24,10 +48,6 @@ public class StarFigure extends Polygon implements Cloneable {
         this.r = r;
         this.innerR = innerR;
         startAngle = 0;
-    }
-
-    public StarFigure(int x, int y, int r, int innerR, double startAngle) {
-        super(getXCoordinates(x, y, r, innerR, startAngle), getYCoordinates(x, y, r, innerR, 5, startAngle), 10);
     }
 
     protected static int[] getXCoordinates(int x, int y, int r, int innerR, double startAngle) {

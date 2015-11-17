@@ -5,6 +5,7 @@
 package org.jhotdraw.samples.svg.figures;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
@@ -37,11 +38,11 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
     
     //Contructors
     public SVGStarFigure() {
-        this(0,0);
+        this(0,0,0,0);
     }
-    public SVGStarFigure(int x, int y) {
+    public SVGStarFigure(int x, int y, int r, int innerR) {
         
-        star = new StarFigure(200, 200, 100, 20);
+        star = new StarFigure(x, y, r, innerR);
         SVGAttributeKeys.setDefaults(this);
     }
     //Drawing
@@ -72,10 +73,9 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
     //Coordinates and bounds
     @Override
     public Double getBounds() {
-       double height = star.r*2;
-       double width = star.r*2;
+       int width = star.r * 2;
+       int height = star.r*2;
        return new Rectangle2D.Double(star.x, star.y, height, width);
-//        return (Rectangle2D.Double)(star.getBounds2D());
     }
 
     @Override
@@ -173,10 +173,9 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure{
     
     @Override
     public Collection<Handle> createHandles(int detailLevel) {
-                System.out.println("Handles");
         LinkedList<Handle> handles = new LinkedList<Handle>();
         switch (detailLevel % 2) {
-            case -1: // Mouse hover handles
+            case -1: 
                 handles.add(new BoundsOutlineHandle(this, false, true));
                 break;
             case 0:
