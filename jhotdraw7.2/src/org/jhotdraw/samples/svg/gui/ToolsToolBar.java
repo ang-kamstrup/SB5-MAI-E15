@@ -69,7 +69,7 @@ public class ToolsToolBar extends AbstractToolBar {
         HashMap<AttributeKey, Object> attributes;
         btn = ButtonFactory.addSelectionToolTo(this, editor,
                 ButtonFactory.createDrawingActions(editor),
-                createSelectionActions(editor));
+                SelectionActionFactory.createSelectionActions(editor));
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -185,31 +185,6 @@ public class ToolsToolBar extends AbstractToolBar {
                 break;
         }
         return p;
-    }
-
-    public static Collection<Action> createSelectionActions(DrawingEditor editor) {
-        LinkedList<Action> a = new LinkedList<Action>();
-        a.add(new DuplicateAction());
-
-        a.add(null); // separator
-        
-        a.add(new FlipHoriAction(editor));
-        a.add(new FlipVertAction(editor));
-        
-        a.add(null); // separator
-
-        a.add(new GroupAction(editor, new SVGGroupFigure()));
-        a.add(new UngroupAction(editor, new SVGGroupFigure()));
-        a.add(new CombineAction(editor));
-        a.add(new SplitAction(editor));
-
-        a.add(null); // separator
-
-        a.add(new BringToFrontAction(editor));
-        a.add(new SendToBackAction(editor));
-        a.add(new EdgeDetectionAction(editor));
-
-        return a;
     }
 
     @Override
