@@ -356,37 +356,46 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
     public boolean handleMouseClick(Point2D.Double p, MouseEvent evt, DrawingView view) {
         if (evt.isShiftDown() && evt.getClickCount() == 2 && view.getHandleDetailLevel() % 2 == 0) {
 
-            // CLONE RECTANGLE TO PATHFIGURE
-
-            SVGBezierFigure bf = new SVGBezierFigure();
-
-            // Left lower corner
-            bf.addNode(new BezierPath.Node(getX(), getY()));
-
-            // Left top corner
-            bf.addNode(new BezierPath.Node(getX(), (getY() + getHeight())));
-            // Right top corner
-            bf.addNode(new BezierPath.Node((getX() + getWidth()), (getY() + getHeight())));
-
-            // Right lower corner
-            bf.addNode(new BezierPath.Node((getX() + getWidth()), getY()));
-            bf.setClosed(true);
-
-            // REMOVE RECTANGLE AND SHOW NEW PATHFIGURE
+            // Convert Rectangle to Pathfigure
             SVGPathFigure pf = new SVGPathFigure();
-            pf.removeAllChildren();
-            pf.add(bf);
-
-            // TODO: DOES NOT WORK
-            pf.setAttribute(FILL_COLOR, Color.white);
-            pf.setAttribute(STROKE_COLOR, Color.black);
-
+            pf = convertToPathFigure(this, pf);
+            
+            // Remove rectangle and show new pathfigure
             view.getDrawing().remove(this);
             view.getDrawing().add(pf);
             view.addToSelection(pf);
-
+            
             return pf.handleMouseClick(p, evt, view);
         }
         return false;
+    }
+
+    public SVGPathFigure convertToPathFigure(SVGRectFigure rf, SVGPathFigure pf) {
+
+        // CLONE RECTANGLE BOUNDS TO A NEW PATHFIGURE
+        // DONE CREATING 4 NODES REPRESENTING RECTANGLE CORNERS
+        SVGBezierFigure bf = new SVGBezierFigure();
+
+        // Left lower corner
+        bf.addNode(new BezierPath.Node(getX(), getY()));
+        
+        // Left top corner
+        bf.addNode(new BezierPath.Node(getX(), (getY() + getHeight())));
+        // Right top corner
+        bf.addNode(new BezierPath.Node((getX() + getWidth()), (getY() + getHeight())));
+
+        // Right lower corner
+        bf.addNode(new BezierPath.Node((getX() + getWidth()), getY()));
+        bf.setClosed(true);
+
+        // Add BezierFigure to PathFigure
+        pf.removeAllChildren();
+        pf.add(bf);
+
+        // Set attributes on pathfigure
+        pf.setAttribute(FILL_COLOR, Color.white);
+        pf.setAttribute(STROKE_COLOR, Color.black);
+        
+        return pf;
     }
 }
