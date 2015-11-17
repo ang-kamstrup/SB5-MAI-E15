@@ -122,6 +122,7 @@ public class AttributeKeys {
      * Stroke color. The value of this attribute is a Color object.
      */
     public final static AttributeKey<Color> STROKE_COLOR = new AttributeKey<Color>("strokeColor", Color.class, Color.black, true, labels);
+    
     /**
      * Stroke width. A double used to construct a BasicStroke or the
      * outline of a DoubleStroke.
@@ -237,7 +238,15 @@ public class AttributeKeys {
      * Text shadow offset. The value of this attribute is a Dimension2DDouble object.
      */
     public final static AttributeKey<Dimension2DDouble> TEXT_SHADOW_OFFSET = new AttributeKey<Dimension2DDouble>("textShadowOffset", Dimension2DDouble.class, new Dimension2DDouble(1d, 1d), false, labels);
+    
+    
+    public final static AttributeKey<Color> SHADOW_COLOR = new AttributeKey<Color>("shadowColor", Color.class, Color.black, false, labels);
 
+    //Shadow_Opacity, used to determine stroke.
+    public final static AttributeKey<Dimension2DDouble> SHADOW_OFFSET = new AttributeKey<Dimension2DDouble>("shadowOffset", Dimension2DDouble.class, new Dimension2DDouble(1d, 1d), false, labels);
+    
+    public final static AttributeKey<Color> SHADOW_FILL_COLOR = new AttributeKey<Color>("shadowOffset", Color.class, Color.black, false, labels);
+    
     public static enum Alignment {
 
         /** align on the left or the top */
@@ -356,6 +365,8 @@ public class AttributeKeys {
                     STROKE_DASH_PHASE,
                     STROKE_TYPE,
                     STROKE_PLACEMENT,
+                    SHADOW_COLOR,
+                    SHADOW_OFFSET,
                     TEXT,
                     TEXT_COLOR,
                     TEXT_SHADOW_COLOR,
@@ -395,7 +406,7 @@ public class AttributeKeys {
             // break; not reached
         }
     }
-
+    
     /**
      * Convenience method for computing the total stroke miter limit from the
      * STROKE_MITER_LIMIT, and IS_STROKE_MITER_LIMIT factor.

@@ -430,4 +430,8 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
         imageData = baos.toByteArray();
         bufferedImage = img;
     }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
+    }
 }

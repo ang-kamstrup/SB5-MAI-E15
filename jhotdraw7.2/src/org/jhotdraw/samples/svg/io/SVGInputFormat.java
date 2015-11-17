@@ -111,15 +111,18 @@ public class SVGInputFormat implements InputFormat {
         /**
          * The viewBox specifies the coordinate system within the Viewport.
          */
-        public Rectangle2D.Double viewBox = new Rectangle2D.Double(0d, 0d, 640d, 480d);
+        //public Rectangle2D.Double viewBox = new Rectangle2D.Double(0d, 0d, 640d, 480d);
+        public Rectangle2D.Double viewBox = new Rectangle2D.Double(0d, 0d, width, height);
         /**
          * Factor for percent values relative to Viewport width.
          */
-        public double widthPercentFactor = 640d / 100d;
+        //public double widthPercentFactor = 640d / 100d;
+        public double widthPercentFactor = width / 100d;
         /**
          * Factor for percent values relative to Viewport height.
          */
-        public double heightPercentFactor = 480d / 100d;
+        //public double heightPercentFactor = 480d / 100d;
+        public double heightPercentFactor = height / 100d;
         /**
          * Factor for number values in the user coordinate system.
          * This is the smaller value of width / viewBox.width and height / viewBox.height.

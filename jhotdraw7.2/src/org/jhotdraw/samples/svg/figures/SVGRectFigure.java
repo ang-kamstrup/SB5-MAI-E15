@@ -116,6 +116,14 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
             g.draw(p);
         }
     }
+    
+    @Override
+    protected void drawShadow(Graphics2D g) {
+        Shape fig = new Rectangle2D.Double(getX()+20, getY()+20,getWidth(),getHeight());
+        g.fill(fig);
+        g.draw(fig);
+        
+    }
 
     // SHAPE AND BOUNDS
     public double getX() {

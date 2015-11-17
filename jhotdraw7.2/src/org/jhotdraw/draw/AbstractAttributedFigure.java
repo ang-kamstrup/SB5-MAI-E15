@@ -167,15 +167,23 @@ public abstract class AbstractAttributedFigure extends AbstractFigure {
      * the STROKE_COLOR attribute before calling this method.
      * If the STROKE_COLOR attribute is null, this method is not called.
      */
+    protected abstract void drawStroke(java.awt.Graphics2D g);
+    //<editor-fold defaultstate="collapsed" desc="comment">
     /**
      * This method is called by method draw() to draw the text of the figure
      * . AbstractAttributedFigure configures the Graphics2D object with
      * the TEXT_COLOR attribute before calling this method.
      * If the TEXT_COLOR attribute is null, this method is not called.
      */
-    protected abstract void drawStroke(java.awt.Graphics2D g);
+    //</editor-fold>
     protected void drawText(java.awt.Graphics2D g) {
     }
+    
+    // -II- 
+//    public Shadow getShadow(){
+//      return AttributeKeys.getShadow(this);
+//    }
+    protected abstract void drawShadow(java.awt.Graphics2D g);
     
     public AbstractAttributedFigure clone() {
         AbstractAttributedFigure that = (AbstractAttributedFigure) super.clone();

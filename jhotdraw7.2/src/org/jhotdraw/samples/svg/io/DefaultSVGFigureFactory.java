@@ -93,6 +93,7 @@ public class DefaultSVGFigureFactory implements SVGFigureFactory {
         figure.setAttributes(a);
         return figure;
     }
+   
     public Figure createPath(BezierPath[] beziers, Map<AttributeKey, Object> a) {
         SVGPathFigure figure = new SVGPathFigure();
         figure.removeAllChildren();

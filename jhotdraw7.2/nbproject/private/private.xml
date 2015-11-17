@@ -1,5 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="21">
+        <file>
+            <url>src/org/jhotdraw/samples/svg/figures/SVGRectFigure.java</url>
+            <bookmark id="16">
+                <name/>
+                <line>71</line>
+                <key/>
+            </bookmark>
+            <bookmark id="11">
+                <name/>
+                <line>73</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/org/jhotdraw/samples/svg/SVGAttributeKeys.java</url>
+            <bookmark id="3">
+                <name/>
+                <line>27</line>
+                <key/>
+            </bookmark>
+            <bookmark id="19">
+                <name/>
+                <line>100</line>
+                <key/>
+            </bookmark>
+            <bookmark id="18">
+                <name/>
+                <line>109</line>
+                <key/>
+            </bookmark>
+            <bookmark id="14">
+                <name/>
+                <line>164</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/org/jhotdraw/draw/AbstractAttributedFigure.java</url>
+            <bookmark id="9">
+                <name/>
+                <line>182</line>
+                <key/>
+            </bookmark>
+            <bookmark id="8">
+                <name/>
+                <line>185</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/org/jhotdraw/samples/svg/figures/SVGAttributedFigure.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>0</line>
+                <key/>
+            </bookmark>
+            <bookmark id="21">
+                <name/>
+                <line>88</line>
+                <key/>
+            </bookmark>
+            <bookmark id="13">
+                <name/>
+                <line>107</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/org/jhotdraw/draw/AttributeKeys.java</url>
+            <bookmark id="20">
+                <name/>
+                <line>242</line>
+                <key/>
+            </bookmark>
+            <bookmark id="7">
+                <name/>
+                <line>245</line>
+                <key/>
+            </bookmark>
+            <bookmark id="6">
+                <name/>
+                <line>373</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
 </project-private>

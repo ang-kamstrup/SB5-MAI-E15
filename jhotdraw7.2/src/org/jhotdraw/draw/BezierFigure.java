@@ -707,4 +707,8 @@ public class BezierFigure extends AbstractAttributedFigure {
         }
         in.closeElement();
     }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
+    }
 }

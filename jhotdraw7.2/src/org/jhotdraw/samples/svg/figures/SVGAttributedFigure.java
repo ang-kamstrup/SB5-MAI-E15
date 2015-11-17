@@ -86,6 +86,14 @@ public abstract class SVGAttributedFigure extends AbstractAttributedFigure {
             savedTransform = g.getTransform();
             g.transform(TRANSFORM.get(this));
         }
+        Paint paint2 = SVGAttributeKeys.getShadowPaint(this);
+        //Drawing of shadow
+        paint2 = SVGAttributeKeys.getShadowPaint(this);
+        //if (paint != null && STROKE_WIDTH.get(this) > 0){
+        if (paint2 != null){
+            g.setPaint(paint2);
+            drawShadow(g);
+        }
         
         Paint paint = SVGAttributeKeys.getFillPaint(this);
         if (paint != null) {

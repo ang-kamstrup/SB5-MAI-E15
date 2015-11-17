@@ -602,5 +602,9 @@ public class SVGTextAreaFigure extends SVGAttributedFigure
         that.bounds = (Rectangle2D.Double) this.bounds.clone();
         return that;
     }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
+    }
 }
 
