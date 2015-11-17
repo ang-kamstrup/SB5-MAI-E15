@@ -68,7 +68,7 @@ public class ToolsToolBar extends AbstractToolBar {
 
         HashMap<AttributeKey, Object> attributes;
         btn = ButtonFactory.addSelectionToolTo(this, editor,
-                ButtonFactory.createDrawingActions(editor),
+                ButtonFactory.createDrawingActions(editor), 
                 createSelectionActions(editor));
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
         gbc = new GridBagConstraints();
