@@ -355,36 +355,36 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
     @FeatureEntryPoint(JHotDrawFeatures.RECTANGLE_TOOL)
     public boolean handleMouseClick(Point2D.Double p, MouseEvent evt, DrawingView view) {
         if (evt.isShiftDown() && evt.getClickCount() == 2 && view.getHandleDetailLevel() % 2 == 0) {
-            
+
             // CLONE RECTANGLE TO PATHFIGURE
-            
+
             SVGBezierFigure bf = new SVGBezierFigure();
-            
+
             // Left lower corner
             bf.addNode(new BezierPath.Node(getX(), getY()));
-            
+
             // Left top corner
             bf.addNode(new BezierPath.Node(getX(), (getY() + getHeight())));
             // Right top corner
-            bf.addNode(new BezierPath.Node((getX()+getWidth()),(getY()+getHeight())));
-            
+            bf.addNode(new BezierPath.Node((getX() + getWidth()), (getY() + getHeight())));
+
             // Right lower corner
             bf.addNode(new BezierPath.Node((getX() + getWidth()), getY()));
             bf.setClosed(true);
-            
-            
-            // TODO: DOES NOT WORK
-            bf.setAttribute(FILL_COLOR, Color.white);
-            bf.setAttribute(STROKE_COLOR, Color.black);
-            
+
             // REMOVE RECTANGLE AND SHOW NEW PATHFIGURE
             SVGPathFigure pf = new SVGPathFigure();
             pf.removeAllChildren();
             pf.add(bf);
+
+            // TODO: DOES NOT WORK
+            pf.setAttribute(FILL_COLOR, Color.white);
+            pf.setAttribute(STROKE_COLOR, Color.black);
+
             view.getDrawing().remove(this);
             view.getDrawing().add(pf);
             view.addToSelection(pf);
-            
+
             return pf.handleMouseClick(p, evt, view);
         }
         return false;
