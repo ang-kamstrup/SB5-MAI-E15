@@ -64,6 +64,7 @@ public class ToolsToolBar extends AbstractToolBar {
         TextCreationTool textTool;
         TextAreaCreationTool textAreaTool;
         SVGCreateFromFileTool imageTool;
+        AutoFill autoFillTool;
 
         HashMap<AttributeKey, Object> attributes;
         btn = ButtonFactory.addSelectionToolTo(this, editor,
@@ -136,6 +137,15 @@ public class ToolsToolBar extends AbstractToolBar {
         gbc.gridy = 2;
         gbc.insets = new Insets(3, 0, 0, 0);
         p.add(btn, gbc);
+        
+        autoFillTool = new AutoFill();
+        btn = ButtonFactory.addToolTo(this, editor, autoFillTool, "createText", labels);
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        gbc.insets = new Insets(3,3,0,0);
+        p.add(btn,gbc);
 
         textAreaTool = new TextAreaCreationTool(new SVGTextAreaFigure(), attributes);
         textAreaTool.setRubberbandColor(Color.BLACK);
@@ -171,6 +181,11 @@ public class ToolsToolBar extends AbstractToolBar {
         a.add(new DuplicateAction());
 
         a.add(null); // separator
+        
+        a.add(new FlipHoriAction(editor));
+        a.add(new FlipVertAction(editor));
+        
+        a.add(null); // separator
 
         a.add(new GroupAction(editor, new SVGGroupFigure()));
         a.add(new UngroupAction(editor, new SVGGroupFigure()));
@@ -181,6 +196,7 @@ public class ToolsToolBar extends AbstractToolBar {
 
         a.add(new BringToFrontAction(editor));
         a.add(new SendToBackAction(editor));
+        a.add(new EdgeDetectionAction(editor));
 
         return a;
     }

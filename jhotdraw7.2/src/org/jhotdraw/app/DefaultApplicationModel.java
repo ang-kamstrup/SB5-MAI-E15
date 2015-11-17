@@ -18,6 +18,9 @@ import org.jhotdraw.app.action.*;
 import org.jhotdraw.beans.*;
 import java.util.*;
 import javax.swing.*;
+import org.jhotdraw.filters.BlackHoleFilterAction;
+import org.jhotdraw.filters.GaussianBlurFilterAction;
+import org.jhotdraw.filters.PixelFilterAction;
 import org.jhotdraw.util.ResourceBundleUtil;
 /**
  * DefaultApplicationModel.
@@ -173,41 +176,19 @@ public class DefaultApplicationModel
         list.add(tb);
         return list;
     }
-    public List<JMenu> createMenus(Application a, View p) {
+    
+    public List<JMenu> createMenus(Application app, View v) {
         LinkedList<JMenu> list = new LinkedList<JMenu>();
-        list.add(createEditMenu(a, p));
+        list.add(createEditMenu(app, v));
         return list;
     }
     protected JMenu createEditMenu(Application a, View p) {
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.app.Labels");
-        
-        JMenu m;
-        JMenuItem mi;
-        
-        m = new JMenu();
+        JMenu m = new JMenu();
         labels.configureMenu(m, "edit");
-        mi = m.add(getAction(UndoAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(RedoAction.ID));
-        mi.setIcon(null);
-        m.addSeparator();
-        mi = m.add(getAction(CutAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(CopyAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(PasteAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(DuplicateAction.ID));
-        mi.setIcon(null);
-        mi = m.add(getAction(DeleteAction.ID));
-        mi.setIcon(null);
-        m.addSeparator();
-        mi = m.add(getAction(SelectAllAction.ID));
-        mi.setIcon(null);
-        if (getAction(FindAction.ID) != null) {
-            m.addSeparator();
-            m.add(getAction(FindAction.ID));
-        }
+        
+        createEditMenuEntries(m);
+        
         return m;
     }
     
@@ -234,6 +215,32 @@ public class DefaultApplicationModel
             actions.remove(id);
         } else {
             actions.put(id, action);
+        }
+    }
+
+    private void createEditMenuEntries(JMenu m) {
+        JMenuItem mi;
+        mi = m.add(getAction(UndoAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(RedoAction.ID));
+        mi.setIcon(null);
+        m.addSeparator();
+        mi = m.add(getAction(CutAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(CopyAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(PasteAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(DuplicateAction.ID));
+        mi.setIcon(null);
+        mi = m.add(getAction(DeleteAction.ID));
+        mi.setIcon(null);
+        m.addSeparator();
+        mi = m.add(getAction(SelectAllAction.ID));
+        mi.setIcon(null);
+        if (getAction(FindAction.ID) != null) {
+            m.addSeparator();
+            m.add(getAction(FindAction.ID));
         }
     }
 }

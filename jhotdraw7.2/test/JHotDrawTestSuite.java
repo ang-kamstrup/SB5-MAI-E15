@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
  * @author jcs
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({AddPointTest.class})
+@Suite.SuiteClasses({GroupingTest.class,EdgeDetectionBetterTest.class, FavoriteColorTest.class, PixelationTest.class, AddPointTest.class})
+
 public class JHotDrawTestSuite {
 
     @BeforeClass

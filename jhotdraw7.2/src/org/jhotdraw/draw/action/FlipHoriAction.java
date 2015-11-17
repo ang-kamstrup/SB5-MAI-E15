@@ -1,0 +1,106 @@
+package org.jhotdraw.draw.action;
+
+import java.awt.event.ActionEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.util.Collection;
+import java.util.LinkedList;
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import org.jhotdraw.draw.CompositeFigure;
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.Figure;
+import org.jhotdraw.draw.GroupFigure;
+import org.jhotdraw.samples.svg.figures.SVGPathFigure;
+
+/**
+ * FlipHoriAction.
+ * 
+ * @author Simon Hansen
+ */
+public class FlipHoriAction extends AbstractSelectedAction {
+    public final static String ID = "edit.fliphori";
+    
+    /** Creates a new instance. */
+    public FlipHoriAction(DrawingEditor editor) {
+        super(editor);
+        labels.configureAction(this, ID);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        final DrawingView view = getView();
+        
+        flipHorizontally(view);
+        
+        fireUndoableEditHappened(new AbstractUndoableEdit() {
+            @Override
+            public String getPresentationName() {
+                return labels.getTextProperty(ID);
+            }
+            @Override
+            public void redo() throws CannotRedoException {
+                super.redo();
+                FlipHoriAction.flipHorizontally(view);
+            }
+            @Override
+            public void undo() throws CannotUndoException {
+                super.undo();
+                FlipHoriAction.flipHorizontally(view);
+            }
+        });
+    }
+
+    private static void flipHorizontally(DrawingView view) {
+        AffineTransform tx = null;
+        Point2D.Double p0 = null;
+        LinkedList<Figure> figures = new LinkedList<Figure>(view.getSelectedFigures());
+        if(view.getSelectionCount() > 1) {
+            /**
+             * Grouping up figures to flip together, instead of flipping each individually
+             * Feels like a more expected result, especially when creating symmetrical designs
+             */
+            Collection<Figure> sorted = view.getDrawing().sort(figures);
+            CompositeFigure group = new GroupFigure();
+            int index = view.getDrawing().indexOf(sorted.iterator().next());
+            view.getDrawing().basicRemoveAll(figures);
+            view.clearSelection();
+            view.getDrawing().add(index, group);
+            group.willChange();
+            for(Figure f : sorted) {
+                group.basicAdd(f);
+            }
+            tx = new AffineTransform();
+            p0 = new Point2D.Double(group.getDrawingArea().x, group.getDrawingArea().y);
+                
+            /** Flips the figure and then moves it back to its original position */
+            tx.translate(p0.x+group.getDrawingArea().getWidth(), p0.y);
+            tx.scale(-1, 1);
+            tx.translate(-group.getDrawingArea().x, -group.getDrawingArea().y);
+                
+            group.transform(tx);
+            group.changed();
+
+            /** Destroy group and split figures into individuals again */
+            group.basicRemoveAllChildren();
+            view.getDrawing().basicAddAll(view.getDrawing().indexOf(group), figures);
+            view.getDrawing().remove(group);
+            view.addToSelection(figures);
+        } 
+        else {
+            for(Figure f : figures) {
+                tx = new AffineTransform();
+                p0 = new Point2D.Double(f.getDrawingArea().x, f.getDrawingArea().y);
+                
+                tx.translate(p0.x+f.getDrawingArea().getWidth(), p0.y);
+                tx.scale(-1, 1);
+                tx.translate(-f.getDrawingArea().x, -f.getDrawingArea().y);
+                
+                f.willChange();
+                f.transform(tx);
+                f.changed();
+            }  
+        }  
+    }
+}

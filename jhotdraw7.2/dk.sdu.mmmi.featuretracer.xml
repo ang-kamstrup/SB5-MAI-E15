@@ -1,6 +1,6 @@
 
 <!-- TODO: replace all "/dk\.sdu\.mmmi\.featuretracer\.test\..*/" with your root package -->
-<!-- e.g. "/org\.jhotdraw\..*/" -->
+<!-- e.g. "/org\.mycompany\.myproject\..*/" -->
 
 <btrace-probes namespace="dk.sdu.mmmi.featuretracer">
 
