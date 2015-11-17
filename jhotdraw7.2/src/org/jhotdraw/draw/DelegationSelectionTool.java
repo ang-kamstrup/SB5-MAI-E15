@@ -324,7 +324,7 @@ public class DelegationSelectionTool extends SelectionTool {
                     figureTool.mousePressed(evt);
                 } else {
                     if (outerFigure.handleMouseClick(p, evt, getView())) {
-                        v.clearSelection();
+                        
                         if (!SVGRectFigure.class.equals(outerFigure.getClass())) {
                             v.addToSelection(outerFigure);
                         }
