@@ -1586,6 +1586,20 @@ public class ButtonFactory {
         return btn;
     }
     
+    //Create a spraycan tool...
+    public static JButton createSprayCan(DrawingEditor editor) {
+        JButton btn;
+        btn = new JButton(new SprayCanAction(editor));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+
     /**
      * Creates a button that make it possible to scale the figures.
      */

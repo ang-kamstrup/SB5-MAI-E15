@@ -181,6 +181,14 @@ public class ToolsToolBar extends AbstractToolBar {
         gbc.insets = new Insets(3, 3, 0, 0);
         p.add(btn, gbc);
         
+        btn = ButtonFactory.createSprayCan(editor);
+        imageTool.setToolDoneAfterCreation(true);
+        imageTool.setUseFileDialog(true);
+        btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+        gbc = new GridBagConstraints();
+        gbc.gridy = 1;
+        gbc.insets = new Insets(3, 3, 0, 0);
+        p.add(btn, gbc);
                 }
                 break;
         }
