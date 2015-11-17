@@ -167,8 +167,8 @@ public class SVGAttributeKeys extends AttributeKeys {
     /** Sets SVG default values. */
     public static void setDefaults(Figure f) {
         //Basic OffSets for caligraphy
-        OFFSET_X.basicSet(f, 20d);
-        OFFSET_Y.basicSet(f, 30d);
+        OFFSET_X.basicSet(f, 40d);
+        OFFSET_Y.basicSet(f, 10d);
         
         // Fill properties
         // http://www.w3.org/TR/SVGMobile12/painting.html#FillProperties

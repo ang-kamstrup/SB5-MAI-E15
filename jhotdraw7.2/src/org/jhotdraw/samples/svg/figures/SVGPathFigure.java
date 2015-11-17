@@ -47,13 +47,13 @@ public class SVGPathFigure extends AbstractAttributedCompositeFigure implements 
     /**
      * This cachedPath is used for drawing.
      */
-    private transient GeneralPath cachedPath;
+    protected transient GeneralPath cachedPath;
    // private transient Rectangle2D.Double cachedDrawingArea;
     /**
      * This is used to perform faster hit testing.
      */
-    private transient Shape cachedHitShape;
-    private final static boolean DEBUG = false;
+    protected transient Shape cachedHitShape;
+    protected final static boolean DEBUG = false;
 
     /** Creates a new instance. */
     @FeatureEntryPoint(JHotDrawFeatures.LINE_TOOL)
@@ -151,7 +151,7 @@ public class SVGPathFigure extends AbstractAttributedCompositeFigure implements 
     protected GeneralPath getPath() {
         if (cachedPath == null) {
             cachedPath = new GeneralPath();
-            cachedPath.setWindingRule(WINDING_RULE.get(this) == WindingRule.EVEN_ODD ? GeneralPath.WIND_EVEN_ODD : GeneralPath.WIND_NON_ZERO);
+//            cachedPath.setWindingRule(WINDING_RULE.get(this) == WindingRule.EVEN_ODD ? GeneralPath.WIND_EVEN_ODD : GeneralPath.WIND_NON_ZERO);
             for (Figure child : getChildren()) {
                 SVGBezierFigure b = (SVGBezierFigure) child;
                 cachedPath.append(b.getBezierPath(), true);
@@ -431,28 +431,32 @@ public class SVGPathFigure extends AbstractAttributedCompositeFigure implements 
                 }
             });
         }
-        if (WINDING_RULE.get(this) != WindingRule.EVEN_ODD) {
-            actions.add(new AbstractAction(labels.getString("attribute.windingRule.evenOdd.text")) {
-                @FeatureEntryPoint(JHotDrawFeatures.LINE_TOOL)
-                public void actionPerformed(ActionEvent evt) {
-                    SVGPathFigure.this.willChange();
-                    getDrawing().fireUndoableEditHappened(
-                            WINDING_RULE.setUndoable(SVGPathFigure.this, WindingRule.EVEN_ODD));
-                    SVGPathFigure.this.changed();
-                }
-            });
-        } else {
-            actions.add(new AbstractAction(labels.getString("attribute.windingRule.nonZero.text")) {
-                public void actionPerformed(ActionEvent evt) {
-                    WINDING_RULE.set(SVGPathFigure.this, WindingRule.NON_ZERO);
-                    getDrawing().fireUndoableEditHappened(
-                            WINDING_RULE.setUndoable(SVGPathFigure.this, WindingRule.NON_ZERO));
-                }
-            });
-        }
+//        if (WINDING_RULE.get(this) != WindingRule.EVEN_ODD) {
+//            actions.add(new AbstractAction(labels.getString("attribute.windingRule.evenOdd.text")) {
+//                @FeatureEntryPoint(JHotDrawFeatures.LINE_TOOL)
+//                public void actionPerformed(ActionEvent evt) {
+//                    SVGPathFigure.this.willChange();
+//                    getDrawing().fireUndoableEditHappened(
+//                            WINDING_RULE.setUndoable(SVGPathFigure.this, WindingRule.EVEN_ODD));
+//                    SVGPathFigure.this.changed();
+//                }
+//            });
+//        } else {
+//            actions.add(new AbstractAction(labels.getString("attribute.windingRule.nonZero.text")) {
+//                public void actionPerformed(ActionEvent evt) {
+//                    WINDING_RULE.set(SVGPathFigure.this, WindingRule.NON_ZERO);
+//                    getDrawing().fireUndoableEditHappened(
+//                            WINDING_RULE.setUndoable(SVGPathFigure.this, WindingRule.NON_ZERO));
+//                }
+//            });
+//        }
         return actions;
     }
+        
+        
     // CONNECTING
+        
+        
     public boolean canConnect() {
         return false; // SVG does not support connecting
     }

@@ -126,6 +126,9 @@ public class ToolsToolBar extends AbstractToolBar {
         gbc.insets = new Insets(0, 3, 0, 0);
         p.add(btn, gbc);
         
+        attributes=new HashMap<AttributeKey, Object>();
+        attributes.put(AttributeKeys.FILL_COLOR, null);
+//        attributes.put(AttributeKeys.STROKE_COLOR,Color.black);
         btn = ButtonFactory.addToolTo(this, editor, calTool = new CalligraphyTool(new CalligraphyFigure(),new SVGBezierFigure(false),attributes), "createCalligraphy", labels);
         calTool.setToolDoneAfterCreation(false);
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
