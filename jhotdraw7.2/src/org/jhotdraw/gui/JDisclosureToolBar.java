@@ -34,6 +34,12 @@ public class JDisclosureToolBar extends JToolBar {
     public JDisclosureToolBar() {
         setUI(PaletteToolBarUI.createUI(this));
         initComponents();
+        
+    }
+    @Override
+    public void setOrientation(int o){
+         super.setOrientation(o);
+         o = 0;
     }
 
     private void initComponents() {
