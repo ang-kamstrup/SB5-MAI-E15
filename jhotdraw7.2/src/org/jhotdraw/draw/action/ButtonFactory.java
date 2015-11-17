@@ -1588,9 +1588,10 @@ public class ButtonFactory {
      * Creates a new crop tool button, of type JToggleButton
      */
     
-    public static JToggleButton createCropToolButton(){
+    public static JToggleButton createCropToolButton(DrawingEditor editor){
         JToggleButton button = new JToggleButton();
-        button.setFocusable(false);
+        button.setFocusable(true);
+        button.addActionListener(new CropAction(editor));
         button.setIcon(new ImageIcon(ButtonFactory.class.getResource("/org/jhotdraw/draw/action/images/moveToBack.png")));
         
         return button;

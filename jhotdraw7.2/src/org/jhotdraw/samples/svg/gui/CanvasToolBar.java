@@ -158,7 +158,7 @@ public class CanvasToolBar extends AbstractToolBar {
                     
                     //Crop tool button
                     JToggleButton cropButton;
-                    cropButton = ButtonFactory.createCropToolButton();
+                    cropButton = ButtonFactory.createCropToolButton(editor);
                     cropButton.setToolTipText("Crop tool");
                     cropButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(cropButton));
                     gbc = new GridBagConstraints();
