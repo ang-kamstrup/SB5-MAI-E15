@@ -28,6 +28,8 @@ import org.jhotdraw.app.action.*;
 import static org.jhotdraw.draw.AttributeKeys.*;
 import org.jhotdraw.geom.*;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.filters.GaussianBlurFilterAction;
+import org.jhotdraw.filters.PixelFilterAction;
 import org.jhotdraw.gui.FavoriteColorsPopupButton;
 import org.jhotdraw.gui.JFontChooser;
 import org.jhotdraw.samples.svg.SVGApplicationModel;
@@ -229,26 +231,8 @@ public class ButtonFactory {
         return a;
     }
 
-    public static Collection<Action> createSelectionActions(DrawingEditor editor) {
-        LinkedList<Action> a = new LinkedList<Action>();
-        a.add(new DuplicateAction());
-
-        a.add(null); // separator
-
-        a.add(new GroupAction(editor));
-        a.add(new UngroupAction(editor));
-
-        a.add(null); // separator
-
-        a.add(new BringToFrontAction(editor));
-        a.add(new SendToBackAction(editor));
-        a.add(new EdgeDetectionAction(editor));
-
-        return a;
-    }
-
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor) {
-        return addSelectionToolTo(tb, editor, createDrawingActions(editor), createSelectionActions(editor));
+        return addSelectionToolTo(tb, editor, createDrawingActions(editor), SelectionActionFactory.createSelectionActions(editor));
     }
 
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor,
@@ -1578,6 +1562,36 @@ public class ButtonFactory {
         btn.setVerticalTextPosition(JButton.BOTTOM);
         btn.setText(null);
         btn.setFocusable(false);
+        return btn;
+    }
+    
+    /**
+     * Creates a button that make it possible to scale the figures.
+     */
+    public static JButton createApplyScaleButton(DrawingEditor editor, CompositeFigure prototype) {        
+       //Event handler for the button
+       JButton btn = new JButton(new ApplyScaleButton(editor, prototype));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static JButton createBlurFilterActionButton(DrawingEditor editor){
+        JButton btn = new JButton(new GaussianBlurFilterAction(editor));
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        btn.setText(null);
+        return btn;
+    }
+    
+    public static JButton createPixelationFilterActionButton(DrawingEditor editor){
+        JButton btn = new JButton(new PixelFilterAction(editor));
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        btn.setText(null);
         return btn;
     }
     

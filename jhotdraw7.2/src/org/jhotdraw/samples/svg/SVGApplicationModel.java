@@ -86,24 +86,6 @@ public class SVGApplicationModel extends DefaultApplicationModel {
         return a;
     }
 
-    public static Collection<Action> createSelectionActions(DrawingEditor editor) {
-        LinkedList<Action> a = new LinkedList<Action>();
-        a.add(new DuplicateAction());
-
-        a.add(null); // separator
-        a.add(new GroupAction(editor, new SVGGroupFigure()));
-        a.add(new UngroupAction(editor, new SVGGroupFigure()));
-        a.add(new CombineAction(editor));
-        a.add(new SplitAction(editor));
-
-        a.add(null); // separator
-        a.add(new BringToFrontAction(editor));
-        a.add(new SendToBackAction(editor));
-        a.add(new EdgeDetectionAction(editor));
-
-        return a;
-    }
-
     @Override
     public java.util.List<JMenu> createMenus(Application a, View pr) {
         LinkedList<JMenu> mb = new LinkedList<JMenu>();
