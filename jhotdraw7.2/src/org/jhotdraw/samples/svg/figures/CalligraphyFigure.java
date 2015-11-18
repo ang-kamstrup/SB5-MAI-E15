@@ -4,40 +4,43 @@
  */
 package org.jhotdraw.samples.svg.figures;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Area;
-import java.awt.geom.GeneralPath;
-import org.jhotdraw.draw.AttributeKeys;
-import org.jhotdraw.draw.Figure;
-import org.jhotdraw.geom.BezierPath;
-import org.jhotdraw.samples.svg.SVGAttributeKeys;
+import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
+import java.awt.*;
+import java.awt.geom.*;
+import org.jhotdraw.app.JHotDrawFeatures;
+import org.jhotdraw.draw.*;
+import org.jhotdraw.geom.*;
+import org.jhotdraw.samples.svg.*;
+import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
 
 /**
  *
- * This class represents a calligraphy figure. it is basicly the same as a path
- * figure, except the path is doubled
+ * This class represents a calligraphy figure. it is basically the same as a
+ * path figure, except the path is traced back with an offset
  *
  * @author jakob
  */
 public class CalligraphyFigure extends SVGPathFigure {
 
+    @FeatureEntryPoint(JHotDrawFeatures.CALI_TOOL)
     public CalligraphyFigure() {
         add(new SVGBezierFigure());
         SVGAttributeKeys.setDefaults(this);
-        SVGAttributeKeys.FILL_COLOR.basicSet(this, Color.black);
+
+
+
     }
 
+    @FeatureEntryPoint(JHotDrawFeatures.CALI_TOOL)
     public CalligraphyFigure(boolean isClosed) {
         if (!isClosed) {
             add(new SVGBezierFigure());
             SVGAttributeKeys.setDefaults(this);
-            this.setAttribute(SVGAttributeKeys.FILL_COLOR, Color.BLACK);
-            SVGAttributeKeys.FILL_COLOR.basicSet(this, Color.black);
 
         }
     }
 
+    @FeatureEntryPoint(JHotDrawFeatures.CALI_TOOL)
     @Override
     public GeneralPath getPath() {
         if (cachedPath == null) {
@@ -46,7 +49,8 @@ public class CalligraphyFigure extends SVGPathFigure {
 
             for (Figure f : getChildren()) {
                 SVGBezierFigure b = (SVGBezierFigure) f.clone();
-                cachedPath.append(CreateCalligraphy(b), true);
+                b = CreateFullPath(b);
+                cachedPath.append(getArea(b), true);
             }
             cachedPath.setWindingRule(GeneralPath.WIND_NON_ZERO);
 
@@ -56,7 +60,8 @@ public class CalligraphyFigure extends SVGPathFigure {
 
     }
 
-    public Area CreateCalligraphy(SVGBezierFigure figure) {
+    @FeatureEntryPoint(JHotDrawFeatures.CALI_TOOL)
+    public SVGBezierFigure CreateFullPath(SVGBezierFigure figure) {
 
         //Creates clones of the figure, and the last one to the first one backwards with an offset
         SVGBezierFigure clone = (SVGBezierFigure) figure.clone();
@@ -73,28 +78,35 @@ public class CalligraphyFigure extends SVGPathFigure {
 
             //Flips all other control point to go opposite directions,
             if (n.x.length > 2) {
-                double temp = n.x[2] + SVGAttributeKeys.OFFSET_X.get(this);
-                n.x[2] = n.x[1] + SVGAttributeKeys.OFFSET_X.get(this);
+                double temp = n.x[2] + OFFSET_X.get(this);
+                n.x[2] = n.x[1] + OFFSET_X.get(this);
                 n.x[1] = temp;
 
-                double temp2 = n.y[2] + SVGAttributeKeys.OFFSET_Y.get(this);
-                n.y[2] = n.y[1] + SVGAttributeKeys.OFFSET_Y.get(this);
+                double temp2 = n.y[2] + OFFSET_Y.get(this);
+                n.y[2] = n.y[1] + OFFSET_Y.get(this);
                 n.y[1] = temp2;
             }
 
             full.addNode(n);
 
         }
-        
+
         //adds a node to finish off the figure.
         if (full.getNodeCount() != 0 && clone.getNodeCount() != 0) {
             full.addNode(full.getNodeCount(), new BezierPath.Node(clone.getStartPoint()));
 
         }
-        
-        
+        return full;
+
+    }
+
+    @FeatureEntryPoint(JHotDrawFeatures.CALI_TOOL)
+    public Area getArea(SVGBezierFigure figure) {
         //splits the figure into smaller segments between each point and draws them one by one.
         //Done to fix some minor bugs in the code where overlapping would destroy the figure.
+        SVGBezierFigure full = (SVGBezierFigure) figure.clone();
+
+
         Area x;// = new Area();
         Area y = new Area();
         BezierPath.Node a, b, c, d;

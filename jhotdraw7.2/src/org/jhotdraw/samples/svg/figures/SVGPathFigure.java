@@ -70,6 +70,7 @@ public class SVGPathFigure extends AbstractAttributedCompositeFigure implements 
         SVGAttributeKeys.setDefaults(this);
     }
 
+    
     @FeatureEntryPoint(JHotDrawFeatures.LINE_TOOL)
     public void draw(Graphics2D g) {
         double opacity = OPACITY.get(this);
@@ -431,25 +432,7 @@ public class SVGPathFigure extends AbstractAttributedCompositeFigure implements 
                 }
             });
         }
-//        if (WINDING_RULE.get(this) != WindingRule.EVEN_ODD) {
-//            actions.add(new AbstractAction(labels.getString("attribute.windingRule.evenOdd.text")) {
-//                @FeatureEntryPoint(JHotDrawFeatures.LINE_TOOL)
-//                public void actionPerformed(ActionEvent evt) {
-//                    SVGPathFigure.this.willChange();
-//                    getDrawing().fireUndoableEditHappened(
-//                            WINDING_RULE.setUndoable(SVGPathFigure.this, WindingRule.EVEN_ODD));
-//                    SVGPathFigure.this.changed();
-//                }
-//            });
-//        } else {
-//            actions.add(new AbstractAction(labels.getString("attribute.windingRule.nonZero.text")) {
-//                public void actionPerformed(ActionEvent evt) {
-//                    WINDING_RULE.set(SVGPathFigure.this, WindingRule.NON_ZERO);
-//                    getDrawing().fireUndoableEditHappened(
-//                            WINDING_RULE.setUndoable(SVGPathFigure.this, WindingRule.NON_ZERO));
-//                }
-//            });
-//        }
+       
         return actions;
     }
         
