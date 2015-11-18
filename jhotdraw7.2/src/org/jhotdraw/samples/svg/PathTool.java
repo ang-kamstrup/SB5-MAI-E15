@@ -22,6 +22,7 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 import java.util.*;
+import org.jhotdraw.draw.action.AlignAction;
 import org.jhotdraw.geom.*;
 
 /**
@@ -35,7 +36,7 @@ public class PathTool extends BezierTool {
     /**
      * Set this to true to turn on debugging output on System.out.
      */
-    private final static boolean DEBUG = false;
+    private final static boolean DEBUG = true;
     /**
      * The path prototype for new figures.
      */
@@ -71,6 +72,7 @@ public class PathTool extends BezierTool {
         }
         creationView.getDrawing().remove(createdFigure);
         SVGPathFigure createdPath = createPath();
+        BezierFigure copy = createdFigure.clone();    
         createdPath.removeAllChildren();
         createdPath.add(createdFigure);
         creationView.getDrawing().add(createdPath);
@@ -79,5 +81,6 @@ public class PathTool extends BezierTool {
         if (isToolDoneAfterCreation()) {
             fireToolDone();
         }
+        
     }
 }

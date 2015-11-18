@@ -117,6 +117,10 @@ public class SVGAttributeKeys extends AttributeKeys {
      */
     public final static AttributeKey<String> LINK_TARGET = new AttributeKey<String>("linkTarget", String.class,null, true, labels);
     
+    //Specifies offset for calligraphy
+    public static final AttributeKey<Double> OFFSET_X = new AttributeKey<Double>("offsetx", Double.class,null,true,labels);
+    
+    public static final AttributeKey<Double> OFFSET_Y = new AttributeKey<Double>("offsety", Double.class,null,true,labels);
     
     /**
      * Gets the fill paint for the specified figure based on the attributes
@@ -162,6 +166,10 @@ public class SVGAttributeKeys extends AttributeKeys {
     
     /** Sets SVG default values. */
     public static void setDefaults(Figure f) {
+        //Basic OffSets for caligraphy
+        OFFSET_X.basicSet(f, 40d);
+        OFFSET_Y.basicSet(f, 10d);
+        
         // Fill properties
         // http://www.w3.org/TR/SVGMobile12/painting.html#FillProperties
         FILL_COLOR.basicSet(f, Color.black);

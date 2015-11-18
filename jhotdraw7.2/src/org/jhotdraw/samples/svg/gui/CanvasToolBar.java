@@ -22,6 +22,7 @@ import javax.swing.*;
 import javax.swing.plaf.LabelUI;
 import javax.swing.plaf.SliderUI;
 import javax.swing.plaf.TextUI;
+import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.gui.plaf.palette.*;
 import org.jhotdraw.text.ColorFormatter;
@@ -34,12 +35,18 @@ import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
  * @version 1.0 2008-05-18 Created.
  */
 public class CanvasToolBar extends AbstractToolBar {
+    
+    private DrawingView view;
 
     /** Creates new instance. */
     public CanvasToolBar() {
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
         setName(labels.getString(getID() + ".toolbar"));
         setDisclosureStateCount(3);
+    }
+    
+    public void setView(DrawingView view){
+        this.view = view;
     }
 
     @Override
@@ -155,6 +162,20 @@ public class CanvasToolBar extends AbstractToolBar {
                     gbc.insets = new Insets(3, 3, 0, 0);
                     gbc.gridwidth=2;
                     p.add(heightField, gbc);
+                    
+                    //Crop tool button
+                    JButton cropButton;
+                    cropButton = ButtonFactory.createCropToolButton(editor, view);
+                    cropButton.setToolTipText(labels.getString("edit.cropTool.toolTipText"));
+                    cropButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(cropButton));
+                    gbc = new GridBagConstraints();
+                    gbc.gridx = 3;
+                    gbc.gridy = 0;
+                    gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+                    gbc.fill = GridBagConstraints.BOTH;
+                    gbc.insets = new Insets(0, 3, 0, 0);
+                    gbc.gridwidth = 3;
+                    p.add(cropButton, gbc);
 
                 }
                 break;
@@ -299,7 +320,7 @@ public class CanvasToolBar extends AbstractToolBar {
                     gbc.fill = GridBagConstraints.BOTH;
                     gbc.insets = new Insets(3, 3, 0, 0);
                     p3.add(heightField, gbc);
-
+                    
                     // Add horizontal strips
                     gbc = new GridBagConstraints();
                     gbc.gridy = 0;
