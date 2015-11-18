@@ -4,6 +4,7 @@
  */
 package org.jhotdraw.draw.action;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
 import java.awt.geom.PathIterator;
@@ -32,30 +33,42 @@ public class AutoFill extends AbstractTool implements ToolListener {
     public AutoFill() {
     }
 
-    public void fillLogic(MouseEvent evt) {
+    public void fillLogic(Point target) {
         final DrawingView view = getView();
         view.selectAll();
-        final Set<Figure> list = view.getSelectedFigures();
 
-        List<SVGPathFigure> flatten = new ArrayList<SVGPathFigure>();
+        try {
+            final Set<Figure> list = view.getSelectedFigures();
+            
+            List<SVGPathFigure> containing = new ArrayList<SVGPathFigure>();
+            List<SVGPathFigure> notContaining = new ArrayList<SVGPathFigure>();
 
-        for (Figure fig : list) {
-            if (fig.contains(view.viewToDrawing(evt.getPoint()))) {
-                flatten.add((SVGPathFigure) fig);
+            for (Figure fig : list) {
+                if (fig.contains(view.viewToDrawing(target))) {
+                    containing.add((SVGPathFigure) fig);
+                }else{
+                    notContaining.add((SVGPathFigure) fig);
+                }
             }
-        }
-        try{
-            Area alpha = new Area(flatten.get(0).getPath().createTransformedShape(null));
-        
-            for (int i = 1; i < flatten.size(); i++) {
-                Area temp = new Area(flatten.get(i).getPath());
-    //            alpha.intersect(new Area(flatten.get(i).getPath().createTransformedShape(null)));
-                alpha.intersect(temp);
+
+            Area alpha = new Area(containing.get(0).getPath().createTransformedShape(null));
+            if(containing.size()>1){
+                for (int i = 1; i < containing.size(); i++) {
+                    Area temp = new Area(containing.get(i).getPath());
+                    //            alpha.intersect(new Area(flatten.get(i).getPath().createTransformedShape(null)));
+                    alpha.intersect(temp);
+                }
+            }
+            if(!notContaining.isEmpty()){
+                for (int i = 0; i< notContaining.size(); i++){
+                    Area temp = new Area(containing.get(i).getPath());
+                    alpha.subtract(temp);
+            }
             }
             SVGBezierFigure omega = new SVGBezierFigure();
             //BezierPath beta = alpha.getPathIterator(null).currentSegment(coords);
             PathIterator iter = alpha.getPathIterator(null);
-            while(!iter.isDone()){
+            while (!iter.isDone()) {
                 double[] location = new double[6];
                 iter.currentSegment(location);
                 BezierPath.Node node = new BezierPath.Node();
@@ -69,13 +82,13 @@ public class AutoFill extends AbstractTool implements ToolListener {
 
                 iter.next();
             }
-            omega.setNode(omega.getNodeCount()-1, omega.getNode(0));
+            omega.setNode(omega.getNodeCount() - 1, omega.getNode(0));
             view.getDrawing().add(omega);
             view.clearSelection();
             view.addToSelection(omega);
-        }catch(ClassCastException ex){
+        } catch (ClassCastException ex) {
             System.out.println("Currently, this feature only works with the scribble tool");
-        }catch(IndexOutOfBoundsException ex){
+        } catch (IndexOutOfBoundsException ex) {
             System.out.println("This feature only works inside figures");
         }
     }
@@ -83,7 +96,7 @@ public class AutoFill extends AbstractTool implements ToolListener {
     @Override
     public void mousePressed(MouseEvent evt) {
 
-        fillLogic(evt);
+        fillLogic(evt.getPoint());
     }
 
     public void mouseDragged(MouseEvent e) {
@@ -91,7 +104,6 @@ public class AutoFill extends AbstractTool implements ToolListener {
     }
 
     public void toolStarted(ToolEvent event) {
-        
     }
 
     public void toolDone(ToolEvent event) {
@@ -99,6 +111,5 @@ public class AutoFill extends AbstractTool implements ToolListener {
     }
 
     public void areaInvalidated(ToolEvent e) {
-        
     }
 }
