@@ -82,6 +82,8 @@ public class SVGDrawingPanel extends JPanel {
         viewToolBar.setDrawingPanel(this);
         viewToolBar.setToolPane(toolsPane);
         
+        canvasToolBar.setView(view);
+        
 
         undoManager = new UndoRedoManager();
         setEditor(new DefaultDrawingEditor());
