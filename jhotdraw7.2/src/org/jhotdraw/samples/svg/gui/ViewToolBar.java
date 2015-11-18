@@ -55,7 +55,6 @@ public class ViewToolBar extends AbstractToolBar {
     
     public ViewToolBar (JPanel toolsPanel) {
         this.toolsPanel = toolsPanel;
-    
     }
     
 
@@ -134,7 +133,26 @@ public class ViewToolBar extends AbstractToolBar {
                     gbc.gridy = 2;
                     gbc.insets = new Insets(3, 0, 0, 0);
                     p.add(btn, gbc);
-                }
+                	
+                    // Zoom selection button
+                    btn = ButtonFactory.createZoomSelectionButton(view);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                    labels.configureToolBarButton(btn, "view.zoomSelection");
+
+                    gbc = new GridBagConstraints();
+                    gbc.gridx = 0;
+                    gbc.gridy = 3;
+                    gbc.weighty = 1;
+                    gbc.weightx = 1;
+                    gbc.gridwidth = GridBagConstraints.WEST;
+                    gbc.fill = GridBagConstraints.NONE;
+                    gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+                    gbc.insets = new Insets(3, 0, 0, 0);        
+
+                    btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, btn.getPreferredSize().height));
+                    p.add(btn, gbc);
+
+                    }
                 break;
             case 2:
                  {
@@ -260,7 +278,25 @@ public class ViewToolBar extends AbstractToolBar {
                     gbc.gridy = 2;
                     gbc.insets = new Insets(3, 0, 0, 0);
                     p.add(btn, gbc);
-                }
+                    
+                    // Zoom selection button
+                    btn = ButtonFactory.createZoomSelectionButton(view);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                    labels.configureToolBarButton(btn, "view.zoomSelection");
+
+                    gbc = new GridBagConstraints();
+                    gbc.gridx = 0;
+                    gbc.gridy = 3;
+                    gbc.weighty = 1;
+                    gbc.weightx = 1;
+                    gbc.gridwidth = GridBagConstraints.WEST;
+                    gbc.fill = GridBagConstraints.NONE;
+                    gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+                    gbc.insets = new Insets(3, 0, 0, 0);        
+
+                    btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, btn.getPreferredSize().height));
+                    p.add(btn, gbc);
+                 }
                  break;
         }
         return p;

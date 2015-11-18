@@ -1615,4 +1615,40 @@ public class ButtonFactory {
 //    public void getSVGDrawingPanel() {
 //        return null;
 //    }
+
+    /**
+     * Creates a button for the action of zooming the selected area.
+     * @param view
+     * @return the button
+     */
+    public static JToggleButton createZoomSelectionButton(final DrawingView view) {
+        final JToggleButton toggleButton;
+
+        toggleButton = new JToggleButton();
+        toggleButton.setFocusable(false);
+        
+        final String ZOOM_SELECTION_PROPERTY_NAME = "SELECTION_ENDED";
+
+        // Corresponding action for button.
+        final ZoomSelectionAction action = new ZoomSelectionAction(view);
+
+        toggleButton.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent event) {
+                if (!toggleButton.isSelected()) { return; }
+                // Send empty event to action.
+                action.actionPerformed(null);
+            }
+        });
+        
+        action.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                // The action has ended, toggle the button.
+                if (evt.getPropertyName().equals(ZOOM_SELECTION_PROPERTY_NAME)) {
+                    toggleButton.setSelected(false);
+                }
+            }
+        });
+
+        return toggleButton;
+    }
 }
