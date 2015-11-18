@@ -71,7 +71,7 @@
               <Connection code="PaletteLookAndFeel.getInstance().getBorder(&quot;Ribbon.border&quot;)" type="code"/>
             </Property>
             <Property name="horizontalScrollBarPolicy" type="int" value="32"/>
-            <Property name="verticalScrollBarPolicy" type="int" value="21"/>
+            <Property name="verticalScrollBarPolicy" type="int" value="22"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[0, 0]"/>
             </Property>
@@ -120,6 +120,10 @@
                 </Component>
                 <Component class="org.jhotdraw.samples.svg.gui.ViewToolBar" name="viewToolBar">
                 </Component>
+                <Container class="org.jhotdraw.samples.svg.gui.FilterToolBar" name="filterToolBar">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>

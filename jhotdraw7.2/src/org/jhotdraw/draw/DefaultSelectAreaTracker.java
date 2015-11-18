@@ -17,6 +17,8 @@ import java.awt.event.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
+import org.jhotdraw.app.action.Context;
+import org.jhotdraw.app.action.PrintFromCanvasAction;
 
 /**
  * <code>DefaultSelectAreaTracker</code> implements interactions with the background
@@ -71,6 +73,11 @@ public class DefaultSelectAreaTracker extends AbstractTool implements SelectArea
      * hovering.
      */
     private Figure hoverFigure = null;
+    /**
+     * The rectangle which the users draw from holding the mouse down.
+     */
+    private Rectangle invalidatedArea;
+    private Context context;
 
     /** Creates a new instance. */
     public DefaultSelectAreaTracker() {
@@ -85,12 +92,25 @@ public class DefaultSelectAreaTracker extends AbstractTool implements SelectArea
     @Override
     public void mouseReleased(MouseEvent evt) {
         selectGroup(evt.isShiftDown());
+        if (invalidatedArea != null) {
+            getinvalidatedArea(invalidatedArea, evt);
+        }
         clearRubberBand();
-
+    }
+    
+    /**
+     * Strategy pattern: Concrete Strategy.
+     * @param invalidatedArea
+     * @param evt 
+     */
+    private void getinvalidatedArea(Rectangle invalidatedArea, MouseEvent evt) {
+        DrawingView view = editor.findView((Container) evt.getSource());
+        context = new Context(new PrintFromCanvasAction());
+        context.areaToPrint(invalidatedArea, view);
     }
 
     public void mouseDragged(MouseEvent evt) {
-        Rectangle invalidatedArea = (Rectangle) rubberband.clone();
+        invalidatedArea = (Rectangle) rubberband.clone();
         rubberband.setBounds(
                 Math.min(anchor.x, evt.getX()),
                 Math.min(anchor.y, evt.getY()),
