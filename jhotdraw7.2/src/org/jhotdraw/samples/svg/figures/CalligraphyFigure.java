@@ -49,7 +49,7 @@ public class CalligraphyFigure extends SVGPathFigure {
 
             for (Figure f : getChildren()) {
                 SVGBezierFigure b = (SVGBezierFigure) f.clone();
-                b = CreateFullPath(b);
+                b = createFullPath(b);
                 cachedPath.append(getArea(b), true);
             }
             cachedPath.setWindingRule(GeneralPath.WIND_NON_ZERO);
@@ -61,19 +61,19 @@ public class CalligraphyFigure extends SVGPathFigure {
     }
 
     @FeatureEntryPoint(JHotDrawFeatures.CALI_TOOL)
-    public SVGBezierFigure CreateFullPath(SVGBezierFigure figure) {
+    public SVGBezierFigure createFullPath(SVGBezierFigure figure) {
 
         //Creates clones of the figure, and the last one to the first one backwards with an offset
         SVGBezierFigure clone = (SVGBezierFigure) figure.clone();
-//        SVGBezierFigure inverseFigure = new SVGBezierFigure();
+
         SVGBezierFigure full = (SVGBezierFigure) figure.clone();
 
         for (int i = 0; i < clone.getNodeCount(); i++) {
             BezierPath.Node n = clone.getNode(clone.getNodeCount() - 1 - i);
 
             //Sets offset of cp[0]
-            n.x[0] += SVGAttributeKeys.OFFSET_X.get(this);
-            n.y[0] += SVGAttributeKeys.OFFSET_Y.get(this);
+            n.x[0] += OFFSET_X.get(this);
+            n.y[0] += OFFSET_Y.get(this);
 
 
             //Flips all other control point to go opposite directions,

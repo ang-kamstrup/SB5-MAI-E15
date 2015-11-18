@@ -4,16 +4,16 @@
  */
 package org.jhotdraw.samples.svg;
 
+import java.awt.Color;
 import java.util.Map;
 import org.jhotdraw.draw.AttributeKey;
 import org.jhotdraw.draw.BezierFigure;
 import org.jhotdraw.draw.BezierTool;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.geom.BezierPath;
-
+import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
 import org.jhotdraw.samples.svg.figures.SVGBezierFigure;
 import org.jhotdraw.samples.svg.figures.CalligraphyFigure;
-
 
 /**
  *
@@ -49,16 +49,15 @@ public class CalligraphyTool extends BezierTool {
 
     @Override
     protected void finishCreation(BezierFigure createdFigure, DrawingView creationView) {
-        int offSetX = -30;
-        int offSetY = -20;
-
+        
+        
         BezierPath.Node current;
 
         creationView.getDrawing().remove(createdFigure);
         CalligraphyFigure createdPath = createCal();
 
         BezierFigure main = createdFigure.clone();
-    
+
         createdPath.add(main);
         creationView.getDrawing().add(createdPath);
         fireUndoEvent(createdPath, creationView);
