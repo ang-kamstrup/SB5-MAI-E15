@@ -50,43 +50,13 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure {
     @Override
     protected void drawFill(Graphics2D g) {
         if (star.r > 0 && star.innerR > 0) {
-            double angle = Math.PI / star.vertexCount;
-            
-            GeneralPath path = new GeneralPath();
-            
-            for (int i = 0; i < 2 * star.vertexCount; i++) {
-                double r = (i & 1) == 0 ? star.r : star.innerR;
-                Point2D.Double p = new Point2D.Double(star.x + Math.cos(i * angle) * r, star.y + Math.sin(i * angle) * r);
-                if (i == 0) {
-                    path.moveTo(p.getX(), p.getY());
-                } else {
-                    path.lineTo(p.getX(), p.getY());
-                }
-            }
-            path.closePath();
-            
-            g.fill(path);
+            g.fill(star.getDrawingFigure());
         }
     }
     
     @Override
     protected void drawStroke(Graphics2D g) {
-        
-        double angle = Math.PI / star.vertexCount;
-        
-        GeneralPath path = new GeneralPath();
-        
-        for (int i = 0; i < 2 * star.vertexCount; i++) {
-            double r = (i & 1) == 0 ? star.r : star.innerR;
-            Point2D.Double p = new Point2D.Double(star.x + Math.cos(i * angle) * r, star.y + Math.sin(i * angle) * r);
-            if (i == 0) {
-                path.moveTo(p.getX(), p.getY());
-            } else {
-                path.lineTo(p.getX(), p.getY());
-            }
-        }
-        path.closePath();
-        g.draw(path);
+        g.draw(star.getDrawingFigure());
     }
     //Coordinates and bounds
 
@@ -194,20 +164,8 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure {
     @Override
     public Collection<Handle> createHandles(int detailLevel) {
         LinkedList<Handle> handles = new LinkedList<Handle>();
-        switch (detailLevel % 2) {
-            case -1:                
-                handles.add(new BoundsOutlineHandle(this, false, true));
-                break;
-            case 0:
-                ResizeHandleKit.addResizeHandles(this, handles);
-                handles.add(new LinkHandle(this));
-                break;
-            case 1:
-                TransformHandleKit.addTransformHandles(this, handles);
-                break;
-            default:
-                break;
-        }
+        ResizeHandleKit.addResizeHandles(this, handles);
+        handles.add(new LinkHandle(this));
         return handles;
     }
 

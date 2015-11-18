@@ -5,6 +5,8 @@
 package org.jhotdraw.samples.svg.figures;
 
 import java.awt.Polygon;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
 
 /**
  *
@@ -82,6 +84,23 @@ public class StarFigure extends Polygon implements Cloneable {
             innerAngle += addAngle;
         }
         return res;
+    }
+    protected GeneralPath getDrawingFigure() {
+        double angle = Math.PI / vertexCount;
+        
+        GeneralPath path = new GeneralPath();
+        
+        for (int i = 0; i < 2 * vertexCount; i++) {
+            double k = (i & 1) == 0 ? r : innerR;
+            Point2D.Double p = new Point2D.Double(x + Math.cos(i * angle) * k, y + Math.sin(i * angle) * k);
+            if (i == 0) {
+                path.moveTo(p.getX(), p.getY());
+            } else {
+                path.lineTo(p.getX(), p.getY());
+            }
+        }
+        path.closePath();
+        return(path);
     }
     @Override
     public Object clone() {
