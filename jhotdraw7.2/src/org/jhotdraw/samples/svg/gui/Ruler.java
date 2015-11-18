@@ -48,6 +48,15 @@ public class Ruler extends JComponent {
     public int getIncrement() {
         return increment;
     }
+    
+    public boolean getOrientation() {
+        if(orientation == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public void setPreferredHeight(int ph) {
         setPreferredSize(new Dimension(SIZE, ph));
