@@ -32,7 +32,13 @@ public class PrintFromCanvasAction extends AbstractAction implements IAreaObserv
     private JLabel helperLabel = new JLabel("Hold the left mouse button down and select what you need to print");
     private Robot robot;
     private Rectangle rectangle;
+    /**
+     * Flag if the user has chosen to print from the canvas.
+     */
     private static boolean readyToPrint;
+    /**
+     * Image to print.
+     */
     private BufferedImage image;
     private Print print;
 
@@ -48,11 +54,29 @@ public class PrintFromCanvasAction extends AbstractAction implements IAreaObserv
     }
 
     /**
+     * To see if print is not null for unit testing.
+     *
+     * @return print reference
+     */
+    public Print getPrint() {
+        return print;
+    }
+
+    /**
+     * To see the image is not null for unit testing.
+     *
+     * @return image reference
+     */
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    /**
      * Open up a JFrame for displaying how to print the selected area from the
      * canvas.
      */
     private void openHelperFrame() {
-        helperFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        helperFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         helperFrame.add(helperLabel, BorderLayout.CENTER);
         helperFrame.pack();
         helperFrame.setLocationRelativeTo(null);
@@ -67,28 +91,32 @@ public class PrintFromCanvasAction extends AbstractAction implements IAreaObserv
         if (readyToPrint && rectangle != null) {
             try {
                 //Get the selected area an take a screenshot of that.
-                JComponent comp = view.getComponent();
-                Point p = comp.getLocationOnScreen();
+               
+                JComponent comp;
+                Point p;
+                if (view != null) {
+                    comp = view.getComponent();
+                    p = comp.getLocationOnScreen();
+                } else {
+                    p = new Point(100, 100);
+                }
 
                 Dimension di = rectangle.getSize();
                 Point pi = rectangle.getLocation();
 
                 int newX = p.x + pi.x;
                 int newY = p.y + pi.y;
-               
+
                 Point pio = new Point(newX, newY);
-                
+
                 Rectangle rect = new Rectangle(pio, di);
 
                 robot = new Robot();
                 image = robot.createScreenCapture(rect);
 
-                //ImageIO.write(image, "png", new File("/Users/Jesper/jhotdraw7.2/screenshoot.png"));
             } catch (AWTException ex) {
                 Logger.getLogger(PrintFromCanvasAction.class.getName()).log(Level.SEVERE, null, ex);
                 throw new Error("Unable to init screen capture tool");
-            } catch (Exception ex) {
-                throw new Error("Unable to write to file");
             }
             readyToPrint = false;
 
@@ -100,7 +128,7 @@ public class PrintFromCanvasAction extends AbstractAction implements IAreaObserv
 
     /**
      * Forward the bufferedimage to printer.
-     * @param image 
+     * @param image
      */
     private void fetchScreenToPrint(BufferedImage image) {
         if (image != null) {
@@ -111,7 +139,7 @@ public class PrintFromCanvasAction extends AbstractAction implements IAreaObserv
     /**
      * Part of strategy pattern.
      * @param rectangle
-     * @param view 
+     * @param view
      */
     public void areaToPrint(Rectangle rectangle, DrawingView view) {
         this.rectangle = rectangle;

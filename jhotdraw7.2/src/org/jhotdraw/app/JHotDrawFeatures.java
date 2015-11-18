@@ -36,6 +36,8 @@ public class JHotDrawFeatures {
     public static final String VIEW_PALETTE = "view palette";
     public static final String ALIGN_PALETTE = "align palette";
     public static final String PIXELATE = "pixelate image";
+    public static final String GAUSSIAN_BLUR = "blur image";
+    public static final String SCALE = "scale";
     public static final String CALI_TOOL = "calligraphy tool";
 
 }

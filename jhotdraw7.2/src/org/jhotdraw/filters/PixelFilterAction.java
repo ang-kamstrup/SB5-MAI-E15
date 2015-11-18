@@ -41,7 +41,7 @@ public class PixelFilterAction extends AbstractSelectedAction {
         super(editor);
     }
 
-    @FeatureEntryPoint(JHotDrawFeatures.AUTOMATIC_SELECTION)
+    @FeatureEntryPoint(JHotDrawFeatures.PIXELATE)
     public void actionPerformed(ActionEvent ae) {
         Thread thread = new Thread(new Runnable() {
             public void run() {
