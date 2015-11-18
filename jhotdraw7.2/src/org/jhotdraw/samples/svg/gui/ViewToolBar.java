@@ -107,7 +107,7 @@ public class ViewToolBar extends AbstractToolBar {
                     p.add(btn, gbc);
                     
                     //Feather
-                    btn = ButtonFactory.createFeaterButton(editor);
+                    btn = ButtonFactory.createFeaterButton(view);
                     btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
                     labels.configureToolBarButton(btn, "edit.feather");
                     gbc = new GridBagConstraints();
@@ -224,7 +224,7 @@ public class ViewToolBar extends AbstractToolBar {
                     p.add(btn, gbc);
                     
                     //Feather
-                    btn = ButtonFactory.createFeaterButton(editor);
+                    btn = ButtonFactory.createFeaterButton(view);
                     btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
                     labels.configureToolBarButton(btn, "edit.feather");
                     gbc = new GridBagConstraints();

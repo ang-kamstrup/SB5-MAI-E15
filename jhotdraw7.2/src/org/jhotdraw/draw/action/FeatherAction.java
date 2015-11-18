@@ -23,12 +23,12 @@ import static org.jhotdraw.draw.AttributeKeys.*;
  *
  * @author ChristianArentsen
  */
-public class FeatherAction extends AbstractSelectedAction{
+public class FeatherAction extends AbstractDrawingViewAction {
     
      private ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
 
-public FeatherAction(DrawingEditor editor) {
-        super(editor);
+public FeatherAction(DrawingView view) {
+        super(view);
         labels.configureAction(this, "edit.feather");
         setEnabled(true);
     }

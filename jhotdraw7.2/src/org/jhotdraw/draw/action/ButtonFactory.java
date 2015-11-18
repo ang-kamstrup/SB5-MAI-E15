@@ -1493,9 +1493,9 @@ public class ButtonFactory {
         return btn;
     }
 
-    public static JButton createFeaterButton(DrawingEditor editor) {
-        JButton btn;
-        btn = new JButton(new FeatherAction(editor));
+    public static JButton createFeaterButton(DrawingView view) {
+        JButton btn;            
+        btn = new JButton(new FeatherAction(view));
         if (btn.getIcon() != null) {
             btn.putClientProperty("hideActionText", Boolean.TRUE);
         }
