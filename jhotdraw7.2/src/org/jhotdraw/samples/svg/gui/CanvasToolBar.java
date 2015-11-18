@@ -22,6 +22,7 @@ import javax.swing.*;
 import javax.swing.plaf.LabelUI;
 import javax.swing.plaf.SliderUI;
 import javax.swing.plaf.TextUI;
+import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.gui.plaf.palette.*;
 import org.jhotdraw.text.ColorFormatter;
@@ -34,12 +35,18 @@ import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
  * @version 1.0 2008-05-18 Created.
  */
 public class CanvasToolBar extends AbstractToolBar {
+    
+    private DrawingView view;
 
     /** Creates new instance. */
     public CanvasToolBar() {
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
         setName(labels.getString(getID() + ".toolbar"));
         setDisclosureStateCount(3);
+    }
+    
+    public void setView(DrawingView view){
+        this.view = view;
     }
 
     @Override
@@ -158,7 +165,7 @@ public class CanvasToolBar extends AbstractToolBar {
                     
                     //Crop tool button
                     JToggleButton cropButton;
-                    cropButton = ButtonFactory.createCropToolButton(editor);
+                    cropButton = ButtonFactory.createCropToolButton(editor, view);
                     cropButton.setToolTipText("Crop tool");
                     cropButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(cropButton));
                     gbc = new GridBagConstraints();

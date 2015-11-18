@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import static org.jhotdraw.draw.AttributeKeys.*;
+import org.jhotdraw.draw.DefaultDrawingView;
 import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.gui.DrawingAttributeEditorHandler;
 import org.jhotdraw.gui.JAttributeTextField;
 
@@ -19,26 +21,22 @@ import org.jhotdraw.gui.JAttributeTextField;
  */
 public class CropAction extends AbstractSelectedAction{
 
-    private JAttributeTextField<Double> widthField, heightField;
     private DrawingEditor editor;
+    private DrawingView view;
     
-    public CropAction(DrawingEditor editor) {
+    public CropAction(DrawingEditor editor, DrawingView view) {
         super(editor);
         setEnabled(true);
         this.editor = editor;
-        widthField = new JAttributeTextField<Double>();
-        heightField = new JAttributeTextField<Double>();
-        widthField.setAttributeValue(200.00);
-        heightField.setAttributeValue(200.00);
+        this.view = view;
     }
 
     public void actionPerformed(ActionEvent ae) {
         JToggleButton button = (JToggleButton) ae.getSource();
         if(button.isSelected()){
             JOptionPane.showMessageDialog(null, "To use crop tool, click keyboard arrows, to adjust canvas", "Crop tool", JOptionPane.INFORMATION_MESSAGE);
-//            Double cw = CANVAS_WIDTH.get(getDrawing());
-//            Double ch = CANVAS_HEIGHT.get(getDrawing());
-//            System.out.println("Width: " + cw + " Height: " + ch);
+            view.getDrawing().setAttribute(CANVAS_WIDTH, 200.00);
+            view.getDrawing().setAttribute(CANVAS_HEIGHT, 200.00);
         } else{
             System.out.println("Deselected");
         }
