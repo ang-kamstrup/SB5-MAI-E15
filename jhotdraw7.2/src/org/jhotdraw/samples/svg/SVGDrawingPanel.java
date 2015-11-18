@@ -27,6 +27,7 @@ import org.jhotdraw.gui.ToolBarLayout;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.gui.plaf.palette.PaletteLookAndFeel;
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
+import org.jhotdraw.samples.svg.gui.Navigator;
 
 /**
  * JSVGDrawingAppletPanel.
@@ -78,6 +79,9 @@ public class SVGDrawingPanel extends JPanel {
         toolsPane.setOpaque(true);
 
         viewToolBar.setView(view);
+        viewToolBar.setDrawingPanel(this);
+        viewToolBar.setToolPane(toolsPane);
+        
 
         undoManager = new UndoRedoManager();
         setEditor(new DefaultDrawingEditor());
@@ -136,6 +140,7 @@ public class SVGDrawingPanel extends JPanel {
             public void componentRemoved(ContainerEvent e) {
             }
         });
+        toolsPane.add(new Navigator(view));        
     }
 
     public void setDrawing(Drawing d) {
@@ -143,6 +148,18 @@ public class SVGDrawingPanel extends JPanel {
         view.getDrawing().removeUndoableEditListener(undoManager);
         view.setDrawing(d);
         d.addUndoableEditListener(undoManager);
+        
+        undoManager = new UndoRedoManager();
+        setEditor(new DefaultDrawingEditor());
+        editor.setHandleAttribute(HandleAttributeKeys.HANDLE_SIZE, new Integer(7));
+    }
+    
+    public JPanel getToolsPanel() {
+        return toolsPanel;
+    }
+    
+    public JPanel getToolsPane() {
+        return toolsPane;
     }
 
     public Drawing getDrawing() {
@@ -179,6 +196,7 @@ public class SVGDrawingPanel extends JPanel {
         editor.setActiveView(view);
         canvasToolBar.setEditor(editor);
         viewToolBar.setEditor(editor);
+        filterToolBar.setEditor(editor);
         editor.setActiveView(temp);
     }
 
@@ -208,6 +226,7 @@ public class SVGDrawingPanel extends JPanel {
         linkToolBar = new org.jhotdraw.samples.svg.gui.LinkToolBar();
         canvasToolBar = new org.jhotdraw.samples.svg.gui.CanvasToolBar();
         viewToolBar = new org.jhotdraw.samples.svg.gui.ViewToolBar();
+        filterToolBar = new org.jhotdraw.samples.svg.gui.FilterToolBar();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
@@ -224,7 +243,7 @@ public class SVGDrawingPanel extends JPanel {
 
         toolsScrollPane.setBorder(PaletteLookAndFeel.getInstance().getBorder("Ribbon.border"));
         toolsScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-        toolsScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        toolsScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         toolsScrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
 
         toolsPane.setForeground(new java.awt.Color(153, 153, 153));
@@ -241,6 +260,7 @@ public class SVGDrawingPanel extends JPanel {
         toolsPane.add(linkToolBar);
         toolsPane.add(canvasToolBar);
         toolsPane.add(viewToolBar);
+        toolsPane.add(filterToolBar);
 
         toolsScrollPane.setViewportView(toolsPane);
 
@@ -256,6 +276,7 @@ public class SVGDrawingPanel extends JPanel {
     public JComponent getComponent() {
         return this;
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jhotdraw.samples.svg.gui.ActionsToolBar actionToolBar;
     private org.jhotdraw.samples.svg.gui.AlignToolBar alignToolBar;
@@ -264,6 +285,7 @@ public class SVGDrawingPanel extends JPanel {
     private org.jhotdraw.samples.svg.gui.ToolsToolBar creationToolBar;
     private org.jhotdraw.samples.svg.gui.FigureToolBar figureToolBar;
     private org.jhotdraw.samples.svg.gui.FillToolBar fillToolBar;
+    private org.jhotdraw.samples.svg.gui.FilterToolBar filterToolBar;
     private org.jhotdraw.samples.svg.gui.FontToolBar fontToolBar;
     private org.jhotdraw.samples.svg.gui.LinkToolBar linkToolBar;
     private javax.swing.JScrollPane scrollPane;

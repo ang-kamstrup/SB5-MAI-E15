@@ -46,8 +46,7 @@ import org.jhotdraw.text.JavaNumberFormatter;
  *
  * @author Werner Randelshofer
  * @version 1.2 2008-05-23 Hide the toolbar if nothing is selected, and no
- * creation tool is active. 
- * <br>1.1 2008-03-26 Don't draw button borders. 
+ * creation tool is active. <br>1.1 2008-03-26 Don't draw button borders.
  * <br>1.0 May 1, 2007 Created.
  */
 public class FillToolBar extends AbstractToolBar {
@@ -59,7 +58,7 @@ public class FillToolBar extends AbstractToolBar {
         
         private String prettyName;
         
-        private GradientType(String prettyName) {
+        GradientType(String prettyName) {
             this.prettyName = prettyName;
         }
         
@@ -146,7 +145,6 @@ public class FillToolBar extends AbstractToolBar {
     protected String getID() {
         return "fill";
     }
-    
     @Override
     protected int getDefaultDisclosureState() {
         return 1;
@@ -165,6 +163,7 @@ public class FillToolBar extends AbstractToolBar {
     public GradientType getFillState() {
         return fillState;
     }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -280,6 +279,22 @@ public class FillToolBar extends AbstractToolBar {
             opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
             opacitySlider.setScaleFactor(100d);
             new FigureAttributeEditorHandler<Double>(FILL_OPACITY, opacitySlider, editor);
+
+
+            btn = ButtonFactory.createFavouriteColorsButton(editor,
+                    FILL_COLOR, "attribute.favoriteColor", labels,
+                    defaultAttributes, new Rectangle(3, 3, 10, 10));
+            btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+            ((JPopupButton) btn).setAction(null, null);
+
+            gbc = new GridBagConstraints();
+            gbc.gridx = 2;
+            gbc.gridwidth = 2;
+            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+            rowTwo.add(btn, gbc);
+            
+            
+            
             
             gbc = new GridBagConstraints();
             gbc.gridy = 0;

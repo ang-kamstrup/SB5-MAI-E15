@@ -27,6 +27,7 @@ import org.jhotdraw.draw.GridConstrainer;
 import org.jhotdraw.draw.action.*;
 import org.jhotdraw.gui.JLifeFormattedTextField;
 import org.jhotdraw.gui.plaf.palette.*;
+import org.jhotdraw.samples.svg.SVGDrawingPanel;
 import org.jhotdraw.text.JavaNumberFormatter;
 
 /**
@@ -41,6 +42,9 @@ import org.jhotdraw.text.JavaNumberFormatter;
 public class ViewToolBar extends AbstractToolBar {
 
     private DrawingView view;
+    private JPanel toolsPanel;
+    private JPanel toolsPane;
+    private SVGDrawingPanel svgDrawingpanel;
 
     /** Creates new instance. */
     public ViewToolBar() {
@@ -48,6 +52,13 @@ public class ViewToolBar extends AbstractToolBar {
         setName(labels.getString(getID() + ".toolbar"));
         setDisclosureStateCount(3);
     }
+    
+    public ViewToolBar (JPanel toolsPanel) {
+        this.toolsPanel = toolsPanel;
+    
+    }
+    
+
 
     public void setView(DrawingView view) {
         this.view = view;
@@ -104,6 +115,24 @@ public class ViewToolBar extends AbstractToolBar {
                     gbc.weighty = 1;
                     gbc.weightx = 1;
                     btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, toggleGridButton.getPreferredSize().height));
+                    p.add(btn, gbc);
+                    
+                    // Change to Horizontal btn
+                    btn = ButtonFactory.createChangeToHorizontalButton(editor, svgDrawingpanel, toolsPane);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                    labels.configureToolBarButton(btn, "edit.changeToHorizontal");
+                    gbc = new GridBagConstraints();
+                    gbc.gridy = 2;
+                    gbc.insets = new Insets(3, 0, 0, 0);
+                    p.add(btn, gbc);
+                    
+                    // Change to Vertical btn
+                    btn = ButtonFactory.createChangeToVerticalButton(editor, svgDrawingpanel, toolsPane);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                    labels.configureToolBarButton(btn, "edit.changeToVertical");
+                    gbc = new GridBagConstraints();
+                    gbc.gridy = 2;
+                    gbc.insets = new Insets(3, 0, 0, 0);
                     p.add(btn, gbc);
                 }
                 break;
@@ -213,8 +242,26 @@ public class ViewToolBar extends AbstractToolBar {
                     gbc.weighty = 1;
                     btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, scaleFactorField.getPreferredSize().height));
                     p.add(btn, gbc);
+                    
+                    // Change to Horizontal btn
+                    btn = ButtonFactory.createChangeToHorizontalButton(editor, svgDrawingpanel, toolsPane);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                    labels.configureToolBarButton(btn, "edit.changeToHorizontal");
+                    gbc = new GridBagConstraints();
+                    gbc.gridy = 2;
+                    gbc.insets = new Insets(3, 0, 0, 0);
+                    p.add(btn, gbc);
+                    
+                    // Change to Vertical btn
+                    btn = ButtonFactory.createChangeToVerticalButton(editor, svgDrawingpanel, toolsPane);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                    labels.configureToolBarButton(btn, "edit.changeToVertical");
+                    gbc = new GridBagConstraints();
+                    gbc.gridy = 2;
+                    gbc.insets = new Insets(3, 0, 0, 0);
+                    p.add(btn, gbc);
                 }
-                break;
+                 break;
         }
         return p;
     }
@@ -236,4 +283,14 @@ public class ViewToolBar extends AbstractToolBar {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    public void setDrawingPanel(SVGDrawingPanel aThis) {
+        svgDrawingpanel = aThis;
+        System.out.println(aThis);
+    }
+    
+    public void setToolPane(JPanel aThis) {
+        toolsPane = aThis;
+        System.out.println("setToolPane");
+    }
 }

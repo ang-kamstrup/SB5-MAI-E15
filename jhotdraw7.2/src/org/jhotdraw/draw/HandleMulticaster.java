@@ -68,11 +68,11 @@ public class HandleMulticaster {
         for (Handle h : new ReversedList<Handle>(handles)) {
             h.trackEnd(current, anchor, modifiersEx);
         }
-        view.getDrawing().fireUndoableEditHappened(edit);
+        //view.getDrawing().fireUndoableEditHappened(edit);
     }
     
     public void trackStart(Point anchor, int modifiersEx, DrawingView view) {
-        view.getDrawing().fireUndoableEditHappened(edit = new CompositeEdit());
+        //view.getDrawing().fireUndoableEditHappened(edit = new CompositeEdit());
         
         for (Handle h : handles) {
             h.trackStart(anchor, modifiersEx);
