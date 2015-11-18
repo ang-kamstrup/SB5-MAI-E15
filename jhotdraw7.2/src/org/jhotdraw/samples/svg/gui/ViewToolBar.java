@@ -105,6 +105,16 @@ public class ViewToolBar extends AbstractToolBar {
                     gbc.weightx = 1;
                     btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, toggleGridButton.getPreferredSize().height));
                     p.add(btn, gbc);
+                    
+                    // Insert Graph
+                    btn = ButtonFactory.createGraphButton(editor);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                    labels.configureToolBarButton(btn, "edit.insertGraph");
+                    gbc = new GridBagConstraints();
+                    gbc.gridy = 2;
+                    gbc.insets = new Insets(3, 1, 0, 0);
+                    p.add(btn,gbc);
+                    
                 }
                 break;
             case 2:
@@ -213,6 +223,16 @@ public class ViewToolBar extends AbstractToolBar {
                     gbc.weighty = 1;
                     btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, scaleFactorField.getPreferredSize().height));
                     p.add(btn, gbc);
+                    
+                    // Insert Graph
+                    btn = ButtonFactory.createGraphButton(editor);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
+                    labels.configureToolBarButton(btn, "edit.insertGraph");
+                    gbc = new GridBagConstraints();
+                    gbc.gridy = 2;
+                    gbc.insets = new Insets(3, 1, 0, 0);
+                    p.add(btn,gbc);
+                    
                 }
                 break;
         }
