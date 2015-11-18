@@ -1,5 +1,3 @@
-package org.jhotdraw.filters;
-
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
@@ -8,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.imageio.ImageIO;
+import org.jhotdraw.filters.GaussianKernel;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -39,7 +38,7 @@ public class TestBlurOperation {
     public void setUp() throws IOException {
         testImage = ImageIO.read(new File("test/resources/testImage.jpg"));
         unblurredImagePixels = ((DataBufferByte) testImage.getRaster().getDataBuffer()).getData();
-        blurOperation = new ConvolveOp(GaussianKernel.createGaussianKernel());
+        blurOperation = new ConvolveOp(GaussianKernel.createKernel());
     }
      
     @After
