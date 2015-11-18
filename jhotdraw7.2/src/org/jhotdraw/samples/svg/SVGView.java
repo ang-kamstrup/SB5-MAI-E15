@@ -35,6 +35,7 @@ import javax.swing.SwingUtilities;
 import org.jhotdraw.app.AbstractView;
 import org.jhotdraw.app.ExportableView;
 import org.jhotdraw.app.JHotDrawFeatures;
+import org.jhotdraw.app.PrintableView;
 import org.jhotdraw.app.action.RedoAction;
 import org.jhotdraw.app.action.UndoAction;
 import org.jhotdraw.draw.Drawing;
@@ -67,7 +68,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
  * <br>1.1 2006-06-10 Extended to support DefaultDrawApplicationModel.
  * <br>1.0 2006-02-07 Created.
  */
-public class SVGView extends AbstractView implements ExportableView {
+public class SVGView extends AbstractView implements ExportableView, PrintableView {
     public final static String GRID_VISIBLE_PROPERTY = "gridVisible";
 
     protected JFileChooser exportChooser;

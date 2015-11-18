@@ -28,8 +28,12 @@ import org.jhotdraw.app.action.*;
 import static org.jhotdraw.draw.AttributeKeys.*;
 import org.jhotdraw.geom.*;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.filters.GaussianBlurFilterAction;
+import org.jhotdraw.filters.PixelFilterAction;
 import org.jhotdraw.gui.FavoriteColorsPopupButton;
 import org.jhotdraw.gui.JFontChooser;
+import org.jhotdraw.samples.svg.SVGApplicationModel;
+import org.jhotdraw.samples.svg.SVGDrawingPanel;
 
 /**
  * ButtonFactory.
@@ -222,30 +226,13 @@ public class ButtonFactory {
         a.add(new CopyAction());
         a.add(new PasteAction());
         a.add(new SelectSameAction(editor));
-
-        return a;
-    }
-
-    public static Collection<Action> createSelectionActions(DrawingEditor editor) {
-        LinkedList<Action> a = new LinkedList<Action>();
-        a.add(new DuplicateAction());
-
-        a.add(null); // separator
-
-        a.add(new GroupAction(editor));
-        a.add(new UngroupAction(editor));
-
-        a.add(null); // separator
-
-        a.add(new BringToFrontAction(editor));
-        a.add(new SendToBackAction(editor));
-        a.add(new EdgeDetectionAction(editor));
+        a.add(new PrintFromCanvasAction());
 
         return a;
     }
 
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor) {
-        return addSelectionToolTo(tb, editor, createDrawingActions(editor), createSelectionActions(editor));
+        return addSelectionToolTo(tb, editor, createDrawingActions(editor), SelectionActionFactory.createSelectionActions(editor));
     }
 
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor,
@@ -1551,4 +1538,81 @@ public class ButtonFactory {
         btn.setFocusable(false);
         return btn;
     }
+    
+    public static JButton createChangeToHorizontalButton(DrawingEditor editor, SVGDrawingPanel svgDrawingPanel, JPanel toolsPane) {
+        JButton btn;
+        btn = new JButton(new ChangeToHorizontalAction(editor, svgDrawingPanel, toolsPane));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static JButton createChangeToVerticalButton(DrawingEditor editor, SVGDrawingPanel svgDrawingPanel, JPanel toolsPane) {
+        JButton btn;
+        btn = new JButton(new ChangeToVerticalAction(editor, svgDrawingPanel, toolsPane));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    /**
+     * Creates a button that make it possible to scale the figures.
+     */
+    public static JButton createApplyScaleButton(DrawingEditor editor, CompositeFigure prototype) {        
+       //Event handler for the button
+       JButton btn = new JButton(new ApplyScaleButton(editor, prototype));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static JButton createBlurFilterActionButton(DrawingEditor editor){
+        JButton btn = new JButton(new GaussianBlurFilterAction(editor));
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        btn.setText(null);
+        return btn;
+    }
+    
+    public static JButton createPixelationFilterActionButton(DrawingEditor editor){
+        JButton btn = new JButton(new PixelFilterAction(editor));
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        btn.setText(null);
+        return btn;
+    }
+    
+    public void getSVGDrawingPanel() {
+        
+    }
+    
+    /**
+     * Creates a new crop tool button, of type JToggleButton
+     */
+    
+    public static JButton createCropToolButton(DrawingEditor editor, DrawingView view){
+        JButton button = new JButton();
+        button.setFocusable(true);
+        button.addActionListener(new CropAction(editor, view));
+        button.setIcon(new ImageIcon(ButtonFactory.class.getResource("/org/jhotdraw/samples/svg/action/images/crop.png")));
+        
+        return button;
+    }
+    
+//    public void getSVGDrawingPanel() {
+//        return null;
+//    }
 }
