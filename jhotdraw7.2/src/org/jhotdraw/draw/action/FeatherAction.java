@@ -26,7 +26,8 @@ import static org.jhotdraw.draw.AttributeKeys.*;
 public class FeatherAction extends AbstractDrawingViewAction {
     
      private ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.draw.Labels", Locale.getDefault());
-
+     private DrawingView view = getView();
+     
 public FeatherAction(DrawingView view) {
         super(view);
         labels.configureAction(this, "edit.feather");
@@ -34,7 +35,12 @@ public FeatherAction(DrawingView view) {
     }
 
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(!view.getSelectedFigures().isEmpty()){
+            
+        }
+        else{
+            
+        }
     }
 }
 
