@@ -26,10 +26,10 @@ public class ZoomSelectionAction extends AbstractDrawingViewAction {
     private ToolListener listener;
     private SelectionTool selectionTool;
     private boolean isZoomed = false;
-    
+
     /**
      * Initializes the action with a view to act upon.
-     * @param view 
+     * @param view
      */
     public ZoomSelectionAction(DrawingView view) {
         super(view);
@@ -37,18 +37,21 @@ public class ZoomSelectionAction extends AbstractDrawingViewAction {
         this.geoView = new GeometricDrawingView(this.view);
         selectionTool = new ZoomSelectionTool();
     }
-    
+
     /**
      * Performs the zoom and move of the view in response
-     * to some zoomable area.
+     * to some zoom-able area.
      * @param area to be zoomed in on.
      */
     private void performAction(Rectangle area) {
         int width = view.getWidth();
-        double factor = Math.round(width/area.width);
+
+        double factor = width / area.width;
         view.setScaleFactor(factor);
-        
-        geoView.moveView(new Point(area.x, area.y));
+
+        geoView.moveView(new Point(
+                (int) (((area.width - area.x)/2)*factor),
+                (int) (((area.height - area.y)/2)*factor)));
     }
     
     /**
@@ -58,14 +61,14 @@ public class ZoomSelectionAction extends AbstractDrawingViewAction {
      */
     @Override
     public void actionPerformed(final ActionEvent _) {
-                
+
         if (isZoomed) {
             view.setScaleFactor(1.0d);
             isZoomed = false;
-            
+
             // Notify all listeners
             for (PropertyChangeListener changeListener : this.getPropertyChangeListeners()) {
-                changeListener.propertyChange(new PropertyChangeEvent(this, 
+                changeListener.propertyChange(new PropertyChangeEvent(this,
                         "SELECTION_ENDED", true, true));
             }
 
@@ -87,16 +90,19 @@ public class ZoomSelectionAction extends AbstractDrawingViewAction {
                     x = area.width;
                     y = area.height;
                 }
-                
+
                 @Override
                 public void toolDone(ToolEvent event) {
                     Rectangle area = event.getInvalidatedArea();
                     
-                    self.performAction(area);
-                    
+                    Rectangle r = new Rectangle(x, y, 
+                            Math.abs(area.width - x), Math.abs(area.height - y));
+
+                    self.performAction(r);
+
                     // Notify all listeners
                     for (PropertyChangeListener changeListener : self.getPropertyChangeListeners()) {
-                        changeListener.propertyChange(new PropertyChangeEvent(self, 
+                        changeListener.propertyChange(new PropertyChangeEvent(self,
                                 "SELECTION_ENDED", true, true));
                     }
 
@@ -106,10 +112,10 @@ public class ZoomSelectionAction extends AbstractDrawingViewAction {
 
                     selectionTool.removeToolListener(this);
                 }
-                
+
                 @Override
                 public void areaInvalidated(ToolEvent event) {
-                    // Unused for this action.           
+                    // Unused for this action
                 }
             };
 
