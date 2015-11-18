@@ -28,6 +28,7 @@ import org.jhotdraw.app.action.*;
 import static org.jhotdraw.draw.AttributeKeys.*;
 import org.jhotdraw.geom.*;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.gui.FavoriteColorsPopupButton;
 import org.jhotdraw.gui.JFontChooser;
 
 /**
@@ -812,6 +813,23 @@ public class ButtonFactory {
         new SelectionComponentRepainter(editor, popupButton);
         return popupButton;
     }
+    
+    public static JPopupButton createFavouriteColorsButton(
+            DrawingEditor editor, AttributeKey<Color> attributeKey,
+            String labelKey, ResourceBundleUtil labels,
+            Map<AttributeKey, Object> defaultAttributes,
+            Shape colorShape) {
+
+        FavoriteColorsPopupButton popupButton =
+                new FavoriteColorsPopupButton(
+                editor, attributeKey, labelKey, labels,
+                defaultAttributes, colorShape);
+
+
+        new SelectionComponentRepainter(editor, popupButton);
+        return popupButton;
+    }
+    
 
     /**
      * Creates a color button, with an action region and a popup menu. The
