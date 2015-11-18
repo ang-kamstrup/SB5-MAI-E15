@@ -27,6 +27,8 @@ import org.jhotdraw.gui.ToolBarLayout;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.gui.plaf.palette.PaletteLookAndFeel;
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
+import org.jhotdraw.samples.svg.gui.Ruler;
+import org.jhotdraw.samples.svg.gui.Corner;
 import org.jhotdraw.samples.svg.gui.Navigator;
 
 /**
@@ -42,6 +44,12 @@ public class SVGDrawingPanel extends JPanel {
     private DrawingEditor editor;
     private ResourceBundleUtil labels;
     private Preferences prefs;
+    
+    //Fields needed for ruler
+    private Ruler columnView;
+    private Ruler rowView;
+    private JToggleButton isMetric;
+    JPanel corner = new JPanel();
 
     private class ItemChangeHandler implements ItemListener {
 
@@ -77,6 +85,17 @@ public class SVGDrawingPanel extends JPanel {
         toolsPane.setLayout(new ToolBarLayout());
         toolsPane.setBackground(new Color(0xf0f0f0));
         toolsPane.setOpaque(true);
+        
+        //Code for changing the scrollPane to displaying a ruler. 
+        //The ruler will be dispayed in the left and top side of the canvas.
+        
+        initializeRulers();
+
+        createCorner();
+        
+        addRulersToJPanel();
+        
+        //End of ruler stuff
 
         viewToolBar.setView(view);
         viewToolBar.setDrawingPanel(this);
@@ -142,6 +161,69 @@ public class SVGDrawingPanel extends JPanel {
         });
         toolsPane.add(new Navigator(view));        
     }
+    
+    public void initializeRulers() {
+        //Create the row and column headers.
+        columnView = new Ruler(Ruler.HORIZONTAL, true);
+        rowView = new Ruler(Ruler.VERTICAL, true);
+               
+        scrollPane.setViewportBorder(
+            BorderFactory.createMatteBorder(1, 1, 0, 0, Color.black));
+       
+        columnView.setPreferredWidth((int)getPreferredSize().getWidth());
+        rowView.setPreferredHeight((int)getPreferredSize().getHeight());
+    }
+    
+    public void createCorner() {
+        //Creating the corners (we will only "see" one)
+        isMetric = new JToggleButton("cm");
+        isMetric.setContentAreaFilled(false);
+        isMetric.setOpaque(true);
+        isMetric.setBackground(new Color(255, 255, 255)); 
+        isMetric.setFocusPainted(false);
+        isMetric.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        isMetric.setBorder(BorderFactory.createEmptyBorder(1, 3, 3, 3));
+        corner.setBackground(new Color(255, 255, 255));
+        addItemListenerToCorner();
+        
+        //adding the boolean button to the corner JPanel
+        corner.add(isMetric);
+    }
+    
+    public void addItemListenerToCorner() {
+        //Adding an itemlistener for the togglebutton
+        isMetric.addItemListener(new ItemListener(){
+        public void itemStateChanged(ItemEvent e){
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+            //Turn it to metric on toggle
+            rowView.setIsMetric(true);
+            columnView.setIsMetric(true);
+            isMetric.setText("cm");
+        } else {
+            //Turn it to inches on toggle
+            rowView.setIsMetric(false);
+            columnView.setIsMetric(false);
+            isMetric.setText("in");
+        }
+            }
+        });
+    }
+
+    
+    public void addRulersToJPanel() {
+        //add the custom header and row view to the scrollPane
+        scrollPane.setColumnHeaderView(columnView);
+        scrollPane.setRowHeaderView(rowView);
+        
+        //Set the corners.
+        scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER,
+                            corner);
+        scrollPane.setCorner(JScrollPane.LOWER_LEFT_CORNER,
+                            new Corner());
+        scrollPane.setCorner(JScrollPane.UPPER_RIGHT_CORNER,
+                            new Corner()); 
+    }
+        //End of ruler stuff
 
     public void setDrawing(Drawing d) {
         undoManager.discardAllEdits();
