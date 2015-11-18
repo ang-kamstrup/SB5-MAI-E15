@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import javax.swing.text.*;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.action.AlignAction;
 import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.samples.svg.*;
 import org.jhotdraw.samples.svg.figures.*;
@@ -86,6 +87,7 @@ public class DefaultSVGFigureFactory implements SVGFigureFactory {
         figure.removeAllChildren();
         SVGBezierFigure bf = new SVGBezierFigure();
         for (int i=0; i < points.length; i++) {
+            
             bf.addNode(new BezierPath.Node(points[i].x, points[i].y));
         }
         bf.setClosed(true);

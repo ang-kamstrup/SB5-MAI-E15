@@ -229,31 +229,8 @@ public class ButtonFactory {
         return a;
     }
 
-    public static Collection<Action> createSelectionActions(DrawingEditor editor) {
-        LinkedList<Action> a = new LinkedList<Action>();
-        a.add(new DuplicateAction());
-
-        a.add(null); // separator
-
-          a.add(new FlipHoriAction(editor));
-        a.add(new FlipVertAction(editor));
-        
-        a.add(null); // separator
-        
-        a.add(new GroupAction(editor));
-        a.add(new UngroupAction(editor));
-
-        a.add(null); // separator
-
-        a.add(new BringToFrontAction(editor));
-        a.add(new SendToBackAction(editor));
-        a.add(new EdgeDetectionAction(editor));
-
-        return a;
-    }
-
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor) {
-        return addSelectionToolTo(tb, editor, createDrawingActions(editor), createSelectionActions(editor));
+        return addSelectionToolTo(tb, editor, createDrawingActions(editor), SelectionActionFactory.createSelectionActions(editor));
     }
 
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor,
