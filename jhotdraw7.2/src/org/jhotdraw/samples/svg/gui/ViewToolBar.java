@@ -28,7 +28,6 @@ import org.jhotdraw.draw.action.*;
 import org.jhotdraw.gui.JLifeFormattedTextField;
 import org.jhotdraw.gui.plaf.palette.*;
 import org.jhotdraw.text.JavaNumberFormatter;
-import org.jhotdraw.samples.svg.SVGDrawingPanel;
 
 /**
  * ViewToolBar.
@@ -42,9 +41,6 @@ import org.jhotdraw.samples.svg.SVGDrawingPanel;
 public class ViewToolBar extends AbstractToolBar {
 
     private DrawingView view;
-    private JPanel toolsPanel;
-    private JPanel toolsPane;
-    private SVGDrawingPanel svgDrawingpanel;
 
     /** Creates new instance. */
     public ViewToolBar() {
@@ -217,16 +213,6 @@ public class ViewToolBar extends AbstractToolBar {
                     gbc.weighty = 1;
                     btn.setPreferredSize(new Dimension(btn.getPreferredSize().width, scaleFactorField.getPreferredSize().height));
                     p.add(btn, gbc);
-                    
-                    //Insert Graph
-                    btn = ButtonFactory.createGraphButton(editor, svgDrawingpanel, toolsPane);
-                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-                    labels.configureToolBarButton(btn, "edit.insertGraph");
-                    gbc = new GridBagConstraints();
-                    gbc.gridy = 2;
-                    gbc.insets = new Insets(3, 1, 0, 0);
-                    p.add(btn,gbc);
-                    
                 }
                 break;
         }

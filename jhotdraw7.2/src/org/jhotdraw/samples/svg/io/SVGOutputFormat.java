@@ -350,35 +350,35 @@ public class SVGOutputFormat implements OutputFormat {
     }
 
     
-//        protected void writeGraphElement(IXMLElement parent, SVGPathFigure f) throws IOException {
-//        LinkedList<Point2D.Double> points = new LinkedList<Point2D.Double>();
-//        BezierPath[] beziers = new BezierPath[f.getChildCount()];
-//        for (int i = 0, n = f.getChildCount(); i < n; i++) {
-//            BezierPath bezier = ((BezierFigure) f.getChild(i)).getBezierPath();
-//            for (BezierPath.Node node : bezier) {
-//                points.add(new Point2D.Double(node.x[0], node.y[0]));
-//            }
-//        }
-//
-//        parent.addChild(insertGraph(
-//                document,
-//                points.toArray(new Point2D.Double[points.size()]),
-//                f.getAttributes()));
-//    }
-//
-//    protected IXMLElement insertGraph(IXMLElement doc,
-//            Point2D.Double[] points,
-//            Map<AttributeKey, Object> attributes)
-//            throws IOException {
-//        IXMLElement elem = doc.createElement("graph");
-//        writeAttribute(elem, "graph", toPoints(points), null);
-//        writeShapeAttributes(elem, attributes);
-//        writeOpacityAttribute(elem, attributes);
-//        writeTransformAttribute(elem, attributes);
-//        return elem;
-//    }
-//    
-//    
+        protected void writeGraphElement(IXMLElement parent, SVGPathFigure f) throws IOException {
+        LinkedList<Point2D.Double> points = new LinkedList<Point2D.Double>();
+        BezierPath[] beziers = new BezierPath[f.getChildCount()];
+        for (int i = 0, n = f.getChildCount(); i < n; i++) {
+            BezierPath bezier = ((BezierFigure) f.getChild(i)).getBezierPath();
+            for (BezierPath.Node node : bezier) {
+                points.add(new Point2D.Double(node.x[0], node.y[0]));
+            }
+        }
+
+        parent.addChild(insertGraph(
+                document,
+                points.toArray(new Point2D.Double[points.size()]),
+                f.getAttributes()));
+    }
+
+    protected IXMLElement insertGraph(IXMLElement doc,
+            Point2D.Double[] points,
+            Map<AttributeKey, Object> attributes)
+            throws IOException {
+        IXMLElement elem = doc.createElement("graph");
+        writeAttribute(elem, "graph", toPoints(points), null);
+        writeShapeAttributes(elem, attributes);
+        writeOpacityAttribute(elem, attributes);
+        writeTransformAttribute(elem, attributes);
+        return elem;
+    }
+    
+    
     protected void writePolygonElement(IXMLElement parent, SVGPathFigure f) throws IOException {
         LinkedList<Point2D.Double> points = new LinkedList<Point2D.Double>();
         BezierPath[] beziers = new BezierPath[f.getChildCount()];

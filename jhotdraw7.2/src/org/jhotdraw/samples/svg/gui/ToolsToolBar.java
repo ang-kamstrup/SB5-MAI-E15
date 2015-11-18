@@ -101,8 +101,8 @@ public class ToolsToolBar extends AbstractToolBar {
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
-        gbc.gridy = 1;
-        gbc.insets = new Insets(3, 1, 0, 0);
+        gbc.gridy = 0;
+        gbc.insets = new Insets(3, 3, 0, 0);
         p.add(btn, gbc);
         
         btn = ButtonFactory.addToolTo(this, editor, pathTool = new PathTool(new SVGPathFigure(), new SVGBezierFigure(true), attributes), "createPolygon", labels);
