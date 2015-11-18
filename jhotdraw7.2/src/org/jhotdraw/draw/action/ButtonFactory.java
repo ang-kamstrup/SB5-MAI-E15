@@ -28,6 +28,7 @@ import org.jhotdraw.app.action.*;
 import static org.jhotdraw.draw.AttributeKeys.*;
 import org.jhotdraw.geom.*;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.filters.GaussianBlurFilterAction;
 import org.jhotdraw.gui.FavoriteColorsPopupButton;
 import org.jhotdraw.gui.JFontChooser;
 import org.jhotdraw.samples.svg.SVGApplicationModel;
@@ -229,31 +230,8 @@ public class ButtonFactory {
         return a;
     }
 
-    public static Collection<Action> createSelectionActions(DrawingEditor editor) {
-        LinkedList<Action> a = new LinkedList<Action>();
-        a.add(new DuplicateAction());
-
-        a.add(null); // separator
-
-          a.add(new FlipHoriAction(editor));
-        a.add(new FlipVertAction(editor));
-        
-        a.add(null); // separator
-        
-        a.add(new GroupAction(editor));
-        a.add(new UngroupAction(editor));
-
-        a.add(null); // separator
-
-        a.add(new BringToFrontAction(editor));
-        a.add(new SendToBackAction(editor));
-        a.add(new EdgeDetectionAction(editor));
-
-        return a;
-    }
-
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor) {
-        return addSelectionToolTo(tb, editor, createDrawingActions(editor), createSelectionActions(editor));
+        return addSelectionToolTo(tb, editor, createDrawingActions(editor), SelectionActionFactory.createSelectionActions(editor));
     }
 
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor,
@@ -1599,6 +1577,14 @@ public class ButtonFactory {
         btn.setVerticalTextPosition(JButton.BOTTOM);
         btn.setText(null);
         btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static JButton createBlurFilterActionButton(DrawingEditor editor){
+        JButton btn = new JButton(new GaussianBlurFilterAction(editor));
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        btn = new JButton(new GaussianBlurFilterAction(editor));
+        btn.setText(null);
         return btn;
     }
     
