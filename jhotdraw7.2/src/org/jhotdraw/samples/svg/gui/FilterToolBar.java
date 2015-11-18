@@ -98,11 +98,10 @@ public class FilterToolBar extends AbstractToolBar{
     private void createPixelFilterActionButton(ResourceBundleUtil labels, JPanel p) {
         AbstractButton btn;
         GridBagConstraints gbc;
-        btn = new JButton(new PixelFilterAction(editor));
+        
+        btn = ButtonFactory.createPixelationFilterActionButton(editor);
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        btn.setText(null);
         labels.configureToolBarButton(btn, PixelFilterAction.ID);
-        btn.putClientProperty("hideActionText", Boolean.TRUE);
         gbc = new GridBagConstraints();
         gbc.gridy = 1;
         gbc.insets = new Insets(3, 0, 0, 0);
