@@ -29,6 +29,7 @@ import static org.jhotdraw.draw.AttributeKeys.*;
 import org.jhotdraw.geom.*;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.filters.GaussianBlurFilterAction;
+import org.jhotdraw.filters.PixelFilterAction;
 import org.jhotdraw.gui.FavoriteColorsPopupButton;
 import org.jhotdraw.gui.JFontChooser;
 import org.jhotdraw.samples.svg.SVGApplicationModel;
@@ -1583,7 +1584,13 @@ public class ButtonFactory {
     public static JButton createBlurFilterActionButton(DrawingEditor editor){
         JButton btn = new JButton(new GaussianBlurFilterAction(editor));
         btn.putClientProperty("hideActionText", Boolean.TRUE);
-        btn = new JButton(new GaussianBlurFilterAction(editor));
+        btn.setText(null);
+        return btn;
+    }
+    
+    public static JButton createPixelationFilterActionButton(DrawingEditor editor){
+        JButton btn = new JButton(new PixelFilterAction(editor));
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
         btn.setText(null);
         return btn;
     }
