@@ -4,6 +4,7 @@
  */
 package org.jhotdraw.draw.action;
 
+import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
 import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -12,6 +13,7 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoableEdit;
+import org.jhotdraw.app.JHotDrawFeatures;
 import org.jhotdraw.draw.CompositeFigure;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.DrawingView;
@@ -35,7 +37,6 @@ public class ApplyScaleButton extends AbstractSelectedAction {
     private Grouping group;
     private CompositeFigure prototype;
 
-    
     public ApplyScaleButton(DrawingEditor editor, CompositeFigure prototype) {
         super(editor);
         labels.configureAction(this, "edit.applyScale");
@@ -72,7 +73,8 @@ public class ApplyScaleButton extends AbstractSelectedAction {
                 getView().getSelectedFigures().iterator().next().getClass().equals(
                 prototype.getClass());
     }
-
+    
+    @FeatureEntryPoint(JHotDrawFeatures.SCALE)
     public void actionPerformed(ActionEvent e) {
         if(canGroup())
         {
