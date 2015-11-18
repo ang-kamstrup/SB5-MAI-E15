@@ -219,6 +219,14 @@ public class GradientHandleKit {
             double y = (p.y - owner.getBounds().y) / owner.getPreferredSize().getHeight();
             g.setGradientCircle(x, y, g.getR());
             
+            double[] offsets = g.getStopOffsets();
+            double a = g.getCX() - g.getFX();
+            double b = g.getCY() - g.getFY();
+            double c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+            
+            offsets[0] = c;
+            g.setStops(offsets, g.getStopColors(), g.getStopOpacities());
+            
             if (TRANSFORM.get(owner) != null) {
                 try {
                     TRANSFORM.get(owner).inverseTransform(p, p);
@@ -282,6 +290,14 @@ public class GradientHandleKit {
             double y = (p.y - owner.getBounds().y) / owner.getPreferredSize().getHeight();
             g.setFocalPoint(x, y);
             
+            double[] offsets = g.getStopOffsets();
+            double a = g.getCX() - g.getFX();
+            double b = g.getCY() - g.getFY();
+            double c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+            
+            offsets[0] = c;
+            g.setStops(offsets, g.getStopColors(), g.getStopOpacities());
+            
             if (TRANSFORM.get(owner) != null) {
                 try {
                     TRANSFORM.get(owner).inverseTransform(p, p);
@@ -302,5 +318,7 @@ public class GradientHandleKit {
         }
         
     }
+    
+    
 
 }
