@@ -1599,6 +1599,19 @@ public class ButtonFactory {
         
     }
     
+    /**
+     * Creates a new crop tool button, of type JToggleButton
+     */
+    
+    public static JButton createCropToolButton(DrawingEditor editor, DrawingView view){
+        JButton button = new JButton();
+        button.setFocusable(true);
+        button.addActionListener(new CropAction(editor, view));
+        button.setIcon(new ImageIcon(ButtonFactory.class.getResource("/org/jhotdraw/samples/svg/action/images/crop.png")));
+        
+        return button;
+    }
+    
 //    public void getSVGDrawingPanel() {
 //        return null;
 //    }
