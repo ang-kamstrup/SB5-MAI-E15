@@ -1,3 +1,8 @@
+import javax.swing.JToggleButton;
+import junit.framework.Assert;
+import org.jhotdraw.draw.DefaultDrawingView;
+import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.action.ButtonFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -11,7 +16,12 @@ import static org.junit.Assert.*;
  */
 public class ZoomSelectionTest {
     
+    private JToggleButton button;
+    private DrawingView view;
+    
     public ZoomSelectionTest() {
+        view = new DefaultDrawingView();
+        button = ButtonFactory.createZoomSelectionButton(view);
     }
     
     @BeforeClass
@@ -28,5 +38,15 @@ public class ZoomSelectionTest {
     
     @After
     public void tearDown() {
+    }
+    
+    @Test
+    public void test() {
+        button.doClick();
+        double factor = view.getScaleFactor();
+        
+        
+        
+        Assert.assertNotSame(factor, factor);
     }
 }

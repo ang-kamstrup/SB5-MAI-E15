@@ -1,14 +1,13 @@
 package org.jhotdraw.draw.action;
 
+import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.LinkedList;
-import java.util.List;
-import org.jhotdraw.draw.DelegationSelectionTool;
+import org.jhotdraw.draw.DefaultDrawingView;
 import org.jhotdraw.draw.DrawingView;
+import org.jhotdraw.draw.GeometricDrawingView;
 import org.jhotdraw.draw.SelectionTool;
 import org.jhotdraw.draw.ToolEvent;
 import org.jhotdraw.draw.ToolListener;
@@ -21,19 +20,35 @@ import org.jhotdraw.draw.ZoomSelectionTool;
  */
 public class ZoomSelectionAction extends AbstractDrawingViewAction {
 
-    private DrawingView view;
+    private DefaultDrawingView view;
+    private GeometricDrawingView geoView;
+
     private ToolListener listener;
     private SelectionTool selectionTool;
     private boolean isZoomed = false;
     
     /**
-     * Initialises the action with a view.
+     * Initializes the action with a view to act upon.
      * @param view 
      */
     public ZoomSelectionAction(DrawingView view) {
         super(view);
-        this.view = view;
+        this.view = (DefaultDrawingView) view;
+        this.geoView = new GeometricDrawingView(this.view);
         selectionTool = new ZoomSelectionTool();
+    }
+    
+    /**
+     * Performs the zoom and move of the view in response
+     * to some zoomable area.
+     * @param area to be zoomed in on.
+     */
+    private void performAction(Rectangle area) {
+        int width = view.getWidth();
+        double factor = Math.round(width/area.width);
+        view.setScaleFactor(factor);
+        
+        geoView.moveView(new Point(area.x, area.y));
     }
     
     /**
@@ -45,53 +60,60 @@ public class ZoomSelectionAction extends AbstractDrawingViewAction {
     public void actionPerformed(final ActionEvent _) {
                 
         if (isZoomed) {
-            view.setScaleFactor(1d);
+            view.setScaleFactor(1.0d);
             isZoomed = false;
+            
+            // Notify all listeners
             for (PropertyChangeListener changeListener : this.getPropertyChangeListeners()) {
                 changeListener.propertyChange(new PropertyChangeEvent(this, 
                         "SELECTION_ENDED", true, true));
             }
+
             selectionTool.removeToolListener(listener);
-            return;
+
+        } else {
+            view.getEditor().setTool(selectionTool);
+
+            // Internally scoped action
+            final ZoomSelectionAction self = this;
+
+            listener = new ToolListener() {
+                int x = 0;
+                int y = 0;
+
+                @Override
+                public void toolStarted(ToolEvent event) {
+                    Rectangle area = event.getInvalidatedArea();
+                    x = area.width;
+                    y = area.height;
+                }
+                
+                @Override
+                public void toolDone(ToolEvent event) {
+                    Rectangle area = event.getInvalidatedArea();
+                    
+                    self.performAction(area);
+                    
+                    // Notify all listeners
+                    for (PropertyChangeListener changeListener : self.getPropertyChangeListeners()) {
+                        changeListener.propertyChange(new PropertyChangeEvent(self, 
+                                "SELECTION_ENDED", true, true));
+                    }
+
+                    if (view.getScaleFactor() != 1.0) {
+                        isZoomed = true;
+                    }
+
+                    selectionTool.removeToolListener(this);
+                }
+                
+                @Override
+                public void areaInvalidated(ToolEvent event) {
+                    // Unused for this action.           
+                }
+            };
+
+            selectionTool.addToolListener(listener);
         }
-        
-        view.getEditor().setTool(selectionTool);
-        
-        final ZoomSelectionAction self = this;
-        
-        listener = new ToolListener() {
-            
-            public void toolStarted(ToolEvent event) {
-                // Unused for this action.
-            }
-
-            public void toolDone(ToolEvent event) {
-                int w = event.getInvalidatedArea().width;
-                int h = event.getInvalidatedArea().height;
-                
-                double range = 0;
-                
-                if (w >= h) {
-                    range = Toolkit.getDefaultToolkit().getScreenSize().width / w;
-                } else {
-                    range = Toolkit.getDefaultToolkit().getScreenSize().height / h;
-                }
-
-                view.setScaleFactor(range);
-                for (PropertyChangeListener changeListener : self.getPropertyChangeListeners()) {
-                    changeListener.propertyChange(new PropertyChangeEvent(self, 
-                            "SELECTION_ENDED", true, true));
-                }
-                isZoomed = true;
-                selectionTool.removeToolListener(this);
-            }
-
-            public void areaInvalidated(ToolEvent event) {
-                // Unused for this action.           
-            }
-        };
-
-        selectionTool.addToolListener(listener);
     }
-    
 }
