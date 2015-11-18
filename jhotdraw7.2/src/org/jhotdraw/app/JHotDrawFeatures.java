@@ -14,6 +14,7 @@ public class JHotDrawFeatures {
     public static final String BASIC_EDITING = "basic editing";
     public static final String AUTOMATIC_SELECTION = "automatic selection";
     public static final String VIEW_SOURCE = "view source";
+    public static final String VIEW_LAYERS = "view layers";
     public static final String ARRANGE = "arrange";
     public static final String GROUPING = "grouping";
     public static final String PATH_EDITING = "path editing";
