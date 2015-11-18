@@ -1607,7 +1607,7 @@ public class ButtonFactory {
         JButton button = new JButton();
         button.setFocusable(true);
         button.addActionListener(new CropAction(editor, view));
-        button.setIcon(new ImageIcon(ButtonFactory.class.getResource("/org/jhotdraw/draw/action/images/moveToBack.png")));
+        button.setIcon(new ImageIcon(ButtonFactory.class.getResource("/org/jhotdraw/samples/svg/action/images/crop.png")));
         
         return button;
     }
