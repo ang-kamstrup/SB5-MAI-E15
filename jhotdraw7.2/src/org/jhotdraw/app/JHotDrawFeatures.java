@@ -39,5 +39,6 @@ public class JHotDrawFeatures {
     public static final String GAUSSIAN_BLUR = "blur image";
     public static final String SCALE = "scale";
     public static final String CALI_TOOL = "calligraphy tool";
+    public static final String ZOOM_SELECTION = "zoom selection";
 
 }

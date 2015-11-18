@@ -1,10 +1,12 @@
 package org.jhotdraw.draw.action;
 
+import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import org.jhotdraw.app.JHotDrawFeatures;
 import org.jhotdraw.draw.DefaultDrawingView;
 import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.GeometricDrawingView;
@@ -59,6 +61,7 @@ public class ZoomSelectionAction extends AbstractDrawingViewAction {
      * Usually works as a callback with the event.
      * @param _ ActionEvent received from caller (unused).
      */
+    @FeatureEntryPoint(JHotDrawFeatures.ZOOM_SELECTION)
     @Override
     public void actionPerformed(final ActionEvent _) {
 
