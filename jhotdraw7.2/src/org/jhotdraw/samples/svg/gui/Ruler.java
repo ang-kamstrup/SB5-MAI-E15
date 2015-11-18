@@ -31,15 +31,6 @@ public class Ruler extends JComponent {
         repaint();
     }
     
-    public boolean getOrientation() {
-        if(orientation == 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    
     private void setIncrementAndUnits() {
         if (isMetric) {
             units = (int)((double)INCH / (double)2.54); // dots per centimeter
