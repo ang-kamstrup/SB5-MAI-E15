@@ -223,7 +223,7 @@ public class GradientHandleKit {
             double a = g.getCX() - g.getFX();
             double b = g.getCY() - g.getFY();
             double c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
-            
+           
             if(c < 1) {
                 offsets[0] = c;
                 g.setStops(offsets, g.getStopColors(), g.getStopOpacities());

@@ -51,14 +51,14 @@ import org.jhotdraw.text.JavaNumberFormatter;
  */
 public class FillToolBar extends AbstractToolBar {
 
-    public enum GradientType {
+    public enum FillType {
         SOLID(" Solid Fill "),
         LINEAR_GRADIENT(" Linear Gradient "),
         RADIAL_GRADIENT(" Radial Gradient ");
         
         private String prettyName;
         
-        GradientType(String prettyName) {
+        FillType(String prettyName) {
             this.prettyName = prettyName;
         }
         
@@ -68,14 +68,14 @@ public class FillToolBar extends AbstractToolBar {
     }
     
     private SelectionComponentDisplayer displayer;
-    private GradientType fillState;
+    private FillType fillState;
     
     /** Creates new instance. */
     public FillToolBar() {
         ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
         setName(labels.getString(getID() + ".toolbar"));
         setDisclosureStateCount(3);
-        setFillState(GradientType.SOLID);
+        setFillState(FillType.SOLID);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class FillToolBar extends AbstractToolBar {
         return 1;
     }
     
-    public void setFillState(GradientType fillState) {
+    public void setFillState(FillType fillState) {
         this.fillState = fillState;
         
         // Force rebuild of the FillToolBar panels.
@@ -160,7 +160,7 @@ public class FillToolBar extends AbstractToolBar {
         }
     }
     
-    public GradientType getFillState() {
+    public FillType getFillState() {
         return fillState;
     }
 
@@ -288,6 +288,7 @@ public class FillToolBar extends AbstractToolBar {
             ((JPopupButton) btn).setAction(null, null);
 
             gbc = new GridBagConstraints();
+            gbc.insets = new Insets(4, 3, 0, 0);
             gbc.gridx = 2;
             gbc.gridwidth = 2;
             gbc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -315,7 +316,7 @@ public class FillToolBar extends AbstractToolBar {
             JPanel rowOne = new JPanel(new GridBagLayout());
             JPanel rowTwo = new JPanel(new GridBagLayout());
             
-            // Row one, fill color field and button, opacity slider. (stop 1)
+            // Row one, fill color button, opacity slider. (stop 1)
             Map<AttributeKey, Object> defaultAttributes = new HashMap<AttributeKey, Object>();
             FILL_GRADIENT.set(defaultAttributes, null);
             GridBagConstraints gbc = new GridBagConstraints();
@@ -374,7 +375,7 @@ public class FillToolBar extends AbstractToolBar {
             });
             
             
-            // Row two, fill color field and button, opacity slider. (stop 2)
+            // Row two, fill color button, opacity slider. (stop 2)
             FILL_GRADIENT.set(defaultAttributes, null);
             gbc.gridx = 0;
             gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -452,7 +453,7 @@ public class FillToolBar extends AbstractToolBar {
             JPanel rowOne = new JPanel(new GridBagLayout());
             JPanel rowTwo = new JPanel(new GridBagLayout());
             
-            // Row one, fill color field and button, opacity slider. (stop 1)
+            // Row one, fill color button, opacity slider. (stop 1)
             Map<AttributeKey, Object> defaultAttributes = new HashMap<AttributeKey, Object>();
             FILL_GRADIENT.set(defaultAttributes, null);
             GridBagConstraints gbc = new GridBagConstraints();
@@ -511,7 +512,7 @@ public class FillToolBar extends AbstractToolBar {
             });
             
             
-            // Row two, fill color field and button, opacity slider. (stop 2)
+            // Row two, fill color button, opacity slider. (stop 2)
             FILL_GRADIENT.set(defaultAttributes, null);
             gbc.gridx = 0;
             gbc.fill = GridBagConstraints.HORIZONTAL;
