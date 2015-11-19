@@ -449,4 +449,8 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
     public boolean getEdgeDetectionApplied() {
         return edgeDetectionApplied;
     }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
+    }
 }

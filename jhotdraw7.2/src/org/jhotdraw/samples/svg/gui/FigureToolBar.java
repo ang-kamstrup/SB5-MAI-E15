@@ -102,6 +102,16 @@ public class FigureToolBar extends AbstractToolBar {
                     opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
                     opacitySlider.setScaleFactor(100d);
                     new FigureAttributeEditorHandler<Double>(OPACITY, opacitySlider, editor);
+                    
+                     //Add ShadowButton
+                    btn = ButtonFactory.createApplyShadowButton(editor);
+                    btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(this));
+                    labels.configureToolBarButton(btn, "edit.applyShadow");
+                    gbc = new GridBagConstraints();
+                    gbc.gridx = 2;
+                    gbc.gridy = 0;
+                    gbc.insets = new Insets(0, 0, 0, 0);
+                    p.add(btn, gbc);
                 }
                 break;
 
@@ -151,6 +161,34 @@ public class FigureToolBar extends AbstractToolBar {
                     opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
                     opacitySlider.setScaleFactor(100d);
                     new FigureAttributeEditorHandler<Double>(OPACITY, opacitySlider, editor);
+                    
+                    // ShadowOpacity field with -slider
+                JAttributeTextField<Double> shadowField = new JAttributeTextField<Double>();
+                shadowField.setColumns(3);
+                shadowField.setToolTipText(labels.getString("attribute.shadowOpacity.toolTipText"));
+                shadowField.setHorizontalAlignment(JAttributeTextField.RIGHT);
+                shadowField.putClientProperty("Palette.Component.segmentPosition", "first");
+                shadowField.setUI((PaletteFormattedTextFieldUI) PaletteFormattedTextFieldUI.createUI(shadowField));
+                shadowField.setFormatterFactory(JavaNumberFormatter.createFormatterFactory(0d, 1d, 100d));
+                shadowField.setHorizontalAlignment(JTextField.LEADING);
+                new FigureAttributeEditorHandler<Double>(SHADOW_OPACITY, shadowField, editor);
+                gbc = new GridBagConstraints();
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.insets = new Insets(0, 0, 0, 0);
+                gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+                gbc.weightx = 1d;
+                p.add(shadowField, gbc);
+ 
+                //Add ShadowButton
+                btn = ButtonFactory.createApplyShadowButton(editor);
+                btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(this));
+                labels.configureToolBarButton(btn, "edit.applyShadow");
+                gbc = new GridBagConstraints();
+                gbc.gridx = 2;
+                gbc.gridy = 1;
+                gbc.insets = new Insets(0, 0, 0, 0);
+                p.add(btn, gbc);
                 }
                 break;
         }
