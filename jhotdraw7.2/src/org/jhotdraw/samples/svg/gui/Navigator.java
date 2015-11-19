@@ -13,58 +13,121 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.swing.JPanel;
-import org.jhotdraw.draw.DefaultDrawing;
+import javax.swing.SwingUtilities;
 import org.jhotdraw.draw.DefaultDrawingView;
+import org.jhotdraw.draw.DrawingView;
 import org.jhotdraw.draw.Figure;
-import org.jhotdraw.draw.action.AlignAction;
 
 /**
  * @author Jesper Madsen
- * @version 0.9.0
- * 
- * Have no implementation in regard to "current" drawing area and zoom
- * needs updating when that gets working :
- *      #3  Feature request: Add smooth zoom function (scroll based) 
- *      #50 Resizable Canvas 
- * Created a MouseListenter for when this gets relevant
- * requestFocus() not working, following mouseWheelListener does not either.
+ * @version 1.0.0
  */
 public class Navigator extends JPanel {
 
     private Collection<Figure> figures;
     private DefaultDrawingView view;
-    private double height, width;
+    private double ScaleHeight, scaleWidth;
+    private double scaleFactor;
+    private final Double[] scaleFactors;
+    private int scaleFactorsPointer;
+    private Dimension prefferedDimension, drawingDimension;
+    private int figureWidth = 0;
+    private int figureHeight = 0;
 
-    public Navigator(DefaultDrawingView view) {
-        this.setPreferredSize(new Dimension(100, 100));
+    public Navigator(final DefaultDrawingView view) {
+        this.scaleFactors = new Double[]{5.0, 4.0, 3.0, 2.0, 1.5, 1.25, 1.0, 0.75, 0.5, 0.25, 0.10};
         this.view = view;
-        height = 100.0 / view.getHeight();
-        width = 100.0 / view.getWidth();
-        figures = new ArrayList<Figure>();
-        this.addMouseListener(new MouseAdapter() {
-            
-            @Override
-            public void mousePressed(MouseEvent e) {
-                System.out.println("setCurrentViewingArea{new Rect(....)}");
-            }
-            
-            @Override
-            public void mouseEntered(MouseEvent e){
-//                requestFocus(); 
-//                requestFocusInWindow();
-            }
-            
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) { 
-                int ticks = e.getWheelRotation();
-                if (ticks < 0) {
-                    System.out.println("Zoom in");
-                } else {
-                    System.out.println("Zoom out");
+        this.prefferedDimension = new Dimension(100, 100);
+        this.drawingDimension = new Dimension(99, 99);
+        this.setPreferredSize(prefferedDimension);
+        this.figures = new ArrayList<Figure>();
+        this.scaleFactor = view.getScaleFactor();
+        this.scaleFactorsPointer = java.util.Arrays.asList(scaleFactors).indexOf((double) scaleFactor);
+
+        //scaleFactor subscribtion on view
+        view.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName() == DrawingView.SCALE_FACTOR_PROPERTY) {
+                    if (evt.getNewValue() != null) {
+                        scaleFactor = ((Double) evt.getNewValue());
+                        repaint();
+                    }
                 }
+            }
+        });
+        
+//        //Not working
+//        view.getDrawing().addFigureListener(new FigureAdapter() {
+//            @Override
+//            public void figureAdded(FigureEvent e){
+//                System.out.println("herp");
+//            }
+//            @Override
+//            public void figureRemoved(FigureEvent e){
+//                System.out.println("derp");
+//            }
+//        });
+        
+        
+        //MouseWheel listener
+        addMouseWheelListener(new MouseAdapter() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent mwe) {
+                super.mouseWheelMoved(mwe);
+                scaleFactorsPointer = java.util.Arrays.asList(scaleFactors).indexOf((double) view.getScaleFactor());
+                if (scaleFactorsPointer == -1.0) {
+                    scaleFactorsPointer = 6;
+                }
+                int notches = mwe.getWheelRotation();
+                if (notches > 0) {
+                    if (scaleFactorsPointer + 1 <= scaleFactors.length - 1) {
+                        view.setScaleFactor(scaleFactors[++scaleFactorsPointer]);
+                    } else {
+                        scaleFactorsPointer = 0;
+                        view.setScaleFactor(scaleFactors[scaleFactorsPointer]);
+                    }
+                } else {
+                    if (scaleFactorsPointer - 1 >= 0) {
+                        view.setScaleFactor(scaleFactors[--scaleFactorsPointer]);
+                    } else {
+                        scaleFactorsPointer = scaleFactors.length;
+                        view.setScaleFactor(scaleFactors[--scaleFactorsPointer]);
+                    }
+                }
+                getParent().repaint();
+                revalidate();
+                repaint();
+            }
+        });
+
+        //Mouse listener
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                super.mousePressed(evt);
+                if (scaleFactorsPointer - 1 >= 0) {
+                    scaleFactor = scaleFactors[--scaleFactorsPointer];
+                    final Rectangle vRect = view.getComponent().getVisibleRect();
+                    double oldFactor = view.getScaleFactor();
+                    view.setScaleFactor(scaleFactor);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            if (vRect != null) {
+                                //implement zoom relative to mouse coordinates (refactor to use in mousewheel)
+                                //do math
+                                view.getComponent().scrollRectToVisible(vRect);
+                            }
+                        }
+                    });
+                }
+                getParent().repaint();
+                revalidate();
+                repaint();
             }
         });
     }
@@ -72,8 +135,8 @@ public class Navigator extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        updateFigures(); //rethink? perhaps thread
-        Rectangle2D clipBounds = new Rectangle(0, 0, view.getWidth(), view.getHeight());
+        updateFigures(); //update and repaint on figurelist change, invoke later
+        Rectangle2D clipBounds = new Rectangle(0, 0, figureWidth, figureHeight);
         if (clipBounds != null) {
             for (Figure f : figures) {
                 if (f.isVisible() && f.getDrawingArea().intersects(clipBounds)) {
@@ -81,19 +144,27 @@ public class Navigator extends JPanel {
                 }
             }
         }
-        g2.drawRect(0, 0, 99, 99);
+        g2.drawRect(0, 0, drawingDimension.width, drawingDimension.height);
     }
 
     private void updateFigures() {
         figures.removeAll(figures); //not unique collection
-        height = 100.0 / (view.getHeight()); //+view.getHeight+zoomFactor
-        width = 100.0 / (view.getWidth()); //+view.getWidth+zoomFactor
         for (Figure f : view.getDrawing().getChildren()) {
-            figures.add((Figure) f.clone()); 
+            figures.add((Figure) f.clone());
         }
+        ScaleHeight = (double) drawingDimension.height / (figureHeight);
         AffineTransform transformer = new AffineTransform();
-        transformer.scale(width, height);
+        transformer.scale(scaleWidth, ScaleHeight);
+        //transform figure in relation to 'canvasSize' = figureWidth,figureHeight
         for (Figure f : figures) {
+            if (f.getBounds().x + f.getBounds().width > figureWidth) {
+                figureWidth = (int) (f.getBounds().x + f.getBounds().width);
+                scaleWidth = (double) drawingDimension.width / (figureWidth);
+            }
+            if (f.getBounds().y + f.getBounds().height > figureHeight) {
+                figureHeight = (int) (f.getBounds().y + f.getBounds().height);
+                ScaleHeight = (double) drawingDimension.height / (figureHeight);
+            }
             f.transform(transformer);
         }
     }
