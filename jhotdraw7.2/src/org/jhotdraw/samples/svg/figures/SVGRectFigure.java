@@ -399,4 +399,10 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         
         return pf;
     }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
+        ShadowRender.DrawShadow(g, this, SHADOW_OFFSET.get(this));
+
+    }
 }

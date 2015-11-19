@@ -1628,6 +1628,18 @@ public class ButtonFactory {
         btn.setFocusable(false);
         return btn;
     }
+     public static JButton createApplyShadowButton(DrawingEditor editor){
+        JButton btn;
+        btn = new JButton(new ApplyShadowAction(editor));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
     
     public static AbstractButton createGradientHandleSelectorButton(DrawingEditor editor, final FillToolBar fillToolBar, ResourceBundleUtil labels) {
 
