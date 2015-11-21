@@ -34,7 +34,6 @@ public class ChangeGradientAction extends AbstractSelectedAction {
     }
 
     public void actionPerformed(ActionEvent ae) {
-        System.out.println("ChangeGradientAction");
         popupButton.setText(fillState.getPrettyName());
         
         Gradient g = null;
