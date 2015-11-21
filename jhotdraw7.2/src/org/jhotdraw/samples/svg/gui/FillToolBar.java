@@ -24,7 +24,6 @@ import javax.swing.*;
 import static javax.swing.SwingConstants.SOUTH_EAST;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.LabelUI;
 import javax.swing.plaf.SliderUI;
 import org.jhotdraw.app.JHotDrawFeatures;
 import org.jhotdraw.draw.*;
@@ -35,7 +34,6 @@ import org.jhotdraw.gui.JAttributeSlider;
 import org.jhotdraw.gui.JAttributeTextField;
 import org.jhotdraw.gui.JPopupButton;
 import org.jhotdraw.gui.plaf.palette.*;
-import org.jhotdraw.samples.svg.LinearGradient;
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.FILL_GRADIENT;
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.FILL_OPACITY;
 import org.jhotdraw.text.ColorFormatter;
@@ -164,7 +162,6 @@ public class FillToolBar extends AbstractToolBar {
         return fillState;
     }
 
-
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -178,10 +175,6 @@ public class FillToolBar extends AbstractToolBar {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-
-    
-    
-    
     public static class FillPanelFactory {
 
         public static JPanel createPanel(FillToolBar fillToolBar, int toolbarState, DrawingEditor editor, ResourceBundleUtil labels) {
@@ -202,15 +195,12 @@ public class FillToolBar extends AbstractToolBar {
             }
             return panel;
         }
-
-        
         
         private static JPanel createSolidFillPanel(FillToolBar fillToolBar, int toolbarState, DrawingEditor editor, ResourceBundleUtil labels) {
             JPanel panel = new JPanel(new GridBagLayout());
             
             JPanel rowOne = new JPanel(new GridBagLayout());
             JPanel rowTwo = new JPanel(new GridBagLayout());
-            
             
             // Row one, fill color field and button
             Map<AttributeKey, Object> defaultAttributes = new HashMap<AttributeKey, Object>();
@@ -295,8 +285,6 @@ public class FillToolBar extends AbstractToolBar {
             rowTwo.add(btn, gbc);
             
             
-            
-            
             gbc = new GridBagConstraints();
             gbc.gridy = 0;
             gbc.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -313,129 +301,10 @@ public class FillToolBar extends AbstractToolBar {
         private static JPanel createLinearGradientPanel(FillToolBar fillToolBar, int toolbarState, DrawingEditor editor, ResourceBundleUtil labels) {
             JPanel panel = new JPanel(new GridBagLayout());
             
-            JPanel rowOne = new JPanel(new GridBagLayout());
-            JPanel rowTwo = new JPanel(new GridBagLayout());
+            JPanel rowOne = createRowForStop(0, toolbarState, fillToolBar, editor, labels);
+            JPanel rowTwo = createRowForStop(1, toolbarState, fillToolBar, editor, labels);
             
-            // Row one, fill color button, opacity slider. (stop 1)
-            Map<AttributeKey, Object> defaultAttributes = new HashMap<AttributeKey, Object>();
-            FILL_GRADIENT.set(defaultAttributes, null);
             GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.insets = new Insets(3, 3, 0, 0);
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            JLabel label = new JLabel();
-            label.setText("1: ");
-            label.setUI((LabelUI) PaletteLabelUI.createUI(label));
-            rowOne.add(label, gbc);
-            
-            gbc.gridx = 1;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            JButton btn = ButtonFactory.createSelectionGradientColorButton(editor,
-                    0, FILL_GRADIENT, ButtonFactory.HSV_COLORS, ButtonFactory.HSV_COLORS_COLUMN_COUNT,
-                    "attribute.fillColor", labels, defaultAttributes, new Rectangle(3, 3, 10, 10));
-            btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-            ((JPopupButton) btn).setAction(null, null);
-            gbc = new GridBagConstraints();
-            gbc.gridx = 2;
-            gbc.gridwidth = 2;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            rowOne.add(btn, gbc);
-            
-            gbc = new GridBagConstraints();
-            gbc.gridx = 3;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            JPopupButton opacityPopupButton = new JPopupButton();
-            JAttributeSlider opacitySlider = new JAttributeSlider(JSlider.VERTICAL, 0, 100, 100);
-            opacityPopupButton.add(opacitySlider);
-            labels.configureToolBarButton(opacityPopupButton, "attribute.fillOpacity");
-            opacityPopupButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(opacityPopupButton));
-            opacityPopupButton.setPopupAnchor(SOUTH_EAST);
-            opacityPopupButton.setIcon(
-                    new SelectionOpacityIcon(editor, FILL_OPACITY, FILL_COLOR, null, fillToolBar.getClass().getResource(labels.getString("attribute.fillOpacity.icon")),
-                    new Rectangle(5, 5, 6, 6), new Rectangle(4, 4, 7, 7)));
-            opacityPopupButton.setPopupAnchor(SOUTH_EAST);
-            new SelectionComponentRepainter(editor, opacityPopupButton);
-            gbc = new GridBagConstraints();
-            gbc.insets = new Insets(0, 3, 0, 0);
-            gbc.gridx = 4;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            gbc.weighty = 1f;
-            rowOne.add(opacityPopupButton, gbc);
-            opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
-            opacitySlider.setScaleFactor(100d);
-            opacitySlider.setAttributeValue(100d);
-            final Action lRow1 = new SelectionGradientOpacityChooserAction(editor, 0, opacitySlider, FILL_GRADIENT);
-            opacitySlider.addChangeListener(new ChangeListener() {
-                public void stateChanged(ChangeEvent ce) {
-                    lRow1.actionPerformed(new ActionEvent(this, 0, ""));
-                }
-            });
-            
-            
-            // Row two, fill color button, opacity slider. (stop 2)
-            FILL_GRADIENT.set(defaultAttributes, null);
-            gbc.gridx = 0;
-            gbc.insets = new Insets(3, 3, 0, 0);
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            label = new JLabel();
-            label.setText("2: ");
-            label.setUI((LabelUI) PaletteLabelUI.createUI(label));
-            rowOne.add(label, gbc);
-            
-            gbc.gridx = 1;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            btn = ButtonFactory.createSelectionGradientColorButton(editor,
-                    1, FILL_GRADIENT, ButtonFactory.HSV_COLORS, ButtonFactory.HSV_COLORS_COLUMN_COUNT,
-                    "attribute.fillColor", labels, defaultAttributes, new Rectangle(3, 3, 10, 10));
-            btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-            ((JPopupButton) btn).setAction(null, null);
-            gbc = new GridBagConstraints();
-            gbc.gridx = 2;
-            gbc.gridwidth = 2;
-            gbc.insets = new Insets(3, 0, 0, 0);
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            rowOne.add(btn, gbc);
-            
-            gbc = new GridBagConstraints();
-            gbc.gridx = 3;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            opacityPopupButton = new JPopupButton();
-            opacitySlider = new JAttributeSlider(JSlider.VERTICAL, 0, 100, 100);
-            opacityPopupButton.add(opacitySlider);
-            labels.configureToolBarButton(opacityPopupButton, "attribute.fillOpacity");
-            opacityPopupButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(opacityPopupButton));
-            opacityPopupButton.setPopupAnchor(SOUTH_EAST);
-            opacityPopupButton.setIcon(
-                    new SelectionOpacityIcon(editor, FILL_OPACITY, FILL_COLOR, null, fillToolBar.getClass().getResource(labels.getString("attribute.fillOpacity.icon")),
-                    new Rectangle(5, 5, 6, 6), new Rectangle(4, 4, 7, 7)));
-            opacityPopupButton.setPopupAnchor(SOUTH_EAST);
-            new SelectionComponentRepainter(editor, opacityPopupButton);
-            gbc = new GridBagConstraints();
-            gbc.insets = new Insets(3, 3, 0, 0);
-            gbc.gridx = 4;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            gbc.weighty = 1f;
-            rowOne.add(opacityPopupButton, gbc);
-            opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
-            opacitySlider.setScaleFactor(100d);
-            opacitySlider.setAttributeValue(100d);
-            final Action lRow2 = new SelectionGradientOpacityChooserAction(editor, 1, opacitySlider, FILL_GRADIENT);
-            opacitySlider.addChangeListener(new ChangeListener() {
-                public void stateChanged(ChangeEvent ce) {
-                    lRow2.actionPerformed(new ActionEvent(this, 0, ""));
-                }
-            });
-            
-            
-            
-            
-            gbc = new GridBagConstraints();
             gbc.gridy = 0;
             gbc.anchor = GridBagConstraints.FIRST_LINE_START;
             panel.add(rowOne, gbc);
@@ -452,10 +321,27 @@ public class FillToolBar extends AbstractToolBar {
         private static JPanel createRadialGradientPanel(FillToolBar fillToolBar, int toolbarState, DrawingEditor editor, ResourceBundleUtil labels) {
             JPanel panel = new JPanel(new GridBagLayout());
             
-            JPanel rowOne = new JPanel(new GridBagLayout());
-            JPanel rowTwo = new JPanel(new GridBagLayout());
+            JPanel rowOne = createRowForStop(0, toolbarState, fillToolBar, editor, labels);
+            JPanel rowTwo = createRowForStop(1, toolbarState, fillToolBar, editor, labels);
             
-            // Row one, fill color button, opacity slider. (stop 1)
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridy = 0;
+            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+            panel.add(rowOne, gbc);
+            gbc = new GridBagConstraints();
+            gbc.insets = new Insets(3, 0, 0, 0);
+            gbc.gridy = 1;
+            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+            panel.add(rowTwo, gbc);
+            
+            return panel;
+        }
+        
+        
+        
+        private static JPanel createRowForStop(int stop, int toolbarState, FillToolBar fillToolBar,  DrawingEditor editor, ResourceBundleUtil labels) {
+            JPanel row = new JPanel(new GridBagLayout());
+            
             Map<AttributeKey, Object> defaultAttributes = new HashMap<AttributeKey, Object>();
             FILL_GRADIENT.set(defaultAttributes, null);
             GridBagConstraints gbc = new GridBagConstraints();
@@ -463,27 +349,19 @@ public class FillToolBar extends AbstractToolBar {
             gbc.insets = new Insets(3, 3, 0, 0);
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            JLabel label = new JLabel();
-            label.setText("1: ");
-            label.setUI((LabelUI) PaletteLabelUI.createUI(label));
-            rowOne.add(label, gbc);
-            
-            gbc.gridx = 1;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
             JButton btn = ButtonFactory.createSelectionGradientColorButton(editor,
-                    0, FILL_GRADIENT, ButtonFactory.HSV_COLORS, ButtonFactory.HSV_COLORS_COLUMN_COUNT,
+                    stop, FILL_GRADIENT, ButtonFactory.HSV_COLORS, ButtonFactory.HSV_COLORS_COLUMN_COUNT,
                     "attribute.fillColor", labels, defaultAttributes, new Rectangle(3, 3, 10, 10));
             btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
             ((JPopupButton) btn).setAction(null, null);
             gbc = new GridBagConstraints();
-            gbc.gridx = 2;
+            gbc.gridx = 1;
             gbc.gridwidth = 2;
             gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            rowOne.add(btn, gbc);
+            row.add(btn, gbc);
             
             gbc = new GridBagConstraints();
-            gbc.gridx = 3;
+            gbc.gridx = 2;
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.anchor = GridBagConstraints.FIRST_LINE_START;
             JPopupButton opacityPopupButton = new JPopupButton();
@@ -499,93 +377,24 @@ public class FillToolBar extends AbstractToolBar {
             new SelectionComponentRepainter(editor, opacityPopupButton);
             gbc = new GridBagConstraints();
             gbc.insets = new Insets(0, 3, 0, 0);
-            gbc.gridx = 4;
+            gbc.gridx = 3;
             gbc.anchor = GridBagConstraints.FIRST_LINE_START;
             gbc.weighty = 1f;
-            rowOne.add(opacityPopupButton, gbc);
+            row.add(opacityPopupButton, gbc);
             opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
             opacitySlider.setScaleFactor(100d);
             opacitySlider.setAttributeValue(100d);
-            final Action rRow1 = new SelectionGradientOpacityChooserAction(editor, 1, opacitySlider, FILL_GRADIENT);
+            final Action rRow1 = new SelectionGradientOpacityChooserAction(editor, stop, opacitySlider, FILL_GRADIENT);
             opacitySlider.addChangeListener(new ChangeListener() {
                 public void stateChanged(ChangeEvent ce) {
                     rRow1.actionPerformed(new ActionEvent(this, 0, ""));
                 }
             });
             
-            
-            // Row two, fill color button, opacity slider. (stop 2)
-            FILL_GRADIENT.set(defaultAttributes, null);
-            gbc.gridx = 0;
-            gbc.insets = new Insets(3, 3, 0, 0);
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            label = new JLabel();
-            label.setText("2: ");
-            label.setUI((LabelUI) PaletteLabelUI.createUI(label));
-            rowOne.add(label, gbc);
-            
-            gbc.gridx = 1;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            btn = ButtonFactory.createSelectionGradientColorButton(editor,
-                    1, FILL_GRADIENT, ButtonFactory.HSV_COLORS, ButtonFactory.HSV_COLORS_COLUMN_COUNT,
-                    "attribute.fillColor", labels, defaultAttributes, new Rectangle(3, 3, 10, 10));
-            btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-            ((JPopupButton) btn).setAction(null, null);
-            gbc = new GridBagConstraints();
-            gbc.insets = new Insets(3, 0, 0, 0);
-            gbc.gridx = 2;
-            gbc.gridwidth = 2;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            rowOne.add(btn, gbc);
-            
-            gbc = new GridBagConstraints();
-            gbc.gridx = 3;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            opacityPopupButton = new JPopupButton();
-            opacitySlider = new JAttributeSlider(JSlider.VERTICAL, 0, 100, 100);
-            opacityPopupButton.add(opacitySlider);
-            labels.configureToolBarButton(opacityPopupButton, "attribute.fillOpacity");
-            opacityPopupButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(opacityPopupButton));
-            opacityPopupButton.setPopupAnchor(SOUTH_EAST);
-            opacityPopupButton.setIcon(
-                    new SelectionOpacityIcon(editor, FILL_OPACITY, FILL_COLOR, null, fillToolBar.getClass().getResource(labels.getString("attribute.fillOpacity.icon")),
-                    new Rectangle(5, 5, 6, 6), new Rectangle(4, 4, 7, 7)));
-            opacityPopupButton.setPopupAnchor(SOUTH_EAST);
-            new SelectionComponentRepainter(editor, opacityPopupButton);
-            gbc = new GridBagConstraints();
-            gbc.insets = new Insets(3, 3, 0, 0);
-            gbc.gridx = 4;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            gbc.weighty = 1f;
-            rowOne.add(opacityPopupButton, gbc);
-            opacitySlider.setUI((SliderUI) PaletteSliderUI.createUI(opacitySlider));
-            opacitySlider.setScaleFactor(100d);
-            opacitySlider.setAttributeValue(100d);
-            final Action rRow2 = new SelectionGradientOpacityChooserAction(editor, 1, opacitySlider, FILL_GRADIENT);
-            opacitySlider.addChangeListener(new ChangeListener() {
-                public void stateChanged(ChangeEvent ce) {
-                    rRow2.actionPerformed(new ActionEvent(this, 0, ""));
-                }
-            });
-            
-            
-            
-            
-            gbc = new GridBagConstraints();
-            gbc.gridy = 0;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            panel.add(rowOne, gbc);
-            gbc = new GridBagConstraints();
-            gbc.gridy = 1;
-            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-            panel.add(rowTwo, gbc);
-            
-            return panel;
+            return row;
         }
     }
+    
     
 
 }
