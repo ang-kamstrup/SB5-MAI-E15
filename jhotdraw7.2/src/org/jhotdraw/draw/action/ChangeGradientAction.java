@@ -1,8 +1,6 @@
 package org.jhotdraw.draw.action;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.geom.AffineTransform;
 import javax.swing.Action;
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
@@ -36,27 +34,18 @@ public class ChangeGradientAction extends AbstractSelectedAction {
     }
 
     public void actionPerformed(ActionEvent ae) {
+        System.out.println("ChangeGradientAction");
         popupButton.setText(fillState.getPrettyName());
         
         Gradient g = null;
         
         switch(this.fillState) {
             case LINEAR_GRADIENT:
-                LinearGradient linearGradient = new LinearGradient();
-                linearGradient.setRelativeToFigureBounds(true);
-                linearGradient.setGradientVector(0.6, 0.5, 0.4, 0.5);
-                linearGradient.setStops(new double[]{0, 1}, new Color[]{Color.BLUE, Color.RED}, new double[]{1.0, 1.0});
-                linearGradient.setTransform(AffineTransform.getRotateInstance(0.0));
-                g = linearGradient;
+                g = LinearGradient.createDefaultGradient();
                 break;
 
             case RADIAL_GRADIENT:
-                RadialGradient radialGradient = new RadialGradient();
-                radialGradient.setRelativeToFigureBounds(true);
-                radialGradient.setGradientCircle(0.6, 0.5, 0.4);
-                radialGradient.setStops(new double[]{0, 1}, new Color[]{Color.BLUE, Color.RED}, new double[]{1.0, 1.0});
-                radialGradient.setTransform(AffineTransform.getRotateInstance(0.0));
-                g = radialGradient;
+                g = RadialGradient.createDefaultGradient();
                 break;
         }
         
