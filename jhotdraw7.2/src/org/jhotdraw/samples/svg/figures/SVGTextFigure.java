@@ -436,4 +436,8 @@ public class SVGTextFigure
     public boolean isTextOverflow() {
         return false;
     }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
+    }
 }

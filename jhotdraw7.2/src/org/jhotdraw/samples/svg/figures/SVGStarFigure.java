@@ -182,4 +182,8 @@ public class SVGStarFigure extends SVGAttributedFigure implements SVGFigure {
         cachedTransformedShape = null;
         cachedHitShape = null;
     }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
+    }
 }

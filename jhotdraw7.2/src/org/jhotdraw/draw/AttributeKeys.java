@@ -220,6 +220,10 @@ public class AttributeKeys {
      * The default value is StrokePlacement.CENTER.
      */
     public final static AttributeKey<StrokePlacement> STROKE_PLACEMENT = new AttributeKey<StrokePlacement>("strokePlacement", StrokePlacement.class, StrokePlacement.CENTER, false, labels);
+    
+    public final static AttributeKey<Color> SHADOW_COLOR = new AttributeKey<Color>("shadowColor", Color.class, Color.black, false, labels);
+    public final static AttributeKey<Color> SHADOW_FILL_COLOR = new AttributeKey<Color>("shadowOffset", Color.class, Color.black, false, labels);
+    public final static AttributeKey<Dimension2DDouble> SHADOW_OFFSET = new AttributeKey<Dimension2DDouble>("shadowOffset", Dimension2DDouble.class, new Dimension2DDouble(10d, 10d), false, labels);
     /**
      * The value of this attribute is a String object, which is used to
      * display the text of the figure.
