@@ -32,6 +32,8 @@ import org.jhotdraw.filters.GaussianBlurFilterAction;
 import org.jhotdraw.filters.PixelFilterAction;
 import org.jhotdraw.gui.FavoriteColorsPopupButton;
 import org.jhotdraw.gui.JFontChooser;
+import org.jhotdraw.samples.svg.Gradient;
+import org.jhotdraw.samples.svg.gui.FillToolBar;
 import org.jhotdraw.samples.svg.SVGApplicationModel;
 import org.jhotdraw.samples.svg.SVGDrawingPanel;
 
@@ -806,17 +808,105 @@ public class ButtonFactory {
             String labelKey, ResourceBundleUtil labels,
             Map<AttributeKey, Object> defaultAttributes,
             Shape colorShape) {
-
+        
         FavoriteColorsPopupButton popupButton =
                 new FavoriteColorsPopupButton(
-                editor, attributeKey, labelKey, labels,
-                defaultAttributes, colorShape);
-
+                        editor, attributeKey, labelKey, labels,
+                        defaultAttributes, colorShape);
 
         new SelectionComponentRepainter(editor, popupButton);
         return popupButton;
     }
     
+    
+    /**
+     * Same as the other createSelectionGradientColorButton methods.
+     * Adjusts the color with a certain stop on a gradient instead.
+     * 
+     * @param editor
+     * @param stop
+     * @param attributeKey
+     * @param swatches
+     * @param columnCount
+     * @param labelKey
+     * @param labels
+     * @param defaultAttributes
+     * @param colorShape
+     * @return 
+     */
+    public static JPopupButton createSelectionGradientColorButton(
+            DrawingEditor editor, int stop, AttributeKey<Gradient> attributeKey,
+            java.util.List<ColorIcon> swatches, int columnCount,
+            String labelKey, ResourceBundleUtil labels,
+            Map<AttributeKey, Object> defaultAttributes,
+            Shape colorShape) {
+        final JPopupButton popupButton = new JPopupButton();
+        popupButton.setPopupAlpha(1f);
+        if (defaultAttributes == null) {
+            defaultAttributes = new HashMap<AttributeKey, Object>();
+        }
+    
+
+        popupButton.setColumnCount(columnCount, false);
+        boolean hasNullColor = false;
+        for (ColorIcon swatch : swatches) {
+            AttributeAction a;
+            HashMap<AttributeKey, Object> attributes = new HashMap<AttributeKey, Object>(defaultAttributes);
+            attributes.put(attributeKey, swatch.getColor());
+            if (swatch.getColor() == null) {
+                hasNullColor = true;
+            }
+            popupButton.add(a =
+                    new SelectionGradientColorChooserAction(
+                    editor,
+                    stop,
+                    attributeKey,
+                    labels.getToolTipTextProperty(labelKey),
+                    swatch));
+            a.putValue(Action.SHORT_DESCRIPTION, swatch.getName());
+        }
+
+        // No color
+        if (!hasNullColor) {
+            AttributeAction a;
+            HashMap<AttributeKey, Object> attributes = new HashMap<AttributeKey, Object>(defaultAttributes);
+            attributes.put(attributeKey, null);
+            popupButton.add(a =
+                    new SelectionGradientColorChooserAction(
+                    editor,
+                    stop,
+                    attributeKey,
+                    labels.getToolTipTextProperty("attribute.color.noColor"),
+                    new ColorIcon(null, labels.getToolTipTextProperty("attribute.color.noColor"))));
+            a.putValue(Action.SHORT_DESCRIPTION, labels.getToolTipTextProperty("attribute.color.noColor"));
+        }
+        // Color chooser
+        ImageIcon chooserIcon = new ImageIcon(
+                ButtonFactory.class.getResource("/org/jhotdraw/draw/action/images/attribute.color.colorChooser.png"));
+        Action a;
+        popupButton.add(
+                a = new SelectionGradientColorChooserAction(
+                editor,
+                stop,
+                attributeKey,
+                labels.getToolTipTextProperty("attribute.color.colorChooser"),
+                chooserIcon,
+                defaultAttributes,
+                true));
+        a.putValue(Action.SHORT_DESCRIPTION, labels.getToolTipTextProperty("attribute.color.colorChooser"));
+        labels.configureToolBarButton(popupButton, labelKey);
+        Icon icon = new SelectionGradientColorIcon(editor,
+                stop,
+                attributeKey,
+                labels.getIconProperty(labelKey, ButtonFactory.class).getImage(),
+                colorShape);
+        popupButton.setIcon(icon);
+        popupButton.setDisabledIcon(icon);
+        popupButton.setFocusable(false);
+
+        new SelectionComponentRepainter(editor, popupButton);
+        return popupButton;
+    }
 
     /**
      * Creates a color button, with an action region and a popup menu. The
@@ -1537,6 +1627,40 @@ public class ButtonFactory {
         btn.setText(null);
         btn.setFocusable(false);
         return btn;
+    }
+     public static JButton createApplyShadowButton(DrawingEditor editor){
+        JButton btn;
+        btn = new JButton(new ApplyShadowAction(editor));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static AbstractButton createGradientHandleSelectorButton(DrawingEditor editor, final FillToolBar fillToolBar, ResourceBundleUtil labels) {
+
+        final JPopupButton popupButton = new JPopupButton();
+
+        labels.configureToolBarButton(popupButton, "attribute.fillGradientHandleSelector");
+        popupButton.setFocusable(false);
+       
+        popupButton.setText(fillToolBar.getFillState().getPrettyName());
+
+        for (final FillToolBar.FillType state : FillToolBar.FillType.values()) {
+            popupButton.add(new ChangeGradientAction(editor, state, popupButton) {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    super.actionPerformed(ae);
+                    fillToolBar.setFillState(state);
+                }
+            });
+        }
+        popupButton.setFocusable(false);
+        return popupButton;
     }
     
     public static JButton createChangeToHorizontalButton(DrawingEditor editor, SVGDrawingPanel svgDrawingPanel, JPanel toolsPane) {

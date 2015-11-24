@@ -304,6 +304,7 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
                 ResizeHandleKit.addResizeHandles(this, handles);
                 handles.add(new SVGRectRadiusHandle(this));
                 handles.add(new LinkHandle(this));
+                GradientHandleKit.addGradientHandles(this, handles);
                 break;
             case 1:
                 TransformHandleKit.addTransformHandles(this, handles);
@@ -397,5 +398,11 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         pf.setAttribute(STROKE_COLOR, Color.black);
         
         return pf;
+    }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
+        ShadowRender.DrawShadow(g, this, SHADOW_OFFSET.get(this));
+
     }
 }

@@ -487,6 +487,7 @@ public class SVGTextAreaFigure extends SVGAttributedFigure
                 handles.add(new FontSizeHandle(this));
                 handles.add(new TextOverflowHandle(this));
                 handles.add(new LinkHandle(this));
+                GradientHandleKit.addGradientHandles(this, handles);
                 break;
             case 1:
                 TransformHandleKit.addTransformHandles(this, handles);
@@ -601,6 +602,10 @@ public class SVGTextAreaFigure extends SVGAttributedFigure
         SVGTextAreaFigure that = (SVGTextAreaFigure) super.clone();
         that.bounds = (Rectangle2D.Double) this.bounds.clone();
         return that;
+    }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
     }
 }
 

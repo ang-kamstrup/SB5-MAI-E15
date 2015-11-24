@@ -249,6 +249,7 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
             case 0:
                 ResizeHandleKit.addResizeHandles(this, handles);
                 handles.add(new LinkHandle(this));
+                GradientHandleKit.addGradientHandles(this, handles);
                 break;
             case 1:
                 TransformHandleKit.addTransformHandles(this, handles);
@@ -447,5 +448,9 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
     
     public boolean getEdgeDetectionApplied() {
         return edgeDetectionApplied;
+    }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
     }
 }

@@ -25,6 +25,7 @@ import javax.swing.*;
 import org.jhotdraw.app.JHotDrawFeatures;
 import org.jhotdraw.gui.ToolBarLayout;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.draw.action.Resizable;
 import org.jhotdraw.gui.plaf.palette.PaletteLookAndFeel;
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
 import org.jhotdraw.samples.svg.gui.Navigator;
@@ -60,6 +61,7 @@ public class SVGDrawingPanel extends JPanel {
             validate();
         }
     }
+    private Resizable r;
 
     /** Creates new instance. */
     @FeatureEntryPoint(JHotDrawFeatures.CANVAS)
@@ -142,6 +144,9 @@ public class SVGDrawingPanel extends JPanel {
             public void componentRemoved(ContainerEvent e) {
             }
         });
+        r = new Resizable(view);
+        scrollPane.getParent().add(r);
+        
         toolsPane.add(new Navigator(view));        
     }
 

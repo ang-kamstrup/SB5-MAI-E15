@@ -102,6 +102,8 @@ public class SVGAttributeKeys extends AttributeKeys {
      */
     public final static AttributeKey<Double> STROKE_OPACITY = new AttributeKey<Double>("strokeOpacity",Double.class, 1d, false, labels);
     
+    public final static AttributeKey<Gradient> SHADOW_GRADIENT = new AttributeKey<Gradient>("shadowGradient", Gradient.class, null, true, labels);
+    public final static AttributeKey<Double> SHADOW_OPACITY = new AttributeKey<Double>("shadowOpacity", Double.class, 0d, false, labels);
     /**
      * Specifies a link.
      * In an SVG file, the link is stored in a "a" element which encloses the
@@ -138,6 +140,21 @@ public class SVGAttributeKeys extends AttributeKeys {
                 color = new Color(
                         (color.getRGB() & 0xffffff) | (int) (opacity * 255) << 24,
                         true);
+            }
+        }
+        return color;
+    }
+    public static Paint getShadowFillPaint(Figure f) {
+        double opacity = SHADOW_OPACITY.get(f);
+        if(opacity == 0) return null;
+        if (SHADOW_GRADIENT.get(f) != null) {
+            return SHADOW_GRADIENT.get(f).getPaint(f, opacity);
+        }
+        Color color = SHADOW_COLOR.get(f);
+        if (color != null) {
+            if (opacity != 1) {
+                color = new Color(
+                        (color.getRGB() & 0xffffff) | (int) (opacity * 255) << 24, true);
             }
         }
         return color;

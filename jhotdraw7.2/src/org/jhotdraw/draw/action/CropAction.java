@@ -7,9 +7,6 @@ package org.jhotdraw.draw.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
-import java.util.Collection;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import static org.jhotdraw.draw.AttributeKeys.*;
 import org.jhotdraw.draw.DefaultDrawingView;
@@ -29,7 +26,6 @@ public class CropAction extends AbstractSelectedAction{
 
     private DrawingEditor editor;
     private DefaultDrawingView view;
-    private Collection<Figure> figures;
     private double x1 = 0;
     private double x2 = 0;
     private double y1 = 0;
@@ -40,11 +36,9 @@ public class CropAction extends AbstractSelectedAction{
         setEnabled(true);
         this.editor = editor;
         this.view = (DefaultDrawingView)view;
-        figures = new ArrayList<Figure>();
     }
 
     public void actionPerformed(ActionEvent ae) {
-        JButton button = (JButton) ae.getSource();
         //Create messagebox to verify action
         int messageBoxButton = JOptionPane.YES_NO_OPTION;
         int messageBoxResult = JOptionPane.showConfirmDialog (null, "Would you like to crop the canvas?", "Crop tool", messageBoxButton);
@@ -59,7 +53,6 @@ public class CropAction extends AbstractSelectedAction{
     public void calculateCanvasSize(){
         int i = 0;
         for(Figure f : view.getDrawing().getChildren()){
-            figures.add((Figure) f.clone());
             //For debugging
             //System.out.println("Figur " + i + ", x: " + f.getDrawingArea().x + ", y: " + f.getDrawingArea().y + ", h: " + f.getDrawingArea().height + ", w: " + f.getDrawingArea().width);
             

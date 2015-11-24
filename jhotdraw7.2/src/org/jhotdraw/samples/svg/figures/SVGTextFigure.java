@@ -362,6 +362,7 @@ public class SVGTextFigure
                 handles.add(new MoveHandle(this, RelativeLocator.southEast()));
                 handles.add(new FontSizeHandle(this));
                 handles.add(new LinkHandle(this));
+                GradientHandleKit.addGradientHandles(this, handles);
                 break;
             case 1 :
                 TransformHandleKit.addTransformHandles(this, handles);
@@ -434,5 +435,9 @@ public class SVGTextFigure
 
     public boolean isTextOverflow() {
         return false;
+    }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
     }
 }
