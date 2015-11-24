@@ -2,6 +2,7 @@ package org.jhotdraw.draw;
 
 import java.awt.Point;
 import javax.swing.JViewport;
+import org.jhotdraw.draw.action.Resizable;
 
 /**
  * Defines a decorated version of the DefaultDrawingView
@@ -28,12 +29,12 @@ public class GeometricDrawingView extends DefaultDrawingView {
      * @param point
      */
     public void moveView(Point point) {
-
+        
         view.invalidate();
 
         if (view.getParent() != null) {
             view.getParent().validate();
-            ((JViewport) view.getParent()).setViewPosition(point);
+            ((Resizable) view.getParent()).setLocation(point);
         }
 
         view.repaint();
