@@ -102,6 +102,8 @@ public class SVGAttributeKeys extends AttributeKeys {
      */
     public final static AttributeKey<Double> STROKE_OPACITY = new AttributeKey<Double>("strokeOpacity",Double.class, 1d, false, labels);
     
+    public final static AttributeKey<Gradient> SHADOW_GRADIENT = new AttributeKey<Gradient>("shadowGradient", Gradient.class, null, true, labels);
+    public final static AttributeKey<Double> SHADOW_OPACITY = new AttributeKey<Double>("shadowOpacity", Double.class, 0d, false, labels);
     /**
      * Specifies a link.
      * In an SVG file, the link is stored in a "a" element which encloses the
@@ -117,6 +119,10 @@ public class SVGAttributeKeys extends AttributeKeys {
      */
     public final static AttributeKey<String> LINK_TARGET = new AttributeKey<String>("linkTarget", String.class,null, true, labels);
     
+    //Specifies offset for calligraphy
+    public static final AttributeKey<Double> OFFSET_X = new AttributeKey<Double>("offsetx", Double.class,null,true,labels);
+    
+    public static final AttributeKey<Double> OFFSET_Y = new AttributeKey<Double>("offsety", Double.class,null,true,labels);
     
     /**
      * Gets the fill paint for the specified figure based on the attributes
@@ -134,6 +140,21 @@ public class SVGAttributeKeys extends AttributeKeys {
                 color = new Color(
                         (color.getRGB() & 0xffffff) | (int) (opacity * 255) << 24,
                         true);
+            }
+        }
+        return color;
+    }
+    public static Paint getShadowFillPaint(Figure f) {
+        double opacity = SHADOW_OPACITY.get(f);
+        if(opacity == 0) return null;
+        if (SHADOW_GRADIENT.get(f) != null) {
+            return SHADOW_GRADIENT.get(f).getPaint(f, opacity);
+        }
+        Color color = SHADOW_COLOR.get(f);
+        if (color != null) {
+            if (opacity != 1) {
+                color = new Color(
+                        (color.getRGB() & 0xffffff) | (int) (opacity * 255) << 24, true);
             }
         }
         return color;
@@ -162,6 +183,10 @@ public class SVGAttributeKeys extends AttributeKeys {
     
     /** Sets SVG default values. */
     public static void setDefaults(Figure f) {
+        //Basic OffSets for caligraphy
+        OFFSET_X.basicSet(f, 40d);
+        OFFSET_Y.basicSet(f, 10d);
+        
         // Fill properties
         // http://www.w3.org/TR/SVGMobile12/painting.html#FillProperties
         FILL_COLOR.basicSet(f, Color.black);

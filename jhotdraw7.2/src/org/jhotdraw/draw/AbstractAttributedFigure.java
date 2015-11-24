@@ -174,6 +174,9 @@ public abstract class AbstractAttributedFigure extends AbstractFigure {
      * If the TEXT_COLOR attribute is null, this method is not called.
      */
     protected abstract void drawStroke(java.awt.Graphics2D g);
+    
+    protected abstract void drawShadow(java.awt.Graphics2D g); 
+
     protected void drawText(java.awt.Graphics2D g) {
     }
     

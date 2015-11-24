@@ -152,6 +152,7 @@ public class SVGEllipseFigure extends SVGAttributedFigure implements SVGFigure {
      *
      * @param tx the transformation.
      */
+    @Override
     public void transform(AffineTransform tx) {
         if (TRANSFORM.get(this) != null ||
                 (tx.getType() & (AffineTransform.TYPE_TRANSLATION)) != tx.getType()) {
@@ -213,6 +214,7 @@ public class SVGEllipseFigure extends SVGAttributedFigure implements SVGFigure {
             case 0:
                 ResizeHandleKit.addResizeHandles(this, handles);
                 handles.add(new LinkHandle(this));
+                GradientHandleKit.addGradientHandles(this, handles);
                 break;
             case 1:
                 TransformHandleKit.addTransformHandles(this, handles);
@@ -256,5 +258,10 @@ public class SVGEllipseFigure extends SVGAttributedFigure implements SVGFigure {
         super.invalidate();
         cachedTransformedShape = null;
         cachedHitShape = null;
+    }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
+        ShadowRender.DrawShadow(g, this, SHADOW_OFFSET.get(this));
     }
 }

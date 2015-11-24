@@ -9,6 +9,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.action.ButtonFactory;
 import org.jhotdraw.filters.BlackHoleFilterAction;
 import org.jhotdraw.filters.GaussianBlurFilterAction;
 import org.jhotdraw.filters.PixelFilterAction;
@@ -83,12 +84,10 @@ public class FilterToolBar extends AbstractToolBar{
 
     private void createGaussianBlurFilterButton(ResourceBundleUtil labels, JPanel p) {
         AbstractButton btn;
-        GridBagConstraints gbc;
-        btn = new JButton(new GaussianBlurFilterAction(editor));
+        btn = ButtonFactory.createBlurFilterActionButton(editor);
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        btn.setText(null);
         labels.configureToolBarButton(btn, GaussianBlurFilterAction.ID);
-        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridy = 2;
         gbc.insets = new Insets(3, 0, 0, 0);
@@ -99,11 +98,10 @@ public class FilterToolBar extends AbstractToolBar{
     private void createPixelFilterActionButton(ResourceBundleUtil labels, JPanel p) {
         AbstractButton btn;
         GridBagConstraints gbc;
-        btn = new JButton(new PixelFilterAction(editor));
+        
+        btn = ButtonFactory.createPixelationFilterActionButton(editor);
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
-        btn.setText(null);
         labels.configureToolBarButton(btn, PixelFilterAction.ID);
-        btn.putClientProperty("hideActionText", Boolean.TRUE);
         gbc = new GridBagConstraints();
         gbc.gridy = 1;
         gbc.insets = new Insets(3, 0, 0, 0);
@@ -113,12 +111,13 @@ public class FilterToolBar extends AbstractToolBar{
 
     private void createBlackHoleFilterButton(ResourceBundleUtil labels, JPanel p) {
         AbstractButton btn;
-        GridBagConstraints gbc;
         btn = new JButton(new BlackHoleFilterAction(editor));
         btn.setUI((PaletteButtonUI) PaletteButtonUI.createUI(btn));
         btn.setText(null);
         labels.configureToolBarButton(btn, BlackHoleFilterAction.ID);
         btn.putClientProperty("hideActionText", Boolean.TRUE);
+        
+        GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;

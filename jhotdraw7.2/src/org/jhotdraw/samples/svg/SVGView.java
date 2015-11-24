@@ -15,23 +15,47 @@
 package org.jhotdraw.samples.svg;
 
 import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.awt.print.Pageable;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.prefs.Preferences;
-import org.jhotdraw.samples.svg.figures.*;
-import org.jhotdraw.samples.svg.io.*;
-import org.jhotdraw.undo.*;
-import org.jhotdraw.util.*;
-import java.awt.*;
-import java.beans.*;
-import java.io.*;
-import java.lang.reflect.*;
-import javax.swing.*;
-import org.jhotdraw.app.*;
-import org.jhotdraw.app.action.*;
-import org.jhotdraw.draw.*;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import org.jhotdraw.app.AbstractView;
+import org.jhotdraw.app.ExportableView;
+import org.jhotdraw.app.JHotDrawFeatures;
+import org.jhotdraw.app.PrintableView;
+import org.jhotdraw.app.action.RedoAction;
+import org.jhotdraw.app.action.UndoAction;
+import org.jhotdraw.draw.Drawing;
+import org.jhotdraw.draw.DrawingEditor;
+import org.jhotdraw.draw.DrawingPageable;
+import org.jhotdraw.draw.ImageInputFormat;
+import org.jhotdraw.draw.ImageOutputFormat;
+import org.jhotdraw.draw.InputFormat;
+import org.jhotdraw.draw.OutputFormat;
+import org.jhotdraw.draw.PictImageInputFormat;
+import org.jhotdraw.draw.QuadTreeDrawing;
+import org.jhotdraw.draw.TextInputFormat;
+import org.jhotdraw.samples.svg.figures.SVGImageFigure;
+import org.jhotdraw.samples.svg.figures.SVGTextFigure;
+import org.jhotdraw.samples.svg.io.ImageMapOutputFormat;
+import org.jhotdraw.samples.svg.io.SVGOutputFormat;
+import org.jhotdraw.samples.svg.io.SVGZInputFormat;
+import org.jhotdraw.samples.svg.io.SVGZOutputFormat;
+import org.jhotdraw.undo.UndoRedoManager;
+import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
  * A view for SVG drawings.
@@ -44,7 +68,7 @@ import org.jhotdraw.draw.*;
  * <br>1.1 2006-06-10 Extended to support DefaultDrawApplicationModel.
  * <br>1.0 2006-02-07 Created.
  */
-public class SVGView extends AbstractView implements ExportableView {
+public class SVGView extends AbstractView implements ExportableView, PrintableView {
     public final static String GRID_VISIBLE_PROPERTY = "gridVisible";
 
     protected JFileChooser exportChooser;
@@ -357,10 +381,10 @@ public class SVGView extends AbstractView implements ExportableView {
             f = new File(f.getPath() + "." + format.getFileExtension());
         }
         
-        //SVGTextFigure watermark = new SVGTextFigure("Exported from SVG");        
-        //svgPanel.getDrawing().add(watermark);        
+        //SVGTextFigure watermark = new SVGTextFigure("Exported from SVG");
+        //svgPanel.getDrawing().add(watermark);
         format.write(f, svgPanel.getDrawing());
-        //svgPanel.getDrawing().remove(watermark);        
+        //svgPanel.getDrawing().remove(watermark);
 
         preferences.put("viewExportFile", f.getPath());
         preferences.put("viewExportFormat", filter.getDescription());

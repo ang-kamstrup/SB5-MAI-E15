@@ -9,7 +9,7 @@
                 <root id="src.src.dir"/>
             </source-roots>
             <test-roots>
-                <root id="test.Test%20Folder%20Pixelation.dir"/>
+                <root id="test.test.dir"/>
             </test-roots>
         </data>
     </configuration>

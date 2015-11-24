@@ -15,6 +15,7 @@ package org.jhotdraw.samples.svg.figures;
 
 import dk.sdu.mmmi.featuretracer.lib.FeatureEntryPoint;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.*;
 import org.jhotdraw.app.JHotDrawFeatures;
@@ -27,17 +28,17 @@ import org.jhotdraw.geom.*;
  * SVGRect.
  *
  * @author Werner Randelshofer
- * @version 2.1 2009-04-17 Method contains() takes now into account
- * whether the figure is filled.
- * <br>2.0 2007-04-14 Adapted for new AttributeKeys.TRANSFORM support.
- * <br>1.0 July 8, 2006 Created.
+ * @version 2.1 2009-04-17 Method contains() takes now into account whether the
+ * figure is filled. <br>2.0 2007-04-14 Adapted for new AttributeKeys.TRANSFORM
+ * support. <br>1.0 July 8, 2006 Created.
  */
 public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
 
-    /** The variable acv is used for generating the locations of the control
-     * points for the rounded rectangle using path.curveTo. */
+    /**
+     * The variable acv is used for generating the locations of the control
+     * points for the rounded rectangle using path.curveTo.
+     */
     private static final double acv;
-
 
     static {
         double angle = Math.PI / 4.0;
@@ -59,7 +60,9 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
      */
     private transient Shape cachedHitShape;
 
-    /** Creates a new instance. */
+    /**
+     * Creates a new instance.
+     */
     public SVGRectFigure() {
         this(0, 0, 0, 0);
     }
@@ -97,7 +100,7 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
             p.moveTo((float) (roundrect.x + aw), (float) roundrect.y);
             p.lineTo((float) (roundrect.x + roundrect.width - aw), (float) roundrect.y);
             p.curveTo((float) (roundrect.x + roundrect.width - aw * acv), (float) roundrect.y, //
-                    (float) (roundrect.x + roundrect.width), (float)(roundrect.y + ah * acv), //
+                    (float) (roundrect.x + roundrect.width), (float) (roundrect.y + ah * acv), //
                     (float) (roundrect.x + roundrect.width), (float) (roundrect.y + ah));
             p.lineTo((float) (roundrect.x + roundrect.width), (float) (roundrect.y + roundrect.height - ah));
             p.curveTo(
@@ -105,13 +108,13 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
                     (float) (roundrect.x + roundrect.width - aw * acv), (float) (roundrect.y + roundrect.height),//
                     (float) (roundrect.x + roundrect.width - aw), (float) (roundrect.y + roundrect.height));
             p.lineTo((float) (roundrect.x + aw), (float) (roundrect.y + roundrect.height));
-            p.curveTo((float) (roundrect.x + aw*acv), (float) (roundrect.y + roundrect.height),//
-                    (float) (roundrect.x), (float) (roundrect.y + roundrect.height - ah*acv),//
-                   (float) roundrect.x, (float) (roundrect.y + roundrect.height - ah));
+            p.curveTo((float) (roundrect.x + aw * acv), (float) (roundrect.y + roundrect.height),//
+                    (float) (roundrect.x), (float) (roundrect.y + roundrect.height - ah * acv),//
+                    (float) roundrect.x, (float) (roundrect.y + roundrect.height - ah));
             p.lineTo((float) roundrect.x, (float) (roundrect.y + ah));
-            p.curveTo((float) (roundrect.x), (float) (roundrect.y + ah*acv),//
-                    (float) (roundrect.x + aw*acv), (float)(roundrect.y),//
-                    (float)(roundrect.x + aw), (float)(roundrect.y));
+            p.curveTo((float) (roundrect.x), (float) (roundrect.y + ah * acv),//
+                    (float) (roundrect.x + aw * acv), (float) (roundrect.y),//
+                    (float) (roundrect.x + aw), (float) (roundrect.y));
             p.closePath();
             g.draw(p);
         }
@@ -219,12 +222,13 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
 
     /**
      * Transforms the figure.
+     *
      * @param tx The transformation.
      */
     public void transform(AffineTransform tx) {
         invalidateTransformedShape();
-        if (TRANSFORM.get(this) != null ||
-                //              (tx.getType() & (AffineTransform.TYPE_TRANSLATION | AffineTransform.TYPE_MASK_SCALE)) != tx.getType()) {
+        if (TRANSFORM.get(this) != null
+                || //              (tx.getType() & (AffineTransform.TYPE_TRANSLATION | AffineTransform.TYPE_MASK_SCALE)) != tx.getType()) {
                 (tx.getType() & (AffineTransform.TYPE_TRANSLATION)) != tx.getType()) {
             if (TRANSFORM.get(this) == null) {
                 TRANSFORM.basicSet(this, (AffineTransform) tx.clone());
@@ -239,14 +243,14 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
             setBounds(
                     (Point2D.Double) tx.transform(anchor, anchor),
                     (Point2D.Double) tx.transform(lead, lead));
-            if (FILL_GRADIENT.get(this) != null &&
-                    !FILL_GRADIENT.get(this).isRelativeToFigureBounds()) {
+            if (FILL_GRADIENT.get(this) != null
+                    && !FILL_GRADIENT.get(this).isRelativeToFigureBounds()) {
                 Gradient g = FILL_GRADIENT.getClone(this);
                 g.transform(tx);
                 FILL_GRADIENT.basicSet(this, g);
             }
-            if (STROKE_GRADIENT.get(this) != null &&
-                    !STROKE_GRADIENT.get(this).isRelativeToFigureBounds()) {
+            if (STROKE_GRADIENT.get(this) != null
+                    && !STROKE_GRADIENT.get(this).isRelativeToFigureBounds()) {
                 Gradient g = STROKE_GRADIENT.getClone(this);
                 g.transform(tx);
                 STROKE_GRADIENT.basicSet(this, g);
@@ -300,6 +304,7 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
                 ResizeHandleKit.addResizeHandles(this, handles);
                 handles.add(new SVGRectRadiusHandle(this));
                 handles.add(new LinkHandle(this));
+                GradientHandleKit.addGradientHandles(this, handles);
                 break;
             case 1:
                 TransformHandleKit.addTransformHandles(this, handles);
@@ -342,5 +347,62 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
     public void invalidate() {
         super.invalidate();
         invalidateTransformedShape();
+    }
+
+    /**
+     * Bryan turn rectangle into pathfigure.
+     */
+    @Override
+    @FeatureEntryPoint(JHotDrawFeatures.RECTANGLE_TOOL)
+    public boolean handleMouseClick(Point2D.Double p, MouseEvent evt, DrawingView view) {
+        if (evt.isShiftDown() && evt.getClickCount() == 2 && view.getHandleDetailLevel() % 2 == 0) {
+
+            // Convert Rectangle to Pathfigure
+            SVGPathFigure pf = new SVGPathFigure();
+            pf = convertToPathFigure(this, pf);
+            
+            // Remove rectangle and show new pathfigure
+            view.getDrawing().remove(this);
+            view.getDrawing().add(pf);
+            view.addToSelection(pf);
+            
+            return pf.handleMouseClick(p, evt, view);
+        }
+        return false;
+    }
+
+    public SVGPathFigure convertToPathFigure(SVGRectFigure rf, SVGPathFigure pf) {
+
+        // CLONE RECTANGLE BOUNDS TO A NEW PATHFIGURE
+        // DONE CREATING 4 NODES REPRESENTING RECTANGLE CORNERS
+        SVGBezierFigure bf = new SVGBezierFigure();
+
+        // Left lower corner
+        bf.addNode(new BezierPath.Node(getX(), getY()));
+        
+        // Left top corner
+        bf.addNode(new BezierPath.Node(getX(), (getY() + getHeight())));
+        // Right top corner
+        bf.addNode(new BezierPath.Node((getX() + getWidth()), (getY() + getHeight())));
+
+        // Right lower corner
+        bf.addNode(new BezierPath.Node((getX() + getWidth()), getY()));
+        bf.setClosed(true);
+
+        // Add BezierFigure to PathFigure
+        pf.removeAllChildren();
+        pf.add(bf);
+
+        // Set attributes on pathfigure
+        pf.setAttribute(FILL_COLOR, Color.white);
+        pf.setAttribute(STROKE_COLOR, Color.black);
+        
+        return pf;
+    }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
+        ShadowRender.DrawShadow(g, this, SHADOW_OFFSET.get(this));
+
     }
 }

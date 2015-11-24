@@ -232,6 +232,7 @@ public class BezierFigure extends AbstractAttributedFigure {
                 for (int i=0, n = path.size(); i < n; i++) {
                     handles.add(new BezierNodeHandle(this, i));
                 }
+                GradientHandleKit.addGradientHandles(this, handles);
                 break;
             case 1 :
                 TransformHandleKit.addTransformHandles(this, handles);
@@ -706,5 +707,9 @@ public class BezierFigure extends AbstractAttributedFigure {
             in.closeElement();
         }
         in.closeElement();
+    }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
     }
 }

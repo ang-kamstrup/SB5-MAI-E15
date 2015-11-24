@@ -61,11 +61,18 @@ public class RadialGradient implements Gradient {
         this.isRelativeToFigureBounds = isRelativeToFigureBounds;
         this.transform = tx;
     }
+    
     public void setGradientCircle(double cx, double cy, double r) {
         this.cx = cx;
         this.cy = cy;
         this.r = r;
     }
+    
+    public void setFocalPoint(double fx, double fy) {
+        this.fx = fx;
+        this.fy = fy;
+    }
+    
     public void setStops(double[] offsets, Color[] colors, double[] stopOpacities) {
         this.stopOffsets = offsets;
         this.stopColors = colors;
@@ -220,6 +227,15 @@ public class RadialGradient implements Gradient {
                 Arrays.equals(stopOpacities, that.stopOpacities) &&
                 Arrays.equals(stopColors, that.stopColors) &&
                 transform.equals(that.transform);
+    }
+    
+    public static RadialGradient createDefaultGradient() {
+        RadialGradient g = new RadialGradient();
+        g.setRelativeToFigureBounds(true);
+        g.setGradientCircle(0.6, 0.5, 0.4);
+        g.setStops(new double[]{0, 1}, new Color[]{Color.BLUE, Color.RED}, new double[]{1.0, 1.0});
+        g.setTransform(AffineTransform.getRotateInstance(0.0));
+        return g;
     }
 }
 

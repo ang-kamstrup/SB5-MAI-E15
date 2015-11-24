@@ -63,6 +63,8 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
      * imageData.
      */
     private BufferedImage bufferedImage;
+    private BufferedImage originalBufferedImage;
+    private boolean edgeDetectionApplied = false;;
 
     /** Creates a new instance. */
     public SVGImageFigure() {
@@ -247,6 +249,7 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
             case 0:
                 ResizeHandleKit.addResizeHandles(this, handles);
                 handles.add(new LinkHandle(this));
+                GradientHandleKit.addGradientHandles(this, handles);
                 break;
             case 1:
                 TransformHandleKit.addTransformHandles(this, handles);
@@ -429,5 +432,25 @@ public class SVGImageFigure extends SVGAttributedFigure implements SVGFigure, Im
         }
         imageData = baos.toByteArray();
         bufferedImage = img;
+    }
+    
+    public void setOriginalBufferedImage() {
+        originalBufferedImage = bufferedImage;
+    }
+    
+    public BufferedImage getOriginalBufferedImage() {
+        return originalBufferedImage;
+    }
+    
+    public void setEdgeDetectionApplied(boolean  edgeDetectionApplied) {
+        this.edgeDetectionApplied = edgeDetectionApplied;
+    }
+    
+    public boolean getEdgeDetectionApplied() {
+        return edgeDetectionApplied;
+    }
+
+    @Override
+    protected void drawShadow(Graphics2D g) {
     }
 }

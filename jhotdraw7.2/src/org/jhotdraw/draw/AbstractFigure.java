@@ -356,6 +356,7 @@ public abstract class AbstractFigure
                 break;
             case 0:
                 ResizeHandleKit.addResizeHandles(this, handles);
+                GradientHandleKit.addGradientHandles(this, handles);
                 break;
         }
         return handles;
@@ -491,7 +492,7 @@ public abstract class AbstractFigure
         Rectangle2D.Double r = getBounds();
         return new Point2D.Double(r.x + r.width, r.y + r.height);
     }
-
+    @Override
     public Point2D.Double getStartPoint() {
         Rectangle2D.Double r = getBounds();
         return new Point2D.Double(r.x, r.y);

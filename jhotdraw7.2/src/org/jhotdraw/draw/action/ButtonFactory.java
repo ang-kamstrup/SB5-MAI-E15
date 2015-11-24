@@ -28,7 +28,14 @@ import org.jhotdraw.app.action.*;
 import static org.jhotdraw.draw.AttributeKeys.*;
 import org.jhotdraw.geom.*;
 import org.jhotdraw.draw.*;
+import org.jhotdraw.filters.GaussianBlurFilterAction;
+import org.jhotdraw.filters.PixelFilterAction;
+import org.jhotdraw.gui.FavoriteColorsPopupButton;
 import org.jhotdraw.gui.JFontChooser;
+import org.jhotdraw.samples.svg.Gradient;
+import org.jhotdraw.samples.svg.gui.FillToolBar;
+import org.jhotdraw.samples.svg.SVGApplicationModel;
+import org.jhotdraw.samples.svg.SVGDrawingPanel;
 
 /**
  * ButtonFactory.
@@ -221,29 +228,13 @@ public class ButtonFactory {
         a.add(new CopyAction());
         a.add(new PasteAction());
         a.add(new SelectSameAction(editor));
-
-        return a;
-    }
-
-    public static Collection<Action> createSelectionActions(DrawingEditor editor) {
-        LinkedList<Action> a = new LinkedList<Action>();
-        a.add(new DuplicateAction());
-
-        a.add(null); // separator
-
-        a.add(new GroupAction(editor));
-        a.add(new UngroupAction(editor));
-
-        a.add(null); // separator
-
-        a.add(new BringToFrontAction(editor));
-        a.add(new SendToBackAction(editor));
+        a.add(new PrintFromCanvasAction());
 
         return a;
     }
 
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor) {
-        return addSelectionToolTo(tb, editor, createDrawingActions(editor), createSelectionActions(editor));
+        return addSelectionToolTo(tb, editor, createDrawingActions(editor), SelectionActionFactory.createSelectionActions(editor));
     }
 
     public static JToggleButton addSelectionToolTo(JToolBar tb, final DrawingEditor editor,
@@ -801,6 +792,111 @@ public class ButtonFactory {
         a.putValue(Action.SHORT_DESCRIPTION, labels.getToolTipTextProperty("attribute.color.colorChooser"));
         labels.configureToolBarButton(popupButton, labelKey);
         Icon icon = new SelectionColorIcon(editor,
+                attributeKey,
+                labels.getIconProperty(labelKey, ButtonFactory.class).getImage(),
+                colorShape);
+        popupButton.setIcon(icon);
+        popupButton.setDisabledIcon(icon);
+        popupButton.setFocusable(false);
+
+        new SelectionComponentRepainter(editor, popupButton);
+        return popupButton;
+    }
+    
+    public static JPopupButton createFavouriteColorsButton(
+            DrawingEditor editor, AttributeKey<Color> attributeKey,
+            String labelKey, ResourceBundleUtil labels,
+            Map<AttributeKey, Object> defaultAttributes,
+            Shape colorShape) {
+        
+        FavoriteColorsPopupButton popupButton =
+                new FavoriteColorsPopupButton(
+                        editor, attributeKey, labelKey, labels,
+                        defaultAttributes, colorShape);
+
+        new SelectionComponentRepainter(editor, popupButton);
+        return popupButton;
+    }
+    
+    
+    /**
+     * Same as the other createSelectionGradientColorButton methods.
+     * Adjusts the color with a certain stop on a gradient instead.
+     * 
+     * @param editor
+     * @param stop
+     * @param attributeKey
+     * @param swatches
+     * @param columnCount
+     * @param labelKey
+     * @param labels
+     * @param defaultAttributes
+     * @param colorShape
+     * @return 
+     */
+    public static JPopupButton createSelectionGradientColorButton(
+            DrawingEditor editor, int stop, AttributeKey<Gradient> attributeKey,
+            java.util.List<ColorIcon> swatches, int columnCount,
+            String labelKey, ResourceBundleUtil labels,
+            Map<AttributeKey, Object> defaultAttributes,
+            Shape colorShape) {
+        final JPopupButton popupButton = new JPopupButton();
+        popupButton.setPopupAlpha(1f);
+        if (defaultAttributes == null) {
+            defaultAttributes = new HashMap<AttributeKey, Object>();
+        }
+    
+
+        popupButton.setColumnCount(columnCount, false);
+        boolean hasNullColor = false;
+        for (ColorIcon swatch : swatches) {
+            AttributeAction a;
+            HashMap<AttributeKey, Object> attributes = new HashMap<AttributeKey, Object>(defaultAttributes);
+            attributes.put(attributeKey, swatch.getColor());
+            if (swatch.getColor() == null) {
+                hasNullColor = true;
+            }
+            popupButton.add(a =
+                    new SelectionGradientColorChooserAction(
+                    editor,
+                    stop,
+                    attributeKey,
+                    labels.getToolTipTextProperty(labelKey),
+                    swatch));
+            a.putValue(Action.SHORT_DESCRIPTION, swatch.getName());
+        }
+
+        // No color
+        if (!hasNullColor) {
+            AttributeAction a;
+            HashMap<AttributeKey, Object> attributes = new HashMap<AttributeKey, Object>(defaultAttributes);
+            attributes.put(attributeKey, null);
+            popupButton.add(a =
+                    new SelectionGradientColorChooserAction(
+                    editor,
+                    stop,
+                    attributeKey,
+                    labels.getToolTipTextProperty("attribute.color.noColor"),
+                    new ColorIcon(null, labels.getToolTipTextProperty("attribute.color.noColor"))));
+            a.putValue(Action.SHORT_DESCRIPTION, labels.getToolTipTextProperty("attribute.color.noColor"));
+        }
+        // Color chooser
+        ImageIcon chooserIcon = new ImageIcon(
+                ButtonFactory.class.getResource("/org/jhotdraw/draw/action/images/attribute.color.colorChooser.png"));
+        Action a;
+        popupButton.add(
+                a = new SelectionGradientColorChooserAction(
+                editor,
+                stop,
+                attributeKey,
+                labels.getToolTipTextProperty("attribute.color.colorChooser"),
+                chooserIcon,
+                defaultAttributes,
+                true));
+        a.putValue(Action.SHORT_DESCRIPTION, labels.getToolTipTextProperty("attribute.color.colorChooser"));
+        labels.configureToolBarButton(popupButton, labelKey);
+        Icon icon = new SelectionGradientColorIcon(editor,
+                stop,
                 attributeKey,
                 labels.getIconProperty(labelKey, ButtonFactory.class).getImage(),
                 colorShape);
@@ -1388,6 +1484,7 @@ public class ButtonFactory {
         bar.addSeparator();
         bar.add(new BringToFrontAction(editor)).setFocusable(false);
         bar.add(new SendToBackAction(editor)).setFocusable(false);
+        bar.add(new EdgeDetectionAction(editor)).setFocusable(false);
 
     }
 
@@ -1530,5 +1627,152 @@ public class ButtonFactory {
         btn.setText(null);
         btn.setFocusable(false);
         return btn;
+    }
+     public static JButton createApplyShadowButton(DrawingEditor editor){
+        JButton btn;
+        btn = new JButton(new ApplyShadowAction(editor));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static AbstractButton createGradientHandleSelectorButton(DrawingEditor editor, final FillToolBar fillToolBar, ResourceBundleUtil labels) {
+
+        final JPopupButton popupButton = new JPopupButton();
+
+        labels.configureToolBarButton(popupButton, "attribute.fillGradientHandleSelector");
+        popupButton.setFocusable(false);
+       
+        popupButton.setText(fillToolBar.getFillState().getPrettyName());
+
+        for (final FillToolBar.FillType state : FillToolBar.FillType.values()) {
+            popupButton.add(new ChangeGradientAction(editor, state, popupButton) {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    super.actionPerformed(ae);
+                    fillToolBar.setFillState(state);
+                }
+            });
+        }
+        popupButton.setFocusable(false);
+        return popupButton;
+    }
+    
+    public static JButton createChangeToHorizontalButton(DrawingEditor editor, SVGDrawingPanel svgDrawingPanel, JPanel toolsPane) {
+        JButton btn;
+        btn = new JButton(new ChangeToHorizontalAction(editor, svgDrawingPanel, toolsPane));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static JButton createChangeToVerticalButton(DrawingEditor editor, SVGDrawingPanel svgDrawingPanel, JPanel toolsPane) {
+        JButton btn;
+        btn = new JButton(new ChangeToVerticalAction(editor, svgDrawingPanel, toolsPane));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    /**
+     * Creates a button that make it possible to scale the figures.
+     */
+    public static JButton createApplyScaleButton(DrawingEditor editor, CompositeFigure prototype) {        
+       //Event handler for the button
+       JButton btn = new JButton(new ApplyScaleButton(editor, prototype));
+        if (btn.getIcon() != null) {
+            btn.putClientProperty("hideActionText", Boolean.TRUE);
+        }
+        btn.setHorizontalTextPosition(JButton.CENTER);
+        btn.setVerticalTextPosition(JButton.BOTTOM);
+        btn.setText(null);
+        btn.setFocusable(false);
+        return btn;
+    }
+    
+    public static JButton createBlurFilterActionButton(DrawingEditor editor){
+        JButton btn = new JButton(new GaussianBlurFilterAction(editor));
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        btn.setText(null);
+        return btn;
+    }
+    
+    public static JButton createPixelationFilterActionButton(DrawingEditor editor){
+        JButton btn = new JButton(new PixelFilterAction(editor));
+        btn.putClientProperty("hideActionText", Boolean.TRUE);
+        btn.setText(null);
+        return btn;
+    }
+    
+    public void getSVGDrawingPanel() {
+        
+    }
+    
+    /**
+     * Creates a new crop tool button, of type JToggleButton
+     */
+    
+    public static JButton createCropToolButton(DrawingEditor editor, DrawingView view){
+        JButton button = new JButton();
+        button.setFocusable(true);
+        button.addActionListener(new CropAction(editor, view));
+        button.setIcon(new ImageIcon(ButtonFactory.class.getResource("/org/jhotdraw/samples/svg/action/images/crop.png")));
+        
+        return button;
+    }
+    
+//    public void getSVGDrawingPanel() {
+//        return null;
+//    }
+
+    /**
+     * Creates a button for the action of zooming the selected area.
+     * @param view
+     * @return the button
+     */
+    public static JToggleButton createZoomSelectionButton(final DrawingView view) {
+        final JToggleButton toggleButton;
+
+        toggleButton = new JToggleButton();
+        toggleButton.setFocusable(false);
+        
+        final String ZOOM_SELECTION_PROPERTY_NAME = "SELECTION_ENDED";
+
+        // Corresponding action for button.
+        final ZoomSelectionAction action = new ZoomSelectionAction(view);
+
+        toggleButton.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent event) {
+                if (!toggleButton.isSelected()) { return; }
+                // Send empty event to action.
+                action.actionPerformed(null);
+            }
+        });
+        
+        action.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                // The action has ended, toggle the button.
+                if (evt.getPropertyName().equals(ZOOM_SELECTION_PROPERTY_NAME)) {
+                    toggleButton.setSelected(false);
+                }
+            }
+        });
+
+        return toggleButton;
     }
 }

@@ -45,6 +45,7 @@ public class GaussianKernel {
     private static void fillKernel(float[] gaussianKernel, float sum) {
         for (int i = 0; i < gaussianKernel.length; i++) {
             gaussianKernel[i] /= sum;
+            // divide by sum to remedy darkening/brightening of the image
         }
     }
 }
