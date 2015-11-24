@@ -4,8 +4,13 @@ import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import org.aspectj.lang.annotation.After;
 import org.jhotdraw.filters.BlackHole;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /*
  * To change this template, choose Tools | Templates
