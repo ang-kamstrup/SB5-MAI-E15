@@ -48,12 +48,14 @@ public class ZoomSelectionAction extends AbstractDrawingViewAction {
     private void performAction(Rectangle area) {
         int width = view.getWidth();
 
-        double factor = width / area.width;
-        view.setScaleFactor(factor);
+        if (area.width != 0) {
+            double factor = width / area.width;
+            view.setScaleFactor(factor);
 
-        geoView.moveView(new Point(
+            geoView.moveView(new Point(
                 (int) (((area.width - area.x)/2)*factor),
                 (int) (((area.height - area.y)/2)*factor)));
+        }
     }
     
     /**

@@ -1632,6 +1632,16 @@ public class ButtonFactory {
         // Corresponding action for button.
         final ZoomSelectionAction action = new ZoomSelectionAction(view);
 
+        view.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getPropertyName() == "scaleFactor") {
+                    if (view.getScaleFactor() == 100.0) {
+                        toggleButton.setSelected(false);
+                    }
+                }
+            }
+        });
+
         toggleButton.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent event) {
                 if (!toggleButton.isSelected()) { return; }
@@ -1648,6 +1658,7 @@ public class ButtonFactory {
                 }
             }
         });
+        
 
         return toggleButton;
     }
