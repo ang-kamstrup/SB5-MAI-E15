@@ -267,6 +267,8 @@ public class SVGDrawingPanel extends JPanel {
         toolsPane.add(linkToolBar);
         toolsPane.add(canvasToolBar);
         toolsPane.add(viewToolBar);
+
+        filterToolBar.setName("Filter"); // NOI18N
         toolsPane.add(filterToolBar);
 
         toolsScrollPane.setViewportView(toolsPane);

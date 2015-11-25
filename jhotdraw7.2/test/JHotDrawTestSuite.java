@@ -26,7 +26,8 @@ import org.junit.runners.Suite;
     StarFigureTest.class,
     TestBlackHole.class,
     TestBlurOperation.class,
-    ZoomSelectionTest.class
+    ZoomSelectionTest.class,
+    TestBlackHole.class
     })
 
 public class JHotDrawTestSuite {
