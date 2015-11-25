@@ -13,7 +13,21 @@ import org.junit.runners.Suite;
  * @author jcs
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GroupingTest.class,EdgeDetectionBetterTest.class, FavoriteColorTest.class, PixelationTest.class, AddPointTest.class, PrintFromCanvasActionTest.class, ZoomSelectionTest.class, GradientTest.class})
+@Suite.SuiteClasses({GroupingTest.class,
+    AddPointTest.class,
+    EdgeDetectionBetterTest.class,
+    EdgeDetectionTest.class,
+    FavoriteColorTest.class,
+    GradientTest.class,
+    GroupingTest.class,
+    PixelationTest.class,
+    PrintFromCanvasActionTest.class,
+    SVGStarFigureTest.class,
+    StarFigureTest.class,
+    TestBlackHole.class,
+    TestBlurOperation.class,
+    ZoomSelectionTest.class
+    })
 
 public class JHotDrawTestSuite {
 
