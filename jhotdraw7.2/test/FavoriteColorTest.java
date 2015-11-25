@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import org.jhotdraw.color.FavoriteColors;
@@ -58,7 +59,9 @@ public class FavoriteColorTest {
 
         //Test that each added test color was correctly added to FavoriteColors.
         int i = 0;
-        for (ColorIcon colorIcon : FavoriteColors.getInstance().getColors()) {
+        List<ColorIcon> favoriteColors = FavoriteColors.getInstance().getColors();
+        Collections.reverse(favoriteColors);
+        for (ColorIcon colorIcon : favoriteColors) {
             boolean isSame = colorIcon.equals(testColors.get(i));
             assertTrue("Expected a different color", isSame);
             i++;
