@@ -72,6 +72,7 @@ public class SVGApplicationModel extends DefaultApplicationModel {
 
         putAction(ClearSelectionAction.ID, new ClearSelectionAction());
         putAction(ViewSourceAction.ID, new ViewSourceAction(a));
+	putAction(ViewRevisionHistoryAction.ID, new ViewRevisionHistoryAction(a));
         putAction(ExportAction.ID, new ExportAction(a));
     }
 
@@ -109,6 +110,7 @@ public class SVGApplicationModel extends DefaultApplicationModel {
         m = new JMenu();
         appLabels.configureMenu(m, "view");
         m.add(getAction(ViewSourceAction.ID));
+	m.add(getAction(ViewRevisionHistoryAction.ID));
 
         return m;
     }

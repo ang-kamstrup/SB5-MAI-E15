@@ -25,6 +25,7 @@ public class SVGApplication extends DefaultSDIApplication {
 		revisionController = new RevisionController(this);
 		revisionController.setupRevisionHistoryCollection();
 		revisionController.startRevisionHistoryCollection();
+
 	}
 
 	public RevisionController getRevisionController(){

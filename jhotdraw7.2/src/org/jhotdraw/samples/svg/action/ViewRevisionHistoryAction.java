@@ -45,6 +45,7 @@ public class ViewRevisionHistoryAction extends AbstractViewAction {
 		RevisionView revisionView = new RevisionView();
 		revisionView.setRevisionController(a.getRevisionController());
 		revisionView.setup();
+
 		final ViewRevisionHistoryAction self = this;
 		revisionView.frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
