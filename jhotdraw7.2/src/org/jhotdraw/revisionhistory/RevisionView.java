@@ -25,6 +25,7 @@ public class RevisionView extends javax.swing.JPanel {
     public RevisionView() {
         initComponents();
         listModel = (DefaultListModel) revisionList.getModel();
+	listModel.addElement("Hallo");
     }
 
     public void setup() {
@@ -32,12 +33,12 @@ public class RevisionView extends javax.swing.JPanel {
         frame.setLayout(new BorderLayout());
         final RevisionView p = new RevisionView();
         frame.add(p, BorderLayout.CENTER);
-        frame.pack();
+	frame.pack();
 
-	for (Drawing d : revisionController.getRevisions()){
-		listModel.addElement(d);
-		listModel.addElement("TEST");
+	for (Drawing d: revisionController.revisions){
+		p.listModel.addElement(d);
 	}
+
     }
 
     @Override
