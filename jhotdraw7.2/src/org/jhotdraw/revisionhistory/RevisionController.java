@@ -20,13 +20,18 @@ public class RevisionController {
 	 */
 	private final RevisionModel revisionModel;
 
+	private final Application application;
+
 	/**
 	 * The thread in which the operations to collect our revisions happen.
 	 */
 	private Thread revisionCollectionThread;
 
-	public RevisionController() {
+	private final long TENMIN = 600000;
+
+	public RevisionController(Application application) {
 		revisionModel = new RevisionModel();
+		this.application = application;
 	}
 
 	/**
@@ -37,10 +42,8 @@ public class RevisionController {
 	/**
 	 * Operation setting up the revisionCollectionThread for collection of
 	 * Revisions.
-	 *
-	 * @param app The application instance which runs everything.
 	 */
-	public void setupRevisionHistoryCollection(final Application app) {
+	public void setupRevisionHistoryCollection() {
 		revisionCollectionThread = new Thread(new Runnable() {
 			public void run() {
 				while (true) {
@@ -51,10 +54,18 @@ public class RevisionController {
 					}
 
 					if (isCollecting) {
-						SVGView svgView = (SVGView) app.getActiveView();
+						SVGView svgView = (SVGView) application.getActiveView();
 						Drawing d = svgView.getDrawing();
 						Date date = new Date();
-						revisionModel.saveRevision(d, date);
+						revisionModel.add(d, date);
+					}
+					
+					final Date NOW = new Date();
+					int i = 1;
+					for (Revision r : revisionModel.getRevisions()){
+						if (r.getDate().before(NOW)){
+							if (2%i == 1) revisionModel.remove(r);
+						}
 					}
 				}
 			}
@@ -94,4 +105,26 @@ public class RevisionController {
 		return revisionModel;
 	}
 
+	/**
+	 * Holds "old" drawing while preview is going on.
+	 */
+	private Drawing oldDrawing;
+
+	/**
+	 * Preview a revision of the drawing
+	 * @param revision The instance set for previewing
+	 */	
+	public void previewRevision(Revision revision){
+		SVGView view = (SVGView) application.getActiveView();
+		oldDrawing = view.getDrawing();
+		view.setDrawing(revision.getDrawing());
+	}
+	
+	/**
+	 * Stops the preview and shows the "old" drawing
+	 */
+	public void stopPreview(){
+		SVGView view = (SVGView) application.getActiveView();
+		view.setDrawing(oldDrawing);
+	}
 }
