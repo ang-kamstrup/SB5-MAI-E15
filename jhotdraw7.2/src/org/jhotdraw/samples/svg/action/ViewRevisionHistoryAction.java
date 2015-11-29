@@ -15,7 +15,7 @@ import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
  *
- * @author E
+ * @author Emil Frisk
  */
 public class ViewRevisionHistoryAction extends AbstractViewAction {
 
