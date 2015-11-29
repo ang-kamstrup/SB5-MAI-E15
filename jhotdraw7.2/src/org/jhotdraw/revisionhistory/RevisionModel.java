@@ -16,7 +16,7 @@ import org.jhotdraw.draw.Drawing;
  */
 public class RevisionModel {
 
-	List<Revision> revisions;
+	private final List<Revision> revisions;
 
 	public RevisionModel() {
 		revisions = new LinkedList<Revision>();
@@ -25,11 +25,19 @@ public class RevisionModel {
 	/**
 	 * Used for saving a revision
 	 *
-	 * @param drawing The drawing, which state you want to save.
+	 * @param drawing The drawing, which state you want to save
 	 * @param date The time the revision is saved
 	 */
-	public void saveRevision(Drawing drawing, Date date) {
+	public void add(Drawing drawing, Date date) {
 		revisions.add(new Revision(drawing, date));
+	}
+
+	/**
+	 * Used for removing a revision
+	 * @param revision The instance which is removed
+	 */
+	public void remove(Revision revision){
+		revisions.remove(revision);
 	}
 
 	/**

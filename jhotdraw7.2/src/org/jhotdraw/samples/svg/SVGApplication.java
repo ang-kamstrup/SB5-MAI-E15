@@ -22,9 +22,10 @@ public class SVGApplication extends DefaultSDIApplication {
 	public void init() {
 		super.init();
 		
-		revisionController = new RevisionController();
-		revisionController.setupRevisionHistoryCollection(this);
+		revisionController = new RevisionController(this);
+		revisionController.setupRevisionHistoryCollection();
 		revisionController.startRevisionHistoryCollection();
+		
 		
 	}
 

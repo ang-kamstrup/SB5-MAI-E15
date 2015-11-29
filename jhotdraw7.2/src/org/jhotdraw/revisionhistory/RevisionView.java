@@ -5,15 +5,19 @@
 package org.jhotdraw.revisionhistory;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 
 /**
  *
  * @author emilfrisk
  */
 public class RevisionView extends javax.swing.JPanel {
-	
+
 	public JFrame frame;
 	public DefaultListModel listModel;
 	public RevisionController revisionController;
@@ -27,23 +31,35 @@ public class RevisionView extends javax.swing.JPanel {
 		listModel = (DefaultListModel) revisionList.getModel();
 		revisionList.setCellRenderer(new RevisionCellRenderer());
 	}
-	
+
 	public void setup() {
 		frame = new JFrame();
 		frame.setLayout(new BorderLayout());
 		frame.add(this, BorderLayout.CENTER);
 		frame.pack();
-		
+
 		for (Revision r : revisionController.getRevisionModel().getRevisions()) {
 			this.listModel.addElement(r);
 		}
+
+		revisionList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent evt) {
+				JList list = (JList) evt.getSource();
+				if (evt.getClickCount() == 2) {
+					int index = list.locationToIndex(evt.getPoint());
+					Revision revision = (Revision) listModel.getElementAt(index);
+					revisionController.previewRevision(revision);
+				}
+			}
+		});
 	}
-	
+
 	@Override
 	public void setVisible(boolean visible) {
 		frame.setVisible(visible);
 	}
-	
+
 	public void setRevisionController(RevisionController revisionController) {
 		this.revisionController = revisionController;
 	}
