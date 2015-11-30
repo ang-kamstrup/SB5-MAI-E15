@@ -55,7 +55,7 @@ public class RevisionController {
 
 					if (isCollecting) {
 						SVGView svgView = (SVGView) application.getActiveView();
-						Drawing d = svgView.getDrawing();
+						Drawing d = (Drawing) svgView.getDrawing().clone();
 						Date date = new Date();
 						revisionModel.add(d, date);
 					}
@@ -118,6 +118,8 @@ public class RevisionController {
 		SVGView view = (SVGView) application.getActiveView();
 		oldDrawing = view.getDrawing();
 		view.setDrawing(revision.getDrawing());
+		view.revalidate();
+		view.repaint();
 	}
 	
 	/**
