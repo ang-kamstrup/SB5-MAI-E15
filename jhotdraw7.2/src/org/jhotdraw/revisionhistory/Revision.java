@@ -5,6 +5,7 @@
  */
 package org.jhotdraw.revisionhistory;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.jhotdraw.draw.Drawing;
 
@@ -30,5 +31,11 @@ public class Revision {
 	
 	public Date getDate(){
 		return date;
+	}
+
+	@Override
+	public String toString() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		return dateFormat.format(date);
 	}
 }
