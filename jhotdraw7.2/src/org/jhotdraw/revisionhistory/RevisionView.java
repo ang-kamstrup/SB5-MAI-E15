@@ -9,8 +9,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -29,7 +29,7 @@ public class RevisionView extends javax.swing.JPanel {
 	public RevisionView() {
 		initComponents();
 		listModel = (DefaultListModel) revisionList.getModel();
-		revisionList.setCellRenderer(new RevisionCellRenderer());
+		//revisionList.setCellRenderer(new RevisionCellRenderer());
 	}
 
 	public void setup() {
@@ -53,6 +53,8 @@ public class RevisionView extends javax.swing.JPanel {
 				}
 			}
 		});
+
+		revisionList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 	}
 
 	@Override

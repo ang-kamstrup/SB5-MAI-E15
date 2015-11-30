@@ -11,6 +11,7 @@ import org.jhotdraw.app.Application;
 import org.jhotdraw.app.action.AbstractViewAction;
 import org.jhotdraw.revisionhistory.RevisionView;
 import org.jhotdraw.samples.svg.SVGApplication;
+import org.jhotdraw.samples.svg.SVGView;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 /**
@@ -38,7 +39,8 @@ public class ViewRevisionHistoryAction extends AbstractViewAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 
-		SVGApplication a = (SVGApplication) getApplication();
+		final SVGApplication a = (SVGApplication) getApplication();
+		final SVGView svgView = (SVGView) a.getActiveView();
 
 		RevisionView revisionView = new RevisionView();
 		revisionView.setRevisionController(a.getRevisionController());
@@ -49,9 +51,15 @@ public class ViewRevisionHistoryAction extends AbstractViewAction {
 			public void windowClosing(WindowEvent e) {
 				super.windowClosing(e);
 				self.setEnabled(true);
+				a.getRevisionController().startRevisionHistoryCollection();
+				svgView.getEditor().setEnabled(true);
 			}
 		});
 		revisionView.setVisible(true);
 		this.setEnabled(false);
+
+		a.getRevisionController().pauseRevisionHistoryCollection();
+
+		svgView.getEditor().setEnabled(false);
 	}
 }
