@@ -528,7 +528,13 @@ view.toolTipText=View
 view.gridSize.toolTipText=Grid Size
 view.toolbar=View
 
+view.viewRevisionHistory.text=View Revision History
+view.viewRevisionHistory.toolTipText=
+view.viewRevisionHistory.accelerator=
+view.viewRevisionHistory.mnemonic=
+view.viewRevisionHistory.icon=
 <<<<<<< HEAD
+
 filter.toolbar.accelerator=
 filter.icon= 
 filter.mnemonic=
@@ -557,9 +563,4 @@ edit.applyShadow.mnemonic=Shadow
 edit.applyShadow.accelerator=
 attribute.shadowOpacity.toolTipText=Shadow Opacity
 =======
-view.viewRevisionHistory.text=View Revision History
-view.viewRevisionHistory.toolTipText=
-view.viewRevisionHistory.accelerator=
-view.viewRevisionHistory.mnemonic=
-view.viewRevisionHistory.icon=
->>>>>>> Added ViewRevisionHistoryAction to the View menu. Updated SVGApplication, SVGApplicationModel and RevisionView.
+>>>>>>> 77aa48d7e3b07f9a76cc669effb3530db9faab78
