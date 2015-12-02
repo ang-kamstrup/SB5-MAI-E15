@@ -52,7 +52,7 @@ import org.jhotdraw.filters.PixelFilterAction;
 public class DefaultSDIApplication extends AbstractApplication {
 
     private Preferences prefs;
-
+    
     /** Creates a new instance. */
     @FeatureEntryPoint(JHotDrawFeatures.APPLICATION_STARTUP)
     public DefaultSDIApplication() {

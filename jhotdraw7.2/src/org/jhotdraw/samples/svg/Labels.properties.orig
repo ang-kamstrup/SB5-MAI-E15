@@ -533,6 +533,7 @@ view.viewRevisionHistory.toolTipText=
 view.viewRevisionHistory.accelerator=
 view.viewRevisionHistory.mnemonic=
 view.viewRevisionHistory.icon=
+<<<<<<< HEAD
 
 filter.toolbar.accelerator=
 filter.icon= 
@@ -561,3 +562,5 @@ edit.applyShadow.toolTipText=Apply Shadow
 edit.applyShadow.mnemonic=Shadow
 edit.applyShadow.accelerator=
 attribute.shadowOpacity.toolTipText=Shadow Opacity
+=======
+>>>>>>> 77aa48d7e3b07f9a76cc669effb3530db9faab78
