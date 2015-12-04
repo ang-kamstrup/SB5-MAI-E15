@@ -33,9 +33,9 @@ public class Main {
         String os = System.getProperty("os.name").toLowerCase();
         if (os.startsWith("win")) {
           //  app = new DefaultMDIApplication();
-            app = new SVGApplication();
+            app = new DefaultSDIApplication();
         } else {
-            app = new SVGApplication();
+            app = new DefaultSDIApplication();
         }
         SVGApplicationModel model = new SVGApplicationModel();
         model.setName("JHotDraw SVG");
