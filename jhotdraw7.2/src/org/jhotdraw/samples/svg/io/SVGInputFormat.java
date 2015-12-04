@@ -31,7 +31,6 @@ import org.jhotdraw.draw.InputFormat;
 import org.jhotdraw.xml.css.StyleManager;
 import org.jhotdraw.geom.*;
 import org.jhotdraw.io.*;
-import org.jhotdraw.io.Base64;
 import org.jhotdraw.samples.svg.*;
 import org.jhotdraw.samples.svg.figures.*;
 import static org.jhotdraw.samples.svg.SVGConstants.*;

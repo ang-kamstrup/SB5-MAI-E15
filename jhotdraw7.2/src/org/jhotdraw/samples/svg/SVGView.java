@@ -247,10 +247,6 @@ public class SVGView extends AbstractView implements ExportableView, PrintableVi
         return svgPanel.getDrawing();
     }
 
-    public void setDrawing(Drawing drawing){
-	    svgPanel.setDrawing(drawing);
-    }
-
     public void setEnabled(boolean newValue) {
         svgPanel.setEnabled(newValue);
         super.setEnabled(newValue);
@@ -393,6 +389,7 @@ public class SVGView extends AbstractView implements ExportableView, PrintableVi
         preferences.put("viewExportFile", f.getPath());
         preferences.put("viewExportFormat", filter.getDescription());
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jhotdraw.samples.svg.SVGDrawingPanel svgPanel;
