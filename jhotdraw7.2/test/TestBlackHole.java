@@ -40,7 +40,7 @@ public class TestBlackHole {
     @Before
     public void setUp() throws IOException {
         //Setup Pixel arrays because Assert cannot compare two images
-        testImage = ImageIO.read(new File("test/resources/testImage.jpg"));
+        testImage = ImageIO.read(new File("test/resources/TestImageBlackHole.jpg"));
         originalImagePixels = ((DataBufferByte) testImage.getRaster().getDataBuffer()).getData();
         blackHoleImagePixels = originalImagePixels;
         //Assert the arrays
