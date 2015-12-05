@@ -13,22 +13,21 @@ import org.jhotdraw.revisionhistory.RevisionController;
  */
 public class SVGApplication extends DefaultSDIApplication {
 
-	private static RevisionController revisionController;
+    private static RevisionController revisionController;
 
-	public SVGApplication() {
-	}
+    public SVGApplication() {
+    }
 
-	@Override
-	public void init() {
-		super.init();
-		
-		revisionController = new RevisionController(this);
-		revisionController.setupRevisionHistoryCollection();
-		revisionController.startRevisionHistoryCollection();
+    @Override
+    public void init() {
+	super.init();
 
-	}
+	revisionController = new RevisionController(this);
+	revisionController.setupRevisionHistoryCollection();
+	revisionController.startRevisionHistoryCollection();
+    }
 
-	public RevisionController getRevisionController(){
-		return revisionController;
-	}
+    public RevisionController getRevisionController() {
+	return revisionController;
+    }
 }

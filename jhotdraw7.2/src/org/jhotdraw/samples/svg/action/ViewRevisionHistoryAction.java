@@ -20,47 +20,47 @@ import org.jhotdraw.util.ResourceBundleUtil;
  */
 public class ViewRevisionHistoryAction extends AbstractViewAction {
 
-	/**
-	 * The ViewRevisionHistoryActions ID, which it is represented by in the
-	 * SVGApplicationModels "actions" HashMap.
-	 */
-	public final static String ID = "view.viewRevisionHistory";
+    /**
+     * The ViewRevisionHistoryActions ID, which it is represented by in the
+     * SVGApplicationModels "actions" HashMap.
+     */
+    public final static String ID = "view.viewRevisionHistory";
 
-	public ViewRevisionHistoryAction(Application app) {
-		super(app);
-		ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
-		labels.configureAction(this, ID);
-	}
+    public ViewRevisionHistoryAction(Application app) {
+	super(app);
+	ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
+	labels.configureAction(this, ID);
+    }
 
-	/**
-	 * The operation which happens when the action is performed. In this
-	 * case it shows the RevisionView.
-	 * @param e Represent the Event instance - in this case an ActionEvent.
-	 */
-	public void actionPerformed(ActionEvent e) {
+    /**
+     * The operation which happens when the action is performed. In this case it
+     * shows the RevisionView.
+     *
+     * @param e Represent the Event instance - in this case an ActionEvent.
+     */
+    public void actionPerformed(ActionEvent e) {
 
-		final SVGApplication a = (SVGApplication) getApplication();
-		final SVGView svgView = (SVGView) a.getActiveView();
+	final SVGApplication a = (SVGApplication) getApplication();
+	final SVGView svgView = (SVGView) a.getActiveView();
 
-		RevisionView revisionView = new RevisionView();
-		revisionView.setRevisionController(a.getRevisionController());
-		revisionView.setup();
+	RevisionView revisionView = new RevisionView();
+	revisionView.setRevisionController(a.getRevisionController());
+	revisionView.setup();
+	final ViewRevisionHistoryAction self = this;
+	revisionView.frame.addWindowListener(new java.awt.event.WindowAdapter() {
+	    @Override
+	    public void windowClosing(WindowEvent e) {
+		super.windowClosing(e);
+		self.setEnabled(true);
+		a.getRevisionController().startRevisionHistoryCollection();
+		svgView.getEditor().setEnabled(true);
+	    }
+	});
+	revisionView.setVisible(true);
+	this.setEnabled(false);
 
-		final ViewRevisionHistoryAction self = this;
-		revisionView.frame.addWindowListener(new java.awt.event.WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				super.windowClosing(e);
-				self.setEnabled(true);
-				a.getRevisionController().startRevisionHistoryCollection();
-				svgView.getEditor().setEnabled(true);
-			}
-		});
-		revisionView.setVisible(true);
-		this.setEnabled(false);
+	a.getRevisionController().pauseRevisionHistoryCollection();
 
-		a.getRevisionController().pauseRevisionHistoryCollection();
-
-		svgView.getEditor().setEnabled(false);
-	}
+	svgView.getEditor().setEnabled(false);
+    }
 }
